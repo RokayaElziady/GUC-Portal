@@ -1,6 +1,7 @@
 const express = require('express')
 const locatinRouter = express.Router()
 const locationModel = require('../../Models/location.model');
+const slotModel = require('../../Models/slots.model');
 locatinRouter.route('/')
 //add new location and does the validation to check if correct data format
 .post(
@@ -20,6 +21,7 @@ locatinRouter.route('/')
       }
     }
     );
+//delete location and make slots there unallocated
 locatinRouter.route('/:locationName')
 .delete(async (req, res)=>{ 
   try{
@@ -27,7 +29,13 @@ locatinRouter.route('/:locationName')
         res.status(200).json({
           message: 'location deleted',
       });
+      try{
+        const result= await slotModel.updateMany({location: req.params.locationName},{location: "unallocated"})
      
+     }catch(err){    console.log(err);
+      res.status(500).json({
+        error: err
+      });}
      }
         catch(err){    console.log(err);
           res.status(500).json({

@@ -5,12 +5,16 @@ const app = express()
 const locationRoute=require('./api/routers/location.router');
 const { connectDB } = require('./config/dbConfig');
 const locationRouter = require('./api/routers/location.router');
-
+const slotModel = require('./Models/slots.model');
+const slot= new slotModel({ startTime: 11,
+  endTime: 12,
+  course:"pepsi",
+  location:"tet2"});
+  slot.save();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/locations',locationRouter);
-
 app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
