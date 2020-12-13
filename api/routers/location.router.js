@@ -40,7 +40,28 @@ locatinRouter.route('/:locationName')
         catch(err){    console.log(err);
           res.status(500).json({
             error: err
-          });}});
- 
+          });}})
+//update location
+.put( async(req, res)=>
+{ try{
+            const result= await locationModel.findOneAndUpdate
+            ({name : req.params.locationName}, req.body, {new: true});
+            res.send(result);
+            if(req.body.name){
+              try{
+                const result= await slotModel.updateMany({location: req.params.locationName},{location: req.body.name})
+             
+             }catch(err){    console.log(err);
+              res.status(500).json({
+                error: err
+              });}
+            }
+           }
+            catch(err){
+              console.log(err);
+          res.status(500).json({
+            error: err
+          });
+            }})
 
 module.exports = locatinRouter;
