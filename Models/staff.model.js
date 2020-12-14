@@ -1,4 +1,5 @@
 
+const { boolean } = require('joi');
 var mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
 
@@ -13,7 +14,7 @@ var staff = new Schema({
     extraInformation:{type:String},
     password:{type:String,default:"1234"},
     dayOff:{type:String,default:"Saturday"},
-    hr:{type:bool},
+    hr:{type:boolean},
     acadamic:{type:boolean}
 })
 
