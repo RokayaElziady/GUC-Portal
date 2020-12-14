@@ -2,6 +2,7 @@ const express = require('express')
 const courseRouter = express.Router()
 const courseModel = require('../../Models/course.model');
 const departmentModel = require('../../Models/department.model');
+const staffModel = require('../../Models/staff.model');
 courseRouter.route('/')
 .post(
   async (req, res) => {

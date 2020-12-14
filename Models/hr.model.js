@@ -5,7 +5,7 @@ mongoose.set('useCreateIndex', true);
 
 var Schema = mongoose.Schema
 
-var staff = new Schema({
+var hr = new Schema({
     id:{type:String,unique: true,required:true},
     name:{type:String,required:true},
     email:{type:String,unique: true,required:true},
@@ -14,9 +14,8 @@ var staff = new Schema({
     extraInformation:{type:String},
     password:{type:String,default:"1234"},
     dayOff:{type:String,default:"Saturday"},
-    hr:{type:Boolean},
-    acadamic:{type:Boolean}
+  
 })
 
-var staffmodel = mongoose.model('staff', staff);
-module.exports = staffmodel;
+var hrmodel = mongoose.model('hr', hr);
+module.exports = hrmodel;

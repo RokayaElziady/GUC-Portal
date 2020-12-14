@@ -3,6 +3,7 @@ const departmentRouter = express.Router()
 const departmentModel = require('../../Models/department.model');
 const courseModel = require('../../Models/course.model');
 const facultyModel = require('../../Models/faculty.model');
+const staffModel = require('../../Models/staff.model');
 departmentRouter.route('/')
 .post(
   async (req, res) => {
@@ -33,13 +34,13 @@ departmentRouter.route('/')
 departmentRouter.route('/:departmentName')
 .delete(async (req, res)=>{ 
   try{
-    try{
-        const result= await courseModel.updateMany({department: req.params.departmentName},{department: "unassigned"})
-
-     }catch(err){    console.log(err);
-      res.status(500).json({
-        error: err
-      });}
+const department= await  departmentModel.findOne({name : req.params.departmentName})
+  department.courseNames.forEach(element=>{
+    let course=await courseModel.findOne({name:element});
+    course.department=  course.department.filter(item => item != req.params.departmentName)
+    courseModel.findOneAndUpdate({name:element}, course, {new: true});
+})
+const staff=staffModel.findOneAndUpdate({department:req.params.departmentName},{department:unassigned})
       const result= await departmentModel.deleteOne({name : req.params.departmentName})
       res.status(200).json({
         message: 'department deleted',
@@ -53,6 +54,18 @@ departmentRouter.route('/:departmentName')
 .put( async(req, res)=>
 { 
     try{
+        const staff=staffModel.findOneAndUpdate({department:req.params.departmentName},{department:unassigned})
+        if(req.body.staffIds){
+            staffIds=req.body.staffIds;
+            staffIds.array.forEach(element => {
+                let staff=await staffModel.findOne({id:element})
+                  if(!staff){
+            res.status(500).json({
+               message: "staff does not exist"
+              });
+            return; }
+            });
+        }
         if(req.body.faculty){
             const faculty=await facultyModel.findOne({name : req.body.faculty});
             if(!faculty){

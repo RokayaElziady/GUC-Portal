@@ -1,9 +1,17 @@
 var mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
+
+
 var Schema = mongoose.Schema
-var departments = new Schema({
- name:{type:String,unique: true,required:true},
-faculty: {type:String},
+
+var departement = new Schema({
+  HOD:{type:String},
+  name:{type:String,unique: true,required:true},
+  faculty: {type:String},
+  courseNames:[{type:String}],
+  staffIds:[{type:String}]
 })
-var departmentsmodel = mongoose.model('departments', departments);
-module.exports = departmentsmodel
+
+var departementModel = mongoose.model('department', departement)
+
+module.exports = departementModel

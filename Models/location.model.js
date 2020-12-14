@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
 
@@ -11,5 +10,5 @@ type: {type:String,enum:['tutorial room','lecture halls','offices']},
  officeOccupants:{type:Number,default:0}
 })
 
-var locationsmodel = mongoose.model('locations', locations)
-module.exports = locationsmodel
+var locationModel = mongoose.model('locations', locations)
+module.exports = locationModel

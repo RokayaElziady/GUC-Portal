@@ -1,19 +1,20 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const {verify}= require('./api/auth/verifyToken')
-const app = express()
+const app = express();
 const locationRoute=require('./api/routers/location.router');
-const { connectDB } = require('./config/dbConfig');
-const locationRouter = require('./api/routers/location.router');
 const facultyRoute=require('./api/routers/faculty.router');
-const courseRoute=require('./api/routers/course.router');
-const departmentRoute=require('./api/routers/department.router');
+const { connectDB } = require('./config/dbConfig');
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use('/courses',courseRoute);
-app.use('/locations',locationRouter);
+//const courseRoute=require('./api/routers/course.router');
+//const departmentRoute=require('./api/routers/department.router');
+
+//app.use('/courses',courseRoute);
+app.use('/locations',locationRoute);
 app.use('/faculties',facultyRoute);
-app.use('/departments',departmentRoute);
+//app.use('/departments',departmentRoute);
 app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })

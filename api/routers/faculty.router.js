@@ -1,3 +1,4 @@
+//done
 const express = require('express')
 const facultyRouter = express.Router()
 const facultyModel = require('../../Models/faculty.model');
@@ -27,7 +28,7 @@ facultyRouter.route('/:facultyName')
           message: 'faculty deleted',
       });
       try{
-        const result= await departmentModel.updateMany({faculty: req.params.facultyName},{faculty: "unallocated"})
+        const result= await departmentModel.updateMany({faculty: req.params.facultyName},{faculty: "unassigned"})
      
      }catch(err){    console.log(err);
       res.status(500).json({
