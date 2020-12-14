@@ -6,9 +6,9 @@ const scheduleModel = require('../../Models/schedule.model')
 router.get('/viewSchedule',
 async (req, res) => {
     try {
-        const user=req.body.username;
+        const user=req.body.member_email;
         result = await scheduleModel
-          .find({ username:user})
+          .find({ member_email:user})
         if(!result){
             return res.json({
                 error: 'You donnot have a schedule ',
