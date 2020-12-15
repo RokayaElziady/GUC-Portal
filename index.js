@@ -9,12 +9,12 @@ const { connectDB } = require('./config/dbConfig');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 //const courseRoute=require('./api/routers/course.router');
-//const departmentRoute=require('./api/routers/department.router');
+const departmentRoute=require('./api/routers/department.router');
 
 //app.use('/courses',courseRoute);
 app.use('/locations',locationRoute);
 app.use('/faculties',facultyRoute);
-//app.use('/departments',departmentRoute);
+app.use('/departments',departmentRoute);
 app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
