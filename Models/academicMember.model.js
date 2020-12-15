@@ -9,7 +9,7 @@ var academicMember = new Schema({
   name:{type:String,required:true},
   email:{type:String},
   gender:{type:String},
-  departement:{type:String},
+  department:{type:String},
   courses:[String],
   salary:{type:Number},
   officeLocation:{type:String},

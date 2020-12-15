@@ -60,7 +60,7 @@ if(req.body.courseNames){
         }
         if(req.body.staffIds)
         for(let i=0;i<req.body.staffIds.length;i++){             
-            const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{departement:req.body.name})
+            const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{department:req.body.name})
         }
         
     } 
@@ -85,7 +85,7 @@ for(var i=0;i<department.courseNames.length;i++){
   let course2=await courseModel.updateOne({name:department.courseNames[i]}, {department:course.department});
   }
  
-const staff3=await acadamicMemberModel.updateMany({departement:req.params.departmentName},{departement:"unassigned"})
+const staff3=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"unassigned"})
       const result= await departmentModel.deleteOne({name : req.params.departmentName})
       res.status(200).json({
         message: 'department deleted',
@@ -131,11 +131,11 @@ const staff3=await acadamicMemberModel.updateMany({departement:req.params.depart
                    }
                  
                }
-               let departementName='';
+               let departmentName='';
                if(req.body.name)  
-               departementName= req.body.name
+               departmentName= req.body.name
                else
-               departementName=req.params.departmentName
+               departmentName=req.params.departmentName
                const result= await departmentModel.findOneAndUpdate
             ({name : req.params.departmentName}, req.body, {new: true});
             res.send(result);
@@ -143,12 +143,12 @@ const staff3=await acadamicMemberModel.updateMany({departement:req.params.depart
         
                 if(req.body.staffIds){
                             //make all unassigned
-                const staff1=await acadamicMemberModel.updateMany({departement:req.params.departmentName},{departement:"unassigned"});
+                const staff1=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"unassigned"});
                 for(let i=0;i<req.body.staffIds.length;i++){ 
-                    const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{departement:departementName})
+                    const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{department:departmentName})
                 }}
                 else{
-                    const staff1=await acadamicMemberModel.updateMany({departement:req.params.departmentName},{departement:departementName});
+                    const staff1=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:departmentName});
                 }
         }
         //handle if courses updated
