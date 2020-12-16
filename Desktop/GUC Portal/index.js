@@ -8,11 +8,14 @@ const academicMemberModel=require('./Models/academicMember.model')
 const slotsModel=require('./Models/slots.model')
 const courseModel=require('./Models/course.model')
 const departementModel=require('./Models/department.model')
+const requestModel=require('./Models/requests.model')
 
 
 const app = express()
 const { connectDB } = require('./config/dbConfig')
 const schedulemodel = require('./Models/schedule.model')
+const { requestType } = require('./api/enums')
+const locationModel = require('./Models/location.model')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -34,25 +37,58 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // ss.save()
 
 // var a=new academicMemberModel({
+//   id:"lala",
+//   name:"haha",
 //   email:"nadine",
-//   courses:["math","cs"]
+//   courses:["5fd8c3f5e952fd1984ba8d7a"],
+//   role:"ta"
 // })
 // a.save();
 
-// var b=new academicMemberModel({
+
+// var a=new academicMemberModel({
+//   id:"lalabb",
+//   name:"hahann",
 //   email:"rokaya",
-//   courses:["math"],
-//   departement:"5fd546436ca519335c27c761"
+//   courses:["5fd8c3f5e952fd1984ba8d7a"],
+//   role:"coordinator"
 // })
-// b.save();
-var c =new departementModel({
-  HOD:"moh"
-})
-c.save()
-// var a =new slotsModel({
-//   course:"cs"
+// a.save();
+
+
+// var a =new requestModel({
+//   to:"rokaya",
+//   type:requestType.SLOT_LINKING
 // })
 // a.save()
+
+
+// var b =new requestModel({
+//   to:"rokaya",
+//   type:requestType.SLOT_LINKING
+// })
+// b.save()
+
+
+// var c =new requestModel({
+//   to:"rokaya",
+//   type:requestType.MATERNITY_LEAVE
+// })
+// c.save()
+
+// var c =new courseModel({
+//   coordinator:"rokaya",
+//   name:"Math",
+// })
+// c.save()
+
+// var a=new locationModel({
+//   name:"c7"
+// })
+// a.save()
+
+
+
 
 app.use('/schedule',schedule)
 app.use('/request',request)

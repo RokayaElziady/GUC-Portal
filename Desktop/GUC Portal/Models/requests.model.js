@@ -1,5 +1,7 @@
 var mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
+mongoose.set('returnOriginal', false);
+mongoose.set('useFindAndModify', false);
 const { requestStatus,requestType } = require('../api/enums')
 
 
@@ -27,10 +29,11 @@ var requests = new Schema({
   slot:{type:String},
   dayOff:{type:String},
   dateSubmitted:{type:Date,
-                 default: Date.now},
+                 default: new Date().toISOString()},
   dateOfRequest:{type:Date},
   replacementMember:{type:String,
                      default: 'undefined'} ,
+                     
 
 
 })

@@ -8,7 +8,8 @@ var departement = new Schema({
   HOD:{type:String},
   name:{type:String,unique: true,required:true},
   faculty: {type:String},
-  staffIds:[{type:String}]
+  staffIds:[{type:String}],
+  courses:[{type:String}]
   
 
 })
