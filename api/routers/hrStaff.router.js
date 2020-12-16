@@ -18,19 +18,11 @@ hrStaffRouter.route('/')
     gender:req.body.gender,
     acadamic:req.body.acadamic
     });   
-    const count=counterModel.find();
-    if(count){
-      newhrStaff.id=count[0].hrCount+1;
-      const count=findOneAndUpdate({hrCount:count[0].hrCount},{hrCount:count[0].hrCount+1});
-    }
-    else{
-      const newCounter=new counterModel({
-        hrCount:1,
-        Count:1,
-      } )
-    }
+   
     newhrStaff.id="hr-"+ newhrStaff.idNumber2;
         try{ 
+          const count= await counterModel.find();
+         
         if(req.body.location){
             const location=await locationModel.findOne({name : req.body.location});
             if(!location){
@@ -50,6 +42,18 @@ hrStaffRouter.route('/')
            }); 
            return;          
         }
+         if((count).length>0){
+            newhrStaff.id=count[0].hrCount+1;
+            const count2=await findOneAndUpdate({hrCount:count[0].hrCount},{hrCount:count[0].hrCount+1});
+          }
+          else{
+            const newCounter=new counterModel({
+              hrCount:1,
+              Count:1,
+            } );
+            newCounter.save();
+            newhrStaff.id=1;
+          }
        locationModel.updateOne({name:req.body.location},{capacity:location.capacity+1})}
         const result= await newhrStaff.save()
         res.send(result)} 
