@@ -6,4 +6,4 @@ var faculty = new Schema({
 
 })
 var fucaltyModel = mongoose.model('faculty', faculty);
-module.exports = fucaltiesModel
+module.exports = fucaltyModel

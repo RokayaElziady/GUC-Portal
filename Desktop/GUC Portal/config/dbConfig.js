@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { mongoURI } = require('./keys_dev')
+const mongoURI = require('./keys_dev').uri;
 
 const connectDB = async () => {
   const uri = mongoURI

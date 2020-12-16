@@ -11,67 +11,66 @@ const notificationModel = require('../../Models/notification.model')
 //const { request } = require('express')
 
 
-
 router.post('/sendReplacementRequest',
-async (req, res) => {
+  async (req, res) => {
     try {
-        const sender=req.body.from;
-        const reciever=req.body.to;
-        const course=req.body.course;
+      const sender = req.body.from;
+      const reciever = req.body.to;
+      const course = req.body.course;
 
-        reciever1 = await academicMemberModel.find({email:reciever})
-        sender1 = await academicMemberModel.find({email:sender})
-        //console.log(sender1[0].courses)
-        senderCourses=sender1[0].courses.filter((c)=>{
+      reciever1 = await academicMemberModel.find({
+        email: reciever
+      })
+      sender1 = await academicMemberModel.find({
+        email: sender
+      })
+      //console.log(sender1[0].courses)
+      senderCourses = sender1[0].courses.filter((c) => {
 
-         if(c===course){
-           return course
-         }
-        })
-        recieverCourses=reciever1[0].courses.filter((c)=>{
-          if(c===course){
-            return course
-          }
-        })
-       console.log(senderCourses)
-        if(!reciever1){
-            return res.json({
-                error: 'The email you are sending to doesnot exist ',
-              })
+        if (c === course) {
+          return course
         }
+      })
+      recieverCourses = reciever1[0].courses.filter((c) => {
+        if (c === course) {
+          return course
+        }
+      })
+      console.log(senderCourses)
+      if (!reciever1) {
+        return res.json({
+          error: 'The email you are sending to doesnot exist ',
+        })
+      } else {
+        if (senderCourses.length === 0) {
+          return res.json({
+            error: 'You donot teach this course ',
+          })
+        } else {
 
-        else{
-          if(senderCourses.length === 0){
-            return res.json({
-              error: 'You donot teach this course ',
-            })
-          }
-            else{
-
-            if(recieverCourses.length === 0){
+          if (recieverCourses.length === 0) {
             return res.json({
               error: 'You should send request to someone teaching this course ',
-            })  
-          }
-          else{
-            const request=new requestsModel({
-              from:req.body.from,
-              to:req.body.to,
-              type:requestType.REPLACEMENT,
-              reason:req.body.reason,
-              status:requestStatus.PENDING,
-              course:req.body.course,
             })
-                 request.save();
-                  return res.json({
-                   msg:'request created successfully',
-                         request
-                  })  
+          } else {
+            const request = new requestsModel({
+              from: req.body.from,
+              to: req.body.to,
+              type: requestType.REPLACEMENT,
+              reason: req.body.reason,
+              status: requestStatus.PENDING,
+              course: req.body.course
+            })
+            request.save();
+            return res.json({
+              msg: 'request created successfully',
+              request
+            })
           }
 
-          }
-          
-        }  
+        }
+
+      }
 
     } catch (exception) {
       return res.json({
@@ -80,14 +79,16 @@ async (req, res) => {
       })
     }
   }
-   
-  )
-  
-  router.get('/viewSentReplacementRequest',
+
+)
+
+router.get('/viewSentReplacementRequest',
   async (req, res) => {
     try {
-       const email=req.body.email;
-         requestsModel.find({to:email})
+      const email = req.body.email;
+      requestsModel.find({
+        to: email
+      })
     } catch (exception) {
       return res.json({
         error: 'Something went wrong',
@@ -95,15 +96,17 @@ async (req, res) => {
       })
     }
   }
-   
-  )
+
+)
 
 
-  router.get('/viewSentReplacementRequest',
+router.get('/viewSentReplacementRequest',
   async (req, res) => {
     try {
-       const email=req.body.email;
-         requestsModel.find({from:email})
+      const email = req.body.email;
+      requestsModel.find({
+        from: email
+      })
     } catch (exception) {
       return res.json({
         error: 'Something went wrong',
@@ -111,55 +114,58 @@ async (req, res) => {
       })
     }
   }
-  )
+)
 
 
 
 router.post('/sendSlotLinkingRequest',
-async (req, res) => {
+  async (req, res) => {
     try {
         const sender=req.body.email;
         const slot=req.body.slot;
         const slot1=await slotsModel.find({_id:slot});
         const sender1= await academicMemberModel.find({email:sender})
-      //  console.log(slot1)
-        if(slot1.length===0){
+        const sender1 = await academicMemberModel.find({
+        email: sender
+      })
+      console.log(slot1)
+      if (slot1.length === 0) {
+        return res.json({
+          error: 'this slot does not exist',
+        })
+      } else {
+        senderCourses = sender1[0].courses.filter((c) => {
+          if (c === slot1[0].course) {
+            //console.log("lallala")
+            return c
+          }
+        })
+        // console.log(slot1[0].course)
+        //console.log(senderCourses)
+        if (senderCourses.length === 0) {
           return res.json({
-            error: 'this slot does not exist',
+            error: 'you donot teach this course',
+          })
+        } else {
+          const course = await courseModel.find({
+            name: slot1[0].course
+          })
+          //     console.log(course)
+          const request = new requestsModel({
+            from: sender,
+            to: course[0].coordinator,
+            type: requestType.SLOT_LINKING,
+            //  reason:req.body.reason,
+            status: requestStatus.PENDING,
+            slot: slot,
+          })
+          request.save();
+          return res.json({
+            msg: 'request created successfully',
+            request
           })
         }
-          else{
-            senderCourses=sender1[0].courses.filter((c)=>{
-              if(c===slot1[0].course){
-                //console.log("lallala")
-                return c
-              }
-             })
-            // console.log(slot1[0].course)
-             console.log("hahahahahaha")
-            if(senderCourses.length===0){
-              return res.json({
-                error: 'you donot teach this course',
-              })
-            }
-            else{
-            const course= await courseModel.find({_id:slot1[0].course})
-               //     console.log(course)
-            const request=new requestsModel({
-              from:sender,
-              to:course[0].coordinator,
-              type:requestType.SLOT_LINKING,
-            //  reason:req.body.reason,
-              status:requestStatus.PENDING,
-              slot:slot,
-            })
-              request.save();
-                  return res.json({
-                   msg:'request created successfully',
-                         request
-                  })  
-          }
-        }
+      }
 
     } catch (exception) {
       return res.json({
@@ -168,32 +174,36 @@ async (req, res) => {
       })
     }
   }
-   
-  )
+
+)
 
 
 
-  router.post('/sendChangeDayOffRequest',
-async (req, res) => {
+router.post('/sendChangeDayOffRequest',
+  async (req, res) => {
     try {
-        const sender=req.body.email;
-        const dayOff=req.body.day;
-        const sender1= await academicMemberModel.find({email:sender})
-        const dep=await departementModel.find({_id:sender1[0].departement})
+      const sender = req.body.email;
+      const dayOff = req.body.day;
+      const sender1 = await academicMemberModel.find({
+        email: sender
+      })
+      const dep = await departementModel.find({
+        _id: sender1[0].departement
+      })
 
-            const request=new requestsModel({
-              from:sender,
-              to:dep[0].HOD,
-              type:requestType.CHANGE_DAY_OFF,
-              reason:req.body.reason,
-              status:requestStatus.PENDING,
-              dayOff:dayOff,
-            })
-              request.save();
-                  return res.json({
-                   msg:'request created successfully',
-                         request
-                  })  
+      const request = new requestsModel({
+        from: sender,
+        to: dep[0].HOD,
+        type: requestType.CHANGE_DAY_OFF,
+        reason: req.body.reason,
+        status: requestStatus.PENDING,
+        dayOff: dayOff,
+      })
+      request.save();
+      return res.json({
+        msg: 'request created successfully',
+        request
+      })
 
     } catch (exception) {
       return res.json({
@@ -202,8 +212,8 @@ async (req, res) => {
       })
     }
   }
-   
-  )
+
+)
 
 
 
@@ -397,26 +407,27 @@ async (req, res) => {
       })
     }
   }
-   
-  )
+
+)
 
 router.get('/viewAllSubmittedRequests',
-async (req, res) => {
+  async (req, res) => {
     try {
-        const sender=req.body.email;
-        const requests= await requestsModel.find({from:sender})
-        if(requests.length===0){
-          return res.json({
-            error:'you havenot submitted any requests',
-           })  
+      const sender = req.body.email;
+      const requests = await requestsModel.find({
+        from: sender
+      })
+      if (requests.length === 0) {
+        return res.json({
+          error: 'you havenot submitted any requests',
+        })
 
-        }
-        else{
-                  return res.json({
-                   msg:'success',
-                         requests
-                  })  
-                }
+      } else {
+        return res.json({
+          msg: 'success',
+          requests
+        })
+      }
     } catch (exception) {
       return res.json({
         error: 'Something went wrong',
@@ -424,12 +435,12 @@ async (req, res) => {
       })
     }
   }
-   
-  )
+
+)
 
 
-  router.get('/viewAllAcceptedRequests',
-async (req, res) => {
+router.get('/viewAllAcceptedRequests',
+  async (req, res) => {
     try {
         const sender=req.body.email;
         var requests= await requestsModel.find({from:sender})
@@ -437,21 +448,20 @@ async (req, res) => {
         requests=requests.filter((r)=>{
           if(r.status===requestStatus.ACCEPTED){
           return r;
-          }
+        }
+      })
+
+      if (requests.length === 0) {
+        return res.json({
+          error: 'you donot have accepted requests',
         })
 
-        if(requests.length===0){
-          return res.json({
-            error:'you donot have accepted requests',
-           })  
-
-        }
-        else{
-                  return res.json({
-                   msg:'success',
-                         requests
-                  })  
-                }
+      } else {
+        return res.json({
+          msg: 'success',
+          requests
+        })
+      }
     } catch (exception) {
       return res.json({
         error: 'Something went wrong',
@@ -459,78 +469,79 @@ async (req, res) => {
       })
     }
   }
-   
-  )
+
+)
 
 
-  router.get('/viewAllRejectedRequests',
-async (req, res) => {
-  try {
-    const sender=req.body.email;
-    var requests= await requestsModel.find({from:sender})
+router.get('/viewAllRejectedRequests',
+  async (req, res) => {
+    try {
+      const sender = req.body.email;
+      var requests = await requestsModel.find({
+        from: sender
+      })
 
-    requests=requests.filter((r)=>{
-      if(r.status===requestStatus.REJECTED){
-      return r;
+      requests = requests.filter((r) => {
+        if (r.status === requestStatus.REJECTED) {
+          return r;
+        }
+      })
+
+      if (requests.length === 0) {
+        return res.json({
+          error: 'you donot have rejected requests',
+        })
+
+      } else {
+        return res.json({
+          msg: 'success',
+          requests
+        })
       }
-    })
-
-    if(requests.length===0){
-      return res.json({
-        error:'you donot have rejected requests',
-       })  
-
-    }
-    else{
-              return res.json({
-               msg:'success',
-                     requests
-              })  
-            }
-} catch (exception) {
+    } catch (exception) {
       return res.json({
         error: 'Something went wrong',
         exception
       })
     }
   }
-   
-  )
+
+)
 
 
 
-  router.get('/viewAllPendingRequests',
+router.get('/viewAllPendingRequests',
   async (req, res) => {
     try {
-      const sender=req.body.email;
-      var requests= await requestsModel.find({from:sender})
-  
-      requests=requests.filter((r)=>{
-        if(r.status===requestStatus.PENDING){
-        return r;
+      const sender = req.body.email;
+      var requests = await requestsModel.find({
+        from: sender
+      })
+
+      requests = requests.filter((r) => {
+        if (r.status === requestStatus.PENDING) {
+          return r;
         }
       })
-  
-      if(requests.length===0){
+
+      if (requests.length === 0) {
         return res.json({
-          error:'you donot have pending requests',
-         })  
-  
-      }
-      else{
-                return res.json({
-                 msg:'success',
-                       requests
-                })  
-              }
-  } catch (exception) {
+          error: 'you donot have pending requests',
+        })
+
+      } else {
         return res.json({
-          error: 'Something went wrong',
-          exception
+          msg: 'success',
+          requests
         })
       }
+    } catch (exception) {
+      return res.json({
+        error: 'Something went wrong',
+        exception
+      })
     }
-     
+  }
     )
 
     router.put('/cancelRequest',
@@ -833,8 +844,8 @@ router.get('/viewAllSlotLinkingRequests',
           })
         }
       }
-       
-      )
+
+)
 
 
       router.post('/rejectSlotLinkingRequest',
