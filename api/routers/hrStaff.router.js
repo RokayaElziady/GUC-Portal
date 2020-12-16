@@ -1,4 +1,5 @@
 const express = require('express')
+const bcrypt=require(('bcrypt'));
 const hrStaffRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const hrStaff = require('../../Models/hr.model');
@@ -16,7 +17,10 @@ hrStaffRouter.route('/')
     gender:req.body.gender,
     acadamic:req.body.acadamic
     });  
-        try{ 
+        try{
+  const salt = await bcrypt.genSalt(10);
+req.body.password = await bcrypt.hash("123456", salt) ;
+newhrStaff.password=req.body.password;
           const count= await counterModel.find();
           let newCount;
           if((count).length>0){

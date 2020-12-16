@@ -18,7 +18,8 @@ var academicMember = new Schema({
   dayOff:{type:String,default:"Saturday"},
   role: { type: String },
   instructorFor: [String],
-  coordinatorFor:[String]
+  coordinatorFor:[String],
+  changePassword:{type:Boolean,default:true}
 })
 
 var academicMemberModel = mongoose.model('academicMember', academicMember)
