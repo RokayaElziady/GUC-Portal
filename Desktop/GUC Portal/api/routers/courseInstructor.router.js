@@ -62,7 +62,7 @@ router.get('/slotsAssignment', async (req, res) => {
         }
     });
     
-    res.send(slotsForCourse.filter((slot) => slot.academicMember));
+    res.send(slotsForCourse);
 });
 
 router.get('/viewStaffByDep', async (req, res) => {
@@ -276,10 +276,12 @@ router.post('/assignAcademicToCourse', async (req, res) => {
         (dep)=>dep.toString().localeCompare(myAcademic.department)
     ).length == 0) {
         res.send("Academic member doesn't work under either departments that teach the course")
+        return;
     }
     //TESTED
      myAcademic.courses.push(myCourse);
-    await academicMemberModel.updateOne({id:myAcademic.id},{courses:myAcademic.courses})
+    await academicMemberModel.updateOne({ id: myAcademic.id }, { courses: myAcademic.courses })
+    res.send("academic assigned Successfully");
 })
 router.post('/removeAcademicFromCourse', async (req, res) => {
     let authorizationToken = authorizeCourseInstructor();
