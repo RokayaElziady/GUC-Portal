@@ -11,23 +11,12 @@ var slots = new Schema({
   course:{type:String },
   location:{type:String},
   order:{type: String,
-<<<<<<< HEAD
-         enum: [slotOrder.FIRST,
-                slotOrder.SECOND,
-                slotOrder.THIRD,
-                slotOrder.FOURTH,
-                slotOrder.FIFTH]},
-                
-  academicMember:{type:String,
-                  default: 'undefined'}         
-=======
     enum: [slotOrder.FIRST,
            slotOrder.SECOND,
            slotOrder.THIRD,
            slotOrder.FOURTH,
            slotOrder.FIFTH]},
   academicMember:{type:String}         
->>>>>>> e2aa3f7038320e3b1d1c5bd7d02e12819358942b
 
 })
 

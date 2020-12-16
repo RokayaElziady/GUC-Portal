@@ -17,11 +17,6 @@ const verify=(req, res, next)=>{
     }
 }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> e2aa3f7038320e3b1d1c5bd7d02e12819358942b
 module.exports = {
     verify
 }
