@@ -2,11 +2,14 @@ const express = require('express')
 const hrStaffRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const hrStaff = require('../../Models/hr.model');
+const counterModel = require('../../Models/counters.model');
+const courseModel = require('../../Models/course.model');
+const { findOneAndUpdate } = require('../../Models/hr.model');
 hrStaffRouter.route('/')
 .post(
   async (req, res) => {
  const newhrStaff= new hrStaff({
-    id:req.body.id,
+
     name:req.body.name,
     email:req.body.email,
     salary:req.body.salary,
@@ -15,7 +18,19 @@ hrStaffRouter.route('/')
     gender:req.body.gender,
     acadamic:req.body.acadamic
     });   
-    try{ 
+    const count=counterModel.find();
+    if(count){
+      newhrStaff.id=count[0].hrCount+1;
+      const count=findOneAndUpdate({hrCount:count[0].hrCount},{hrCount:count[0].hrCount+1});
+    }
+    else{
+      const newCounter=new counterModel({
+        hrCount:1,
+        Count:1,
+      } )
+    }
+    newhrStaff.id="hr-"+ newhrStaff.idNumber2;
+        try{ 
         if(req.body.location){
             const location=await locationModel.findOne({name : req.body.location});
             if(!location){

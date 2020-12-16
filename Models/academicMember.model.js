@@ -1,7 +1,6 @@
 var mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
 
-
 var Schema = mongoose.Schema
 
 var academicMember = new Schema({
