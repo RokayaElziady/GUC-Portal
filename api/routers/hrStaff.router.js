@@ -4,7 +4,8 @@ const hrStaffRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const hrStaff = require('../../Models/hr.model');
 const counterModel = require('../../Models/counters.model');
-const attendanceModel=require('../../Models/attendence.model')
+const attendanceModel=require('../../Models/attendence.model');
+const academicMemberModel=require('../../Models/academicMember.model');
 hrStaffRouter.route('/')
 .post(
   async (req, res) => {
@@ -18,6 +19,13 @@ hrStaffRouter.route('/')
     acadamic:req.body.acadamic
     });  
         try{
+          const acadamic = await academicMemberModel.find({email:req.body.email});
+          if(acadamic){
+            res.status(500).json({
+              message: "emaill already exists"
+             }); 
+             return;
+          }
   const salt = await bcrypt.genSalt(10);
 req.body.password = await bcrypt.hash("123456", salt) ;
 newhrStaff.password=req.body.password;
@@ -99,8 +107,15 @@ hrStaffRouter.route('/:id')
           });}})
 //update hrStaff
 .put( async(req, res)=>
-{ 
-    try{      if(req.body.dayOff){
+{   
+    try{  if(req.body.email){
+      const acadamic = await academicMemberModel.find({email:req.body.email});
+    if(acadamic){
+      res.status(500).json({
+        message: "emaill already exists"
+       }); 
+       return;
+    }}     if(req.body.dayOff){
       res.status(500).json({
         message: "unallowed to change day off"
        }); 
@@ -147,5 +162,18 @@ res.send(result);
             error: err
           });
             }})
+ hrStaffRouter.route('/salary/:id')
+ .put( async(req, res)=>
+ {  
+     try{    
 
+ const result= await hrStaff.findOneAndUpdate({id :req.params.id}, {salary:req.body.salary}, {new: true});
+
+ res.send(result);}
+             catch(err){
+               console.log(err);
+           res.status(500).json({
+             error: err
+           });
+             }})
 module.exports = hrStaffRouter;
