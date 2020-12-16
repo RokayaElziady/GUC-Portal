@@ -7,7 +7,6 @@ var Schema = mongoose.Schema
 var course = new Schema({
   name:{type:String,unique: true,required:true},
   department:[{type:String}],
-  staffIds:[{type:String}] ,
   coordinator:{type:String},
   
 
