@@ -9,13 +9,18 @@ const { connectDB } = require('./config/dbConfig');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 const hrRoute=require('./api/routers/hrStaff.router');
+const acadamicRoute=require('./api/routers/acadamic.router');
 const courseRoute=require('./api/routers/course.router');
 const departmentRoute=require('./api/routers/department.router');
+const attendance=require('./api/routers/attendance.router');
+
 app.use('/hrStaff',hrRoute);
+app.use('/acadamic',acadamicRoute);
 app.use('/courses',courseRoute);
 app.use('/locations',locationRoute);
 app.use('/faculties',facultyRoute);
 app.use('/departments',departmentRoute);
+app.use('/attendance',attendance);
 app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })

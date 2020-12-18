@@ -1,26 +1,29 @@
 const express = require('express')
 const bcrypt=require(('bcrypt'));
-const hrStaffRouter = express.Router()
+const academicMemberRouter = express.Router()
 const locationModel = require('../../Models/location.model');
-const hrStaff = require('../../Models/hr.model');
+const academicMember = require('../../Models/academicMember.model');
 const counterModel = require('../../Models/counters.model');
 const attendanceModel=require('../../Models/attendence.model');
-const academicMemberModel=require('../../Models/academicMember.model');
-hrStaffRouter.route('/')
+const hrModel=require('../../Models/hr.model');
+academicMemberRouter.route('/')
 .post(
   async (req, res) => {
- const newhrStaff= new hrStaff({
+ const newacademicMember= new academicMember({
     name:req.body.name,
     email:req.body.email,
     salary:req.body.salary,
     officeLocation:req.body.officeLocation,
     extraInformation:req.body.extraInformation,
     gender:req.body.gender,
+    role:req.body.role,
     acadamic:req.body.acadamic
-    });  
+    });   
         try{
-          const acadamic = await academicMemberModel.find({email:req.body.email});
-          if(acadamic.length>0){
+    
+          const hr = await hrModel.find({email:req.body.email});
+          
+          if(hr.length>0){
             res.status(500).json({
               message: "emaill already exists"
              }); 
@@ -28,24 +31,24 @@ hrStaffRouter.route('/')
           }
   const salt = await bcrypt.genSalt(10);
 req.body.password = await bcrypt.hash("123456", salt) ;
-newhrStaff.password=req.body.password;
+newacademicMember.password=req.body.password;
           const count= await counterModel.find();
           let newCount;
           if((count).length>0){
-             newCount=count[0].hrCount+1
-            newhrStaff.id="hr-"+newCount;
-            console.log("hrrrr"+count[0].hrCount)
+             newCount=count[0].academicCount+1
+            newacademicMember.id="ac-"+newCount;
+            console.log("hrrrr"+count[0].academicCount)
          
           
           }
           else{
             newCount=1;
             const newCounter=new counterModel({
-              hrCount:1,
+              academicCount:1,
               Count:1,
             } );
             newCounter.save();
-            newhrStaff.id="hr-"+1;
+            newacademicMember.id="ac-"+1;
           }
         if(req.body.officeLocation){
             const location=await locationModel.findOne({name : req.body.officeLocation});
@@ -69,11 +72,11 @@ newhrStaff.password=req.body.password;
         
        }
        const newAttendance=new attendanceModel({
-        staffId:newhrStaff.id
+        staffId:newacademicMember.id
       });
-        const result= await newhrStaff.save()
+        const result= await newacademicMember.save()
         const result2= await newAttendance.save()
-        const count2=await counterModel.updateOne({hrCount:newCount-1},{hrCount:newCount});
+        const count2=await counterModel.updateOne({academicCount:newCount-1},{academicCount:newCount});
         if(req.body.officeLocation){
         const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})}
         res.send(result)} 
@@ -86,31 +89,31 @@ newhrStaff.password=req.body.password;
 
     }
     );
-hrStaffRouter.route('/:id')
+academicMemberRouter.route('/:id')
 .delete(async (req, res)=>{ 
   try{
    
-    const hr= await hrStaff.findOne({id : req.params.id})
+    const hr= await academicMember.findOne({id : req.params.id})
     if(hr){
       if(hr.officeLocation){
         const new1= await locationModel.updateOne({name:hr.officeLocation},   { $inc: {officeOccupants:-1}});
         }
     }
-  const result= await hrStaff.deleteOne({id : req.params.id})
+  const result= await academicMember.deleteOne({id : req.params.id})
       res.status(200).json({
-        message: 'hrStaff deleted',
+        message: 'academicMember deleted',
     });
      }
         catch(err){    console.log(err);
           res.status(500).json({
             error: err
           });}})
-//update hrStaff
+//update academicMember
 .put( async(req, res)=>
 {   
     try{  if(req.body.email){
-      const acadamic = await academicMemberModel.find({email:req.body.email});
-    if(acadamic.length>0){
+      const hr = await hrModel.find({email:req.body.email});
+    if(hr.length>0){
       res.status(500).json({
         message: "emaill already exists"
        }); 
@@ -140,9 +143,9 @@ res.status(500).json({
    }); 
    return;          
 }
-const staff= await hrStaff.findOne({id : req.params.id});
+const staff= await academicMember.findOne({id : req.params.id});
 console.log(staff);
-const result= await hrStaff.findOneAndUpdate
+const result= await academicMember.findOneAndUpdate
 ({id : req.params.id}, req.body, {new: true});
 if(staff.officeLocation){
 const new1= await locationModel.updateOne({name:staff.officeLocation},   { $inc: {officeOccupants:-1}});
@@ -150,7 +153,7 @@ const new1= await locationModel.updateOne({name:staff.officeLocation},   { $inc:
 const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})
 res.send(result);}
 else{
-  const result= await hrStaff.findOneAndUpdate
+  const result= await academicMember.findOneAndUpdate
 ({id :req.params.id}, req.body, {new: true});
 res.send(result);
 }
@@ -162,12 +165,12 @@ res.send(result);
             error: err
           });
             }})
- hrStaffRouter.route('/salary/:id')
+ academicMemberRouter.route('/salary/:id')
  .put( async(req, res)=>
  {  
      try{    
 
- const result= await hrStaff.findOneAndUpdate({id :req.params.id}, {salary:req.body.salary}, {new: true});
+ const result= await academicMember.findOneAndUpdate({id :req.params.id}, {salary:req.body.salary}, {new: true});
 
  res.send(result);}
              catch(err){
@@ -176,4 +179,4 @@ res.send(result);
              error: err
            });
              }})
-module.exports = hrStaffRouter;
+module.exports = academicMemberRouter;

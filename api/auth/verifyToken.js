@@ -16,9 +16,4 @@ const verify=(req, res, next)=>{
         res.status(400).send('Invalid Request')
     }
 }
-
-
-
-module.exports = {
-    verify
-}
+module.exports = {verify}
