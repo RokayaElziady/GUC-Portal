@@ -3,8 +3,9 @@ const express = require('express')
 const attendanceRouter = express.Router()
 const attendanceModel = require('../../Models/attendence.model');
 const academicMemberModel=require('../../Models/academicMember.model');
-const hrModel=require('../../Models/hr.model');
 const hrmodel = require('../../Models/hr.model');
+const requestsModel=require('../../Models/requests.model');
+const { request } = require('express');
 attendanceRouter.route('/:id')
 .post(
   async (req, res) => {
@@ -69,6 +70,7 @@ attendanceRouter.route('/')
 .get(
     async (req, res) => {
   try{ 
+  
       const date=new Date(Date.now()) ;  
    
       var startDate=new Date();
@@ -102,9 +104,9 @@ attendanceRouter.route('/')
   let absence=[];
     let missingDays=0;
     const result=await attendanceModel.find({});
-    hrPeople=await hrmodel.find({});
-    acPeople=await academicMemberModel.find({});
-
+    let hrPeople=await hrmodel.find({});
+    let acPeople=await academicMemberModel.find({});
+   let requests=await requestsModel.find({});
 for(var i=startDate;i.getDate()<=endDate.getDate()&&i.getMonth()<=endDate.getMonth();i.setDate(i.getDate()+1)){
   if(!(i.getDay()=="5")){
  for(var j=0; j<result.length;j++){
@@ -148,16 +150,25 @@ timeExist=true;
        elementTime.getHours()<=19 && timeExist){ 
    temp2.push(result[j].signIn[k]);}
         }
-
 if(!temp||!temp2||temp.length==0||temp2.length==0){
-  absence.push(result[j].staffId);
+  let accepted=false;
+  if(requests){
+ let req2=requests.filter(element=>element.from==result[j].staffId);
+if(req2){
+ for(let l=0;l<req2.length;l++){
+if(new Date(req2[l].dateOfRequest).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='Accidental leave'||req2[l].type=='anual leave'||req2[l].type=='sick leave'||req2[l].type=='maternity leave'||req2[l].type=='compensation leave'||req2[l].type=='leave')){
+accepted=true;
+break;
+}}
+ }}
+ if(!accepted){
+  absence.push(result[j].staffId);}
  }
      temp=[];
-     temp2=[];}}}}}
-
-
+     temp2=[];
+    //absense have only staff with missing days now add missing hours
+  }}}}}
    res.send(absence);}
-
           catch(err){
             console.log(err);
             res.status(500).json({
