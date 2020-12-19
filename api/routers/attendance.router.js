@@ -232,7 +232,7 @@ else{
 console.log("correct4")
   let endHour;
   let endminutes;
-  if((new Date(point2)).getHours>=19){
+  if((new Date(point2)).getHours()>=19){
     endHour=19;
     endminutes=0
   }
@@ -240,6 +240,7 @@ console.log("correct4")
     endHour=(new Date(point2)).getHours();
     endminutes=(new Date(point2)).getMinutes();
   }
+  console.log(endHour)
   let hourstoadd=endHour-(new Date(point1)).getHours();
   hourstoadd=hourstoadd+(endminutes-((new Date(point1)).getMinutes()))/60;
 
