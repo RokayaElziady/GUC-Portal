@@ -6,6 +6,7 @@ const academicMemberModel=require('../../Models/academicMember.model');
 const hrmodel = require('../../Models/hr.model');
 const requestsModel=require('../../Models/requests.model');
 const { request } = require('express');
+const { compare } = require('bcrypt');
 attendanceRouter.route('/:id')
 .post(
   async (req, res) => {
@@ -118,9 +119,13 @@ for(var i=new Date(startDate);i.getDate()<=endDate.getDate()&&i.getMonth()<=endD
   let dayoff;
 if(person.length>0){
    dayoff=getDay(person[0].dayOff);}
+  
  dayOff="blabla"
+ 
   if(!(i.getDay()==dayoff)){
+    
    if(!absence.includes(result[j].staffId)){
+  
   let temp=[];
   let temp2=[];
  for(var k=0;k<result[j].signIn.length;k++){
@@ -150,6 +155,7 @@ timeExist=true;
    temp2.push(result[j].signIn[k]);}
         }
 if(!temp||!temp2||temp.length==0||temp2.length==0){
+ 
   let accepted=false;
   if(requests){
  let req2=requests.filter(element=>element.from==result[j].staffId);
@@ -164,6 +170,7 @@ break;
  if(!accepted){
   absence.push(result[j].staffId);}
  }
+
      temp=[];
      temp2=[];
   }}}}}
@@ -184,13 +191,13 @@ break;
         }
 
       if(!(absence.includes(result[i].staffId)))  {
-        console.log(result[i].staffId);
+        
         let pointer1=0;
         let pointer2=0;
       // console.log(dayoff)
     
       let current=startDate;
-      console.log((new Date(current)).getDay()+"day")
+  
       if(!((new Date(current)).getDay()=="5"||(new Date(current)).getDay()==dayOff )){
   remaining+=8.4;
       }
@@ -199,25 +206,21 @@ break;
          point1.setTime(  result[i].signIn[pointer1].getTime() + result[i].signIn[pointer1].getTimezoneOffset()*60*1000 );
          let point2=new Date(result[i].signOut[pointer2]);
          point2.setTime(  result[i].signOut[pointer2].getTime() + result[i].signOut[pointer2].getTimezoneOffset()*60*1000 );    
-          console.log("rrrr"+remaining)
-          console.log(point1);
-          console.log(point1.getHours());
-          console.log(point2);
-          console.log(point2.getHours());
-          console.log((new Date(result[i].signIn[pointer1])).getTime())     
+          
+       
    if((new Date(point1)).getTime()>=startDate.getTime()&&(new Date(point1)).getTime()<=endDate.getTime()
          &&(new Date(point1)).getHours()>=7&&((new Date(point1)).getHours()<=18)){
-           console.log("correct")
+          
           if(!((current.getDate()==(new Date(point1)).getDate()&&current.getMonth()==(new Date(point1)).getMonth()&&
           current.getFullYear()==(new Date(point1)).getFullYear()))){
             current=new Date(point1);
             if(!(current.getDay()=="5"||current.getDay()==dayOff )){
               remaining+=8.4;
             }}
-   console.log("remainind"+remaining)
+
   if((new Date(point2)).getTime()>=startDate.getTime()&&(new Date(point2)).getTime()<=endDate.getTime()&&
   (new Date(point2)).getTime()>(new Date(point1)).getTime() &&(new Date(point2)).getHours()>=7){
-    console.log("correct3")
+
 if( (new Date(point2)).getDate()>(new Date(point1)).getDate()||
 (new Date(point2)).getMonth()>(new Date(point1)).getMonth()||
 (new Date(point2)).getFullYear()>(new Date(point1)).getFullYear()){
@@ -229,7 +232,7 @@ else if((pointer1+1<result[i].signIn.length)&&(
     pointer1=pointer1+1;
 }
 else{
-console.log("correct4")
+
   let endHour;
   let endminutes;
   if((new Date(point2)).getHours()>=19){
@@ -240,7 +243,7 @@ console.log("correct4")
     endHour=(new Date(point2)).getHours();
     endminutes=(new Date(point2)).getMinutes();
   }
-  console.log(endHour)
+ 
   let hourstoadd=endHour-(new Date(point1)).getHours();
   hourstoadd=hourstoadd+(endminutes-((new Date(point1)).getMinutes()))/60;
 
@@ -267,7 +270,7 @@ break;
    
       }if(remaining>0){
     absence.push(result[i].staffId);}}
-      console.log(remaining)
+     
        dayoff="bla";}
    res.send(absence);}
           catch(err){

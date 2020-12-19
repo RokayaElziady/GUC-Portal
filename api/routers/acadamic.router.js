@@ -6,6 +6,12 @@ const academicMember = require('../../Models/academicMember.model');
 const counterModel = require('../../Models/counters.model');
 const attendanceModel=require('../../Models/attendence.model');
 const hrModel=require('../../Models/hr.model');
+const academicMemberModel = require('../../Models/academicMember.model');
+const scheduleModel = require('../../Models/schedule.model');
+const courseModel = require('../../Models/course.model');
+const departementModel = require('../../Models/department.model');
+const requestsModel = require('../../Models/requests.model');
+const slotsModel = require('../../Models/slots.model');
 academicMemberRouter.route('/')
 .post(
   async (req, res) => {
@@ -20,10 +26,9 @@ academicMemberRouter.route('/')
     acadamic:req.body.acadamic
     });   
         try{
-    
-          const hr = await hrModel.find({email:req.body.email});
-          
-          if(hr.length>0){
+          const hr = await hrModel.find({email:req.body.email}); 
+          const ar = await academicMemberModel.find({email:req.body.email}); 
+          if(hr.length>0||ar.length>0){
             res.status(500).json({
               message: "emaill already exists"
              }); 
@@ -37,10 +42,7 @@ newacademicMember.password=req.body.password;
           if((count).length>0){
              newCount=count[0].academicCount+1
             newacademicMember.id="ac-"+newCount;
-            console.log("hrrrr"+count[0].academicCount)
-         
-          
-          }
+   }
           else{
             newCount=1;
             const newCounter=new counterModel({
@@ -74,8 +76,12 @@ newacademicMember.password=req.body.password;
        const newAttendance=new attendanceModel({
         staffId:newacademicMember.id
       });
+      const schedule=new scheduleModel({
+        academicMember:newacademicMember.id
+      });
         const result= await newacademicMember.save()
         const result2= await newAttendance.save()
+        const result3= await schedule.save()
         const count2=await counterModel.updateOne({academicCount:newCount-1},{academicCount:newCount});
         if(req.body.officeLocation){
         const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})}
@@ -93,12 +99,18 @@ academicMemberRouter.route('/:id')
 .delete(async (req, res)=>{ 
   try{
    
-    const hr= await academicMember.findOne({id : req.params.id})
-    if(hr){
-      if(hr.officeLocation){
-        const new1= await locationModel.updateOne({name:hr.officeLocation},   { $inc: {officeOccupants:-1}});
+    const ac= await academicMember.findOne({id : req.params.id})
+    if(ac){
+      if(ac.officeLocation){
+        const new1= await locationModel.updateOne({name:ac.officeLocation},   { $inc: {officeOccupants:-1}});
         }
     }
+    const deleteSchedule=await scheduleModel.deleteOne({academicMember : req.params.id});
+    const deleteAttendance=await attendanceModel.deleteOne({staffId : req.params.id});
+    const updateCourseCooordinator=await courseModel.updateMany({coordinator : req.params.id},{coordinator : "undefined"});
+    const updatedepartmentStaff=await departementModel.updateMany({staffIds: { $elemMatch: {$eq:req.params.id}}},{ $pullAll: {staffIds: [req.params.id] }});
+    const updaterequests=await requestsModel.deleteOne({from : req.params.id});
+    const updateslots=await slotsModel.updateOne({academicMember : req.params.id},{academicMember : "undefined"});
   const result= await academicMember.deleteOne({id : req.params.id})
       res.status(200).json({
         message: 'academicMember deleted',
