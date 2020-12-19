@@ -720,11 +720,11 @@ Response: the saved data or error in case of errors
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 1)delete location: Functionality:deletes a  location from the university
-Route:/location/l1
-Request type:delete
+Route:/location/l1//////////////////////////////////////////////
+Request type:delete////////////////////////////////////////////
 Request body:   { 
    
-     }
+     }//////////////////////////////////////////////////////
 Response: {
     "message": "location deleted"
 }
