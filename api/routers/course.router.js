@@ -3,6 +3,9 @@ const courseRouter = express.Router()
 const courseModel = require('../../Models/course.model');
 const departmentModel = require('../../Models/department.model');
 const acadamicMemberModel= require('../../Models/academicMember.model');
+const academicMemberModel = require('../../Models/academicMember.model');
+const requestsModel = require('../../Models/requests.model');
+const slotsModel = require('../../Models/slots.model');
 courseRouter.route('/')
 .post(
   async (req, res) => {
@@ -79,6 +82,14 @@ courseRouter.route('/:courseName')
     else if(req.body.name!==req.params.courseName){
       const department2=await departmentModel.updateMany({courseNames: { $elemMatch: {$eq:req.params.courseName}}},{ $push: {courseNames: name }});
       const department=await departmentModel.updateMany({courseNames: { $elemMatch: {$eq:req.params.courseName}}},{ $pullAll: {courseNames: [req.params.courseName] }});
+      const acadamic=await academicMemberModel.updateMany({courses: { $elemMatch: {$eq:req.params.courseName}}},{ $push: {courses: name }});
+      const acadamic2=await academicMemberModel.updateMany({courses: { $elemMatch: {$eq:req.params.courseName}}},{ $pullAll: {courses: [req.params.courseName] }});
+      const acadamic3=await academicMemberModel.updateMany({instructorFor: { $elemMatch: {$eq:req.params.courseName}}},{ $push: {instructorFor: name }});
+      const acadamic4=await academicMemberModel.updateMany({instructorFor: { $elemMatch: {$eq:req.params.courseName}}},{ $pullAll: {instructorFor: [req.params.courseName] }});
+      const acadamic5=await academicMemberModel.updateMany({coordinatorFor: { $elemMatch: {$eq:req.params.courseName}}},{ $push: {coordinatorFor: name }});
+      const acadamic6=await academicMemberModel.updateMany({coordinatorFor: { $elemMatch: {$eq:req.params.courseName}}},{ $pullAll: {coordinatorFor: [req.params.courseName] }});
+      const acadamic7=await requestsModel.updateMany({course:req.params.courseName},{course:name});
+      const acadamic8=await slotsModel.updateMany({course:req.params.courseName},{course:name});
      }
            }
             catch(err){
