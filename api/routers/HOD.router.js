@@ -1,5 +1,4 @@
 const express = require('express');
-const { func } = require('joi');
 const router = express.Router();
 const academicMemberModel = require('../../Models/academicMember.model');
 const courseModel = require('../../Models/course.model');

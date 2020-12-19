@@ -7,8 +7,8 @@ var Schema = mongoose.Schema
 var academicMember = new Schema({
   id:{type:String,unique: true,required:true},
   name:{type:String,required:true},
-  email:{type:String},
-  gender:{type:String},
+  email:{type:String,unique: true,required:true},
+  gender:{type:String,},
   department:{type:String},
   courses:[String],
   salary:{type:Number},
@@ -18,7 +18,8 @@ var academicMember = new Schema({
   dayOff:{type:String,default:"Saturday"},
   role: { type: String },
   instructorFor: [String],
-  coordinatorFor:[String]
+  coordinatorFor:[String],
+  changePassword:{type:Boolean,default:true}
 })
 
 var academicMemberModel = mongoose.model('academicMember', academicMember)

@@ -28,7 +28,7 @@ facultyRouter.route('/:facultyName')
           message: 'faculty deleted',
       });
       try{
-        const result= await departmentModel.updateMany({faculty: req.params.facultyName},{faculty: "unassigned"})
+        const result= await departmentModel.updateMany({faculty: req.params.facultyName},{faculty: "undefined"})
      
      }catch(err){    console.log(err);
       res.status(500).json({

@@ -77,15 +77,9 @@ departmentRouter.route('/:departmentName')
 .delete(async (req, res)=>{ 
   try{
 const department= await  departmentModel.findOne({name : req.params.departmentName})
-  if(department.courseNames)
-for(var i=0;i<department.courseNames.length;i++){   
-    let course=await courseModel.findOne({name:department.courseNames[i]});
-    course.department=  course.department.filter(item => item != req.params.departmentName);
-  console.log(course.department)
-  let course2=await courseModel.updateOne({name:department.courseNames[i]}, {department:course.department});
-  }
- 
-const staff3=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"unassigned"})
+  
+  const course2=await courseModel.updateMany({department: { $elemMatch: {$eq:req.params.departmentName}}},{ $pullAll: {department: [req.params.departmentName] }});
+const staff3=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"undefined"})
       const result= await departmentModel.deleteOne({name : req.params.departmentName})
       res.status(200).json({
         message: 'department deleted',
@@ -142,8 +136,8 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
             if(req.body.staffIds||req.body.name){
         
                 if(req.body.staffIds){
-                            //make all unassigned
-                const staff1=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"unassigned"});
+                            //make all undefined
+                const staff1=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"undefined"});
                 for(let i=0;i<req.body.staffIds.length;i++){ 
                     const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{department:departmentName})
                 }}
@@ -152,35 +146,12 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
                 }
         }
         //handle if courses updated
-        if(req.body.courseNames||req.body.name){
-            if(req.body.courseNames){
-            for(var i=0;i<department.courseNames.length;i++){   
-                let course=await courseModel.findOne({name:department.courseNames[i]});
-                course.department=  course.department.filter(item => item != req.params.departmentName);
-              console.log(course.department)
-              let course2=await courseModel.updateOne({name:department.courseNames[i]}, {department:course.department});
-              }
-        for(let i=0;i<req.body.courseNames.length;i++){
-          const course1=await courseModel.findOne({name:req.body.courseNames[i]});
-            if(course1.department==null)
-          course1.department=[];             
-          course1.department.push(req.body.name)
-          const course2=await courseModel.updateOne({name:req.body.courseNames[i]},{department:course1.department})}
-console.log(department.courseNames);
-      }
-      else{ for(let i=0;i< department.courseNames.length;i++){
-        const course1=await courseModel.findOne({name: department.courseNames[i]});
-          if(course1.department==null)
-        course1.department=[];   
-        course1.department=  course1.department.filter(item => item != req.params.departmentName);       
-        course1.department.push(req.body.name)
-        console.log("departmentss")
-        console.log(  course1.department);
-        const course2=await courseModel.updateOne({name: department.courseNames[i]},{department:course1.department})}}
+        if(req.body.name){  
+        const updateCourse1=await courseModel.updateMany({department: { $elemMatch: {$eq:req.params.departmentName}}},{ $push: {department: req.body.name }});
+        const updateCourse2=await courseModel.updateMany({department: { $elemMatch: {$eq:req.body.name}}},{ $pullAll: {department: [req.params.departmentName] }});
+        }
+  
      }
-        
-          
-           }
             catch(err){
               console.log(err);
           res.status(500).json({

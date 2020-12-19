@@ -18,9 +18,4 @@ const verify=(req, res,next)=>{
        // err
     //}
 }
-
-
-
-module.exports = {
-    verify
-}
+module.exports = {verify}

@@ -1,24 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const {verify}= require('./api/auth/verifyToken')
-const schedule=require('./api/routers/schedule.router')
-const request = require('./api/routers/requests.router')
-const HOD = require('./api/routers/HOD.router')
-const courseInstructor = require('./api/routers/courseInstructor.router')
-const scheduleModel=require('./Models/schedule.model')
-const academicMemberModel=require('./Models/academicMember.model')
-const slotsModel=require('./Models/slots.model')
-const courseModel=require('./Models/course.model')
-const departementModel=require('./Models/department.model')
-const requestsModel = require('./Models/requests.model');
-const {
-  requestStatus,
-  requestType
-} = require('./api/enums');
 const app = express();
-const { connectDB } = require('./config/dbConfig')
-const schedulemodel = require('./Models/schedule.model')
-const locationModel = require('./Models/location.model')
+const locationRoute=require('./api/routers/location.router');
+const facultyRoute=require('./api/routers/faculty.router');
+const { connectDB } = require('./config/dbConfig');
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
