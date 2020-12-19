@@ -4,7 +4,7 @@ mongoose.set('useCreateIndex', true);
 var Schema = mongoose.Schema
 
 var notification = new Schema({
-  member_email:{type:String},
+  academicMember:{type:String},
   request:{type:String},
 })
 

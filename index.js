@@ -23,15 +23,27 @@ const locationModel = require('./Models/location.model')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 connectDB();
+app.use(verify)
 app.use('/schedule',schedule)
 app.use('/request', request)
 app.use('/HOD', HOD)
 app.use('/courseInstructor', courseInstructor);
-// app.use((req, res) => {
-//   res.status(404).send({ err: 'No such url' })
+
+// var a=new academicMemberModel({
+//   id:"m6",
+//   name:"rok",
+//   department:"5fd54e9adf4bfa099808bd12",
+//   gender:"female"
+
 // })
+// a.save()
 
 
+///.save()
+
+
+
+//  a.save()
 
 
 

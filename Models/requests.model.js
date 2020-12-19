@@ -29,8 +29,10 @@ var requests = new Schema({
   dateSubmitted:{type:Date,
                  default: Date.now},
   dateOfRequest:{type:Date},
-  replacementMember:{type:String,
-                     default: 'undefined'} ,
+  replacementMembers:[{type:String,
+                   default: 'undefined'}] ,
+
+  documentsDriveLink:{type:String}                 
 
 
 })

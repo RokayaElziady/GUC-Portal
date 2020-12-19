@@ -16,7 +16,8 @@ var slots = new Schema({
            slotOrder.THIRD,
            slotOrder.FOURTH,
            slotOrder.FIFTH]},
-  academicMember:{type:String}         
+  academicMember:{type:String,
+                   default: 'undefined'}         
 
 })
 
