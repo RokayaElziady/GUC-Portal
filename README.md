@@ -724,22 +724,7 @@ Response: the saved data or error in case of errors
     "capacity": 10,
     "__v": 0
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-2)delete location: Functionality:deletes a  location from the university
-Route:/location/l1
 
-
-Request type:delete
-
-
-Request body:   { 
-   
-     }
-
-
-Response: {
-    "message": "location deleted"
-}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 2)delete location: Functionality:deletes a  location from the university
 
