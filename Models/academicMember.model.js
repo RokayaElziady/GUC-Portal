@@ -19,7 +19,9 @@ var academicMember = new Schema({
   role: { type: String },
   instructorFor: [String],
   coordinatorFor:[String],
-  changePassword:{type:Boolean,default:true}
+  changePassword:{type:Boolean,default:true},
+  annualLeaves:{type:Number},
+  accidentalLeaves:{type:Number}
 })
 
 var academicMemberModel = mongoose.model('academicMember', academicMember)

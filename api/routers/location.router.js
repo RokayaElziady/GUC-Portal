@@ -1,22 +1,25 @@
-//done
 const express = require('express')
-const locatinRouter = express.Router()
+const locationRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const slotModel = require('../../Models/slots.model');
  const hrModel=require('../../Models/hr.model');
 const acadamicMemberModel=require('../../Models/academicMember.model');
-locatinRouter.route('/')
-.post(
+locationRouter
+.post('/',
   async (req, res) => {
+    try{
     const newLocation= new locationModel({
         name: req.body.name, 
         type: req.body.type,
         capacity: req.body.capacity,
     }) 
-    try{ const result= await newLocation.save()
-        res.send(result)} 
+     newLocation.save()
+       return res.json({
+        msg: "successs"
+       } )
+      }
         catch(err){
-          console.log(err);
+          console.log("err");
           res.status(500).json({
             error: err
           });
@@ -24,7 +27,7 @@ locatinRouter.route('/')
     }
     );
 //delete location and make slots there unallocated
-locatinRouter.route('/:locationName')
+locationRouter.route('/:locationName')
 .delete(async (req, res)=>{ 
   try{
         const result= await locationModel.deleteOne({name : req.params.locationName})
@@ -68,4 +71,4 @@ locatinRouter.route('/:locationName')
           });
             }})
 
-module.exports = locatinRouter;
+module.exports = locationRouter;
