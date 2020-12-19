@@ -211,7 +211,7 @@ break;
           if(!((current.getDate()==(new Date(point1)).getDate()&&current.getMonth()==(new Date(point1)).getMonth()&&
           current.getFullYear()==(new Date(point1)).getFullYear()))){
             current=new Date(point1);
-            if(!(current.getDate()=="5"||current.getDate()==dayOff )){
+            if(!(current.getDay()=="5"||current.getDay()==dayOff )){
               remaining+=8.4;
             }}
    console.log("remainind"+remaining)
