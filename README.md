@@ -702,13 +702,19 @@ Route:/courseInstructor/removeAcademicFromCourse Request type:POST Request body:
 ########################################
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 1)add location: Functionality:adds a new location to the university
-Route:/location////////////////////////////////////////////////////////////////
-Request type:post/////////////////////////////////////////////////////////////
+Route:/location
+
+
+Request type:post
+
+
 Request body:   { 
    "name":"l1",
    "type":"offices",
    "capacity":10  
-     }////////////////////////////////////////////////////////////////////////
+     }
+
+
 Response: the saved data or error in case of errors
 {
     "officeOccupants": 0,
@@ -720,21 +726,35 @@ Response: the saved data or error in case of errors
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 2)delete location: Functionality:deletes a  location from the university
-Route:/location/l1//////////////////////////////////////////////////////////
-Request type:delete//////////////////////////////////////////////////////////////
+Route:/location/l1
+
+
+Request type:delete
+
+
 Request body:   { 
    
-     }////////////////////////////////////////////////////////////////
+     }
+
+
 Response: {
     "message": "location deleted"
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 2)delete location: Functionality:deletes a  location from the university
-Route:/location/l1//////////////////////////////////////////////////////////
-Request type:delete//////////////////////////////////////////////////////////////
+
+
+Route:/location/l1
+
+
+Request type:delete
+
+
 Request body:   { 
    
-     }////////////////////////////////////////////////////////////////
+     }
+
+
 Response: {
     "message": "location deleted"
 }
