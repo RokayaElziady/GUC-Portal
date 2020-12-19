@@ -2,34 +2,58 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const {verify}= require('./api/auth/verifyToken')
 const app = express();
-const locationRoute=require('./api/routers/location.router');
+const location=require('./api/routers/location.router');
 const facultyRoute=require('./api/routers/faculty.router');
 const { connectDB } = require('./config/dbConfig');
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-connectDB();
+const hrRoute=require('./api/routers/hrStaff.router');
+const acadamicRoute=require('./api/routers/acadamic.router');
+const courseRoute=require('./api/routers/course.router');
+const departmentRoute=require('./api/routers/department.router');
+const attendance=require('./api/routers/attendance.router');
+const schedule=require('./api/routers/schedule.router')
+const locationModel = require('./Models/location.model');
+const requestsModel = require('./Models/requests.model');
+const academicMemberModel = require('./Models/academicMember.model');
+const scheduleModel = require('./Models/schedule.model');
+connectDB()
 app.use(verify)
+app.use('/hrStaff',hrRoute);
+app.use('/acadamic',acadamicRoute);
+app.use('/courses',courseRoute);
+app.use('/location',location);
+app.use('/faculties',facultyRoute);
+app.use('/departments',departmentRoute);
+app.use('/attendance',attendance);
 app.use('/schedule',schedule)
-app.use('/request', request)
-app.use('/HOD', HOD)
-app.use('/courseInstructor', courseInstructor);
+app.use((req, res) => {
+  res.status(404).send({ err: 'No such url' })
+})
 
-// var a=new academicMemberModel({
-//   id:"m6",
-//   name:"rok",
-//   department:"5fd54e9adf4bfa099808bd12",
-//   gender:"female"
-
+// var loc=new requestsModel({
+//   from:"kaka"
 // })
-// a.save()
+// loc.save()
+
+// loc=new locationModel({
+//   name:"lala3"
+// })
+// loc.save()
 
 
-///.save()
+// var x=new academicMemberModel({
+//   id:"k",
+//   name:"haa",
+//   email:"jajaj"
+// })
+// x.save()
 
-
-
-//  a.save()
+var y=new scheduleModel({
+  academicMember:"k"
+})
+y.save()
 
 
 

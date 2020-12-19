@@ -698,5 +698,19 @@ Functionality:assign a course I am instructor for to a member Route:/courseInstr
 
 Route:/courseInstructor/removeAcademicFromCourse Request type:POST Request body: {"academicID":"ac-1","courseName":"CSEN555"} Response: messages like "you are not instructor for this course" "the academic doesn't teach this course" "all Academic assignments to this Course are removed successfully"
 
-######################################## NADINE ########################################
+######################################## NADINE 
+########################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+1)add location: Functionality:adds a new location to the university
+Route:/location//////////////////////////////////////////////
+Request type:post////////////////////////////////////////////
+Request body:   { 
+   "name":"l1",
+   "type":"offices",
+   "capacity":10  
+     }//////////////////////////////////////////////////////
+Response: the saved data or error in case of errors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 ######################################## MARIAM ########################################

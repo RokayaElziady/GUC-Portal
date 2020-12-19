@@ -1,11 +1,11 @@
 //done
 const express = require('express')
-const locatinRouter = express.Router()
+const locationRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const slotModel = require('../../Models/slots.model');
  const hrModel=require('../../Models/hr.model');
 const acadamicMemberModel=require('../../Models/academicMember.model');
-locatinRouter.route('/')
+locationRouter.route('/')
 .post(
   async (req, res) => {
     const newLocation= new locationModel({
@@ -24,7 +24,7 @@ locatinRouter.route('/')
     }
     );
 //delete location and make slots there unallocated
-locatinRouter.route('/:locationName')
+locationRouter.route('/:locationName')
 .delete(async (req, res)=>{ 
   try{
         const result= await locationModel.deleteOne({name : req.params.locationName})
@@ -68,4 +68,4 @@ locatinRouter.route('/:locationName')
           });
             }})
 
-module.exports = locatinRouter;
+module.exports = locationRouter;

@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
-var AutoIncrement = require('mongoose-sequence')(mongoose);
+//var AutoIncrement = require('mongoose-sequence')(mongoose);
 var Schema = mongoose.Schema
 
 var hr = new Schema({

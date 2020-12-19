@@ -10,6 +10,7 @@ const { requestStatus,requestType } = require('../enums')
 const notificationModel = require('../../Models/notification.model')
 const scheduleModel=require("../../Models/schedule.model")
 const leavesModel=require("../../Models/leaves.model")
+const replacementModel = require('../../Models/replacements.model')
 
 
 
@@ -19,11 +20,7 @@ router.post('/sendReplacementRequest',
 
       const reciever = req.body.to;
       const slot = req.body.slot;
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
-        return res.json({
-          error:'only a TA or an Academic coordinator can use this function',
-         })  
-      }
+     
 
       if(!reciever ||reciever.length===0){
         return res.json({
@@ -135,11 +132,6 @@ router.post('/sendReplacementRequest',
 router.get('/viewSentReplacementRequest',
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
-        return res.json({
-          error:'only a TA or an Academic coordinator can use this function',
-         })  
-      }
       const requests =await requestsModel.find({to: req.id})
       return res.json({
         msg: ' success',
@@ -159,11 +151,6 @@ router.get('/viewSentReplacementRequest',
 router.get('/viewRecievedReplacementRequest',
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
-        return res.json({
-          error:'only a TA or an Academic coordinator can use this function',
-         })  
-      }
       const requests=await requestsModel.find({from: req.id })
 
       return res.json({
@@ -185,11 +172,6 @@ router.post('/sendSlotLinkingRequest',
 
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
-        return res.json({
-          error:'only a TA or an Academic coordinator can use this function',
-         })  
-      }
         const slot=req.body.slot;
         const slot1=await slotsModel.find({_id:slot});
         const sender1= await academicMemberModel.find({id:req.id})
@@ -266,11 +248,6 @@ router.post('/sendSlotLinkingRequest',
 router.post('/sendChangeDayOffRequest',
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
-        return res.json({
-          error:'only a TA or an Academic coordinator can use this function',
-         })  
-      }
       const dayOff = req.body.day;
       const sender1 = await academicMemberModel.find({
         id: req.id
@@ -321,13 +298,9 @@ router.post('/sendChangeDayOffRequest',
   router.post('/sendAnnualLeaveRequest',
 async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
-        return res.json({
-          error:'only a TA or an Academic coordinator can use this function',
-         })  
-      }
         const reason=req.body.reason;
         const replacements=req.body.replacements
+        const requestIds=req.body.requests
         const date=req.body.date;
         const sender1= await academicMemberModel.find({id:req.id})
         const dep=await departementModel.find({_id:sender1[0].department})
@@ -338,8 +311,7 @@ async (req, res) => {
        var m = datereq.getMonth()+1;
        var y=datereq.getFullYear()
 
-        //console.log(y)
-      //  console.log(m)
+      
 
        var datetoday=new Date(Date.now())
 
@@ -347,8 +319,7 @@ async (req, res) => {
        var m1 = datetoday.getMonth()+1;
        var y1=datereq.getFullYear()
 
-      //  console.log(d1)
-      //  console.log(m1)
+      
 
 
 
@@ -357,6 +328,24 @@ async (req, res) => {
             error: 'annual leave should be submitted before targeted day',
           })
         }
+          if((requestIds!=null && requestIds.length>0 && replacements!=null && replacements.length!=0)){
+        requestIds.filter(async(r)=>{
+          var requ=await requestsModel.find({_id:r})
+          if(!requ){
+            return res.json({
+              error: 'one of the requests is not a vaid request id ',
+            })
+          }
+          else{
+            if(requ[0].status!=requestStatus.ACCEPTED){
+              return res.json({
+                error: 'some of the academic members you sent the request to doesnot accept your request yet ',
+              })
+            }
+          }
+
+        })
+      }
 
             const request=new requestsModel({
               from:req.id,
@@ -387,18 +376,13 @@ async (req, res) => {
   router.post('/sendAccidentalLeaveRequest',
   async (req, res) => {
       try {
-        if(req.role!="teachingAssistant" && req.role!="coordinator"){
-          return res.json({
-            error:'only a TA or an Academic coordinator can use this function',
-           })  
-        }
           const reason=req.body.reason;
           const date=req.body.date;
           const sender1= await academicMemberModel.find({id:req.id})
           const dep=await departementModel.find({_id:sender1[0].department})
-          const leaves=await leavesModel.find({academicMember:req.id})
+        //  const leaves=await leavesModel.find({academicMember:req.id})
            
-          if(leaves[0].ACCIDENTAL_LEAVE>=6){
+          if(sender1[0].accidentalLeaves>=6){
             return res.json({
               error:'you canot send accidental leaves any more you already consumed your annual accidental leave balance',
              })  
@@ -908,7 +892,12 @@ router.get('/viewAllPendingRequests',
               error:'you canot accept a request not sent to you',
              })  
           }
-  
+          var x=new replacementModel({
+            id:request1[0].to,
+            slot:request1[0].slot
+          }) 
+          x.save()
+
           await requestsModel.findByIdAndUpdate(request, {status:requestStatus.ACCEPTED})
           var notification=new notificationModel({
             academicMember:request1[0].from,
