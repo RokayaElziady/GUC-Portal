@@ -739,14 +739,24 @@ Response: {
     "message": "location deleted"
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-3)update location: Functionality:updates a  location attribute(s) from the university///////////////////////////////////////
-Route:/location/l1//////////////////////////////////////////////////////////
-Request type:put//////////////////////////////////////////////////////////////
+3)update location: Functionality:updates a  location attribute(s) from the university
+
+
+Route:/location/l1
+
+
+Request type:put
+
+
+
 Request body:      {  
    "name":"l2",
    "type":"tutorial room",
    "capacity":18
-     }///////////////////////////////////////////////////////////////
+     }
+
+
+
 Response: {
     "officeOccupants": 0,
     "_id": "5fde62fa2eafecc6d69fe8ca",
