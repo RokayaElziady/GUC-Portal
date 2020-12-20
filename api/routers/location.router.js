@@ -1,25 +1,29 @@
+//done
 const express = require('express')
 const locationRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const slotModel = require('../../Models/slots.model');
  const hrModel=require('../../Models/hr.model');
 const acadamicMemberModel=require('../../Models/academicMember.model');
-locationRouter
-.post('/',
+locationRouter.route('/')
+.post(
   async (req, res) => {
-    try{
     const newLocation= new locationModel({
         name: req.body.name, 
         type: req.body.type,
         capacity: req.body.capacity,
     }) 
-     newLocation.save()
-       return res.json({
-        msg: "successs"
-       } )
-      }
+    try{ const find= await locationModel.findOne({name:req.body.name})
+    if(find){
+      res.status(200).json({
+        message:"locatiion exists"
+      });
+      return;
+    }
+      const result= await newLocation.save()
+        res.send(result)} 
         catch(err){
-          console.log("err");
+          console.log(err);
           res.status(500).json({
             error: err
           });
@@ -32,7 +36,7 @@ locationRouter.route('/:locationName')
   try{
         const result= await locationModel.deleteOne({name : req.params.locationName})
         res.status(200).json({
-          message: 'location deleted',
+          message: 'done',
       });
 
         const result2= await slotModel.updateMany({location: req.params.locationName},{location: "unallocated"})

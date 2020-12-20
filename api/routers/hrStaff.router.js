@@ -1,5 +1,5 @@
 const express = require('express')
-const bcrypt=require(('bcrypt'));
+const bcrypt=require(('bcryptjs'));
 const hrStaffRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const hrStaff = require('../../Models/hr.model');
@@ -16,7 +16,7 @@ hrStaffRouter.route('/')
     officeLocation:req.body.officeLocation,
     extraInformation:req.body.extraInformation,
     gender:req.body.gender,
-    acadamic:req.body.acadamic
+
     });  
         try{
           const acadamic = await academicMemberModel.find({email:req.body.email});
@@ -96,7 +96,9 @@ hrStaffRouter.route('/:id')
         const new1= await locationModel.updateOne({name:hr.officeLocation},   { $inc: {officeOccupants:-1}});
         }
     }
+ 
   const result= await hrStaff.deleteOne({id : req.params.id})
+  const deleteAttendance=await attendanceModel.deleteOne({staffId : req.params.id});
       res.status(200).json({
         message: 'hrStaff deleted',
     });

@@ -6,7 +6,7 @@ const academicMemberModel=require('../../Models/academicMember.model');
 const hrmodel = require('../../Models/hr.model');
 const requestsModel=require('../../Models/requests.model');
 const { request } = require('express');
-const { compare } = require('bcrypt');
+const { compare } = require('bcryptjs');
 attendanceRouter.route('/:id')
 .post(
   async (req, res) => {
@@ -120,7 +120,6 @@ for(var i=new Date(startDate);i.getDate()<=endDate.getDate()&&i.getMonth()<=endD
 if(person.length>0){
    dayoff=getDay(person[0].dayOff);}
   
- dayOff="blabla"
  
   if(!(i.getDay()==dayoff)){
     
@@ -178,7 +177,8 @@ break;
     //absense have only staff with missing days now add missing hours
     //add missing hour
    
-    let person;    
+    let person; 
+    let dayoff   
     for(let i=0;i<result.length;i++){
       let remaining=0;
       if(result[i].staffId.includes("hr-")){
@@ -186,10 +186,10 @@ break;
         else{
           person=acPeople.filter(element=>element.id==result[i].staffId);
         }
-        if (person.length>0&& dayOff){
+        if (person.length>0&& person[0].dayOff){
           dayoff=getDay(person[0].dayOff);
         }
-
+      
       if(!(absence.includes(result[i].staffId)))  {
         
         let pointer1=0;
@@ -197,8 +197,9 @@ break;
       // console.log(dayoff)
     
       let current=startDate;
-  
-      if(!((new Date(current)).getDay()=="5"||(new Date(current)).getDay()==dayOff )){
+ 
+      if(!((new Date(current)).getDay()=="5"||(new Date(current)).getDay()==dayoff )){
+        
   remaining+=8.4;
       }
         while(pointer1<result[i].signIn.length&&pointer2<result[i].signOut.length){
@@ -214,9 +215,12 @@ break;
           if(!((current.getDate()==(new Date(point1)).getDate()&&current.getMonth()==(new Date(point1)).getMonth()&&
           current.getFullYear()==(new Date(point1)).getFullYear()))){
             current=new Date(point1);
-            if(!(current.getDay()=="5"||current.getDay()==dayOff )){
+           
+            if(!(current.getDay()=="5"||current.getDay()==dayoff )){
+            
               remaining+=8.4;
             }}
+           
 
   if((new Date(point2)).getTime()>=startDate.getTime()&&(new Date(point2)).getTime()<=endDate.getTime()&&
   (new Date(point2)).getTime()>(new Date(point1)).getTime() &&(new Date(point2)).getHours()>=7){
@@ -250,6 +254,9 @@ else{
 remaining=remaining-hourstoadd;
   pointer2=pointer2+1;
   pointer1=pointer1+1;
+ 
+
+ 
 }
 
   }    

@@ -698,5 +698,628 @@ Functionality:assign a course I am instructor for to a member Route:/courseInstr
 
 Route:/courseInstructor/removeAcademicFromCourse Request type:POST Request body: {"academicID":"ac-1","courseName":"CSEN555"} Response: messages like "you are not instructor for this course" "the academic doesn't teach this course" "all Academic assignments to this Course are removed successfully"
 
-######################################## NADINE ########################################
+######################################## NADINE 
+########################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+1)add location: Functionality:adds a new location to the university
+Route:/location
+
+
+Request type:post
+
+
+Request body:   { 
+   "name":"l1",
+   "type":"offices",
+   "capacity":10  
+     }
+
+
+Response: the saved data or error in case of errors
+{
+    "officeOccupants": 0,
+    "_id": "5fde5fe7ea5ccbc5bfe65295",
+    "name": "l1",
+    "type": "offices",
+    "capacity": 10,
+    "__v": 0
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2)delete location: Functionality:deletes a  location from the university
+
+
+Route:/location/l1
+
+
+Request type:delete
+
+
+Request body:   { 
+   
+     }
+
+
+Response: {
+    "message": "done"
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+3)update location: Functionality:updates a  location attribute(s) from the university
+
+
+Route:/location/l1
+
+
+Request type:put
+
+
+
+Request body:      {  
+   "name":"l2",
+   "type":"tutorial room",
+   "capacity":18
+     }
+
+
+
+Response: {
+    "officeOccupants": 0,
+    "_id": "5fde62fa2eafecc6d69fe8ca",
+    "name": "l2",
+    "type": "tutorial room",
+    "capacity": 18,
+    "__v": 0
+}(updated location)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+4)Add afaculty Functionality:adds a new faculty with unique name
+
+Route:/faculties
+
+Request type:post
+
+
+
+Request body:  { 
+    "name":"facullty1"
+     }
+
+
+
+Response:{
+    "_id": "5fde65eaf3e8bfc7b120a91a",
+    "name": "facullty1",
+    "__v": 0
+}(added faculty)
+
+
+or error in case of duplicates for example
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+5)update afaculty Functionality:updates an existing faculty 
+
+Route:/faculties/facullty1
+
+Request type:put
+
+
+
+Request body:  { 
+    "name":"facullty2"
+     }
+
+
+
+Response:{
+    "_id": "5fde65eaf3e8bfc7b120a91a",
+    "name": "facullty2",
+    "__v": 0
+}(updated faculty)
+
+
+or error in case of duplicates for example
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+6)delete afaculty Functionality:deletes an existing faculty 
+
+Route:/faculties/facullty1
+
+Request type:delete
+
+
+
+Request body:  { 
+  
+     }
+
+
+
+Response:{
+    "message": "done"
+} or error
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+7)add a department Functionality:adds a new  department
+
+Route:/departments
+
+Request type:post
+
+
+
+Request body:    { 
+    "name":"d1",
+  "faculty": "fun1",
+  "HOD":"blabla"
+     }(choose attributes to add)
+
+
+
+Response{
+    "message": "HOD does not exist or not array"
+} or{
+    "message": "faculty does not exist or not array"
+}or ...... or the added department if operation was successful
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+8)update a department Functionality:updates an existing  department
+
+Route:/departments/d1
+
+Request type:put
+
+
+
+Request body:       { 
+    "name":"d2",
+  "faculty": "facullty1"
+ 
+     }put parameters to update
+    
+
+
+Response{
+    "courseNames": [],
+    "staffIds": [],
+    "_id": "5fdedb74763f67c873916421",
+    "name": "d2",
+    "faculty": "facullty1",
+    "__v": 0
+}or {
+    "message": "HOD does not exist or not array"
+} or{
+    "message": "faculty does not exist or not array"
+}or ......
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+9)delete a department Functionality:deletes an existing  department
+
+Route:/departments/d2
+
+Request type:delete
+
+
+
+Request body:       { 
+ 
+ 
+     }
+    
+
+
+Response{
+    "message": "done"
+}or or error incase of errors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+10)add a course Functionality:adds a new  course
+
+Route:/courses
+
+Request type:post
+
+
+
+Request body:       { 
+    "name":"course1",
+    "department":["d2","d3"]
+    }
+
+
+
+Response:{
+    "message": "some departments do not exist or not array"
+} or  the added course if success({
+    "department": [
+        "d2",
+        "d3"
+    ],
+    "_id": "5fdede504ab0ceca33f1646d",
+    "name": "course1",
+    "__v": 0
+})
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+11)update a course Functionality:updates an existing  course
+
+Route:/courses/course3
+
+Request type:put
+
+
+
+Request body:      { 
+    "name":"course8",
+    "department":["d3"]
+    }put parameters to update
+    
+
+
+Response{
+    "department": [
+        "d3"
+    ],
+    "_id": "5fdedebb4ab0ceca33f1646f",
+    "name": "course8",
+    "__v": 0
+}or {
+    message: "some departments do not exist or not array"
+} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+12)delete a course Functionality:deletes an existing  course
+
+Route:/courses/course3
+
+Request type:delete
+
+
+
+Request body:       { 
+ 
+ 
+     }
+    
+
+
+Response{
+    "message": "done"
+}or or error incase of errors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+13)add a new hr Functionality:adds a new  hr
+
+Route:/hrStaff
+
+Request type:post
+
+
+
+Request body:   { 
+    "name":"first",
+  "email":"first@gy",
+  "gender":"female",
+"salary":1000,
+"officeLocation":"l2",
+ "extraInformation":"3 years experience"
+  
+     }
+
+
+Response{
+    "password": "$2b$10$f45V.BM5jM4oWFJlY3HIuO3rFnTYIyXP7WmOmR2qSlYplM8Zf.3M6",
+    "dayOff": "Saturday",
+    "changePassword": true,
+    "_id": "5fdee52cc00cd1cbee4927bf",
+    "name": "first",
+    "email": "first@gy",
+    "salary": 1000,
+    "officeLocation": "l2",
+    "extraInformation": "3 years experience",
+    "id": "hr-2",
+    "__v": 0
+} the inserted staff or    message: "location does not exist" or office full or ...
+})
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+department is handled from the department route not here
+
+
+
+14)add an acadamic member Functionality:adds a new  acadamic member
+
+Route:/acadamic
+
+Request type:post
+
+
+
+Request body:       { 
+    "name":"first",
+  "email":"first22@gy",
+  "gender":"female",
+"salary":2000,
+"officeLocation":"l2",
+ "extraInformation":"3 years experience"
+  
+     }
+
+
+
+Response:
+   {
+    "courses": [],
+    "password": "$2b$10$I.0VwuaAw6KKZWPP36X61.am0giDotxOAuHkFdk.849DeeBlgL8cK",
+    "dayOff": "Saturday",
+    "instructorFor": [],
+    "coordinatorFor": [],
+    "changePassword": true,
+    "_id": "5fdee646c00cd1cbee4927c4",
+    "name": "first",
+    "email": "first22@gy",
+    "salary": 2000,
+    "officeLocation": "l2",
+    "extraInformation": "3 years experience",
+    "gender": "female",
+    "id": "ac-1",
+    "__v": 0
+} or error in case there is an error
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+department is handled from the department route not here
+
+
+15)update a hr member Functionality:updates an existing  hr member
+
+Route:/hrStaff/hr-2
+
+Request type:put
+
+
+
+Request body:     { 
+   
+  "gender":"male",
+"officeLocation":"l4",
+ "extraInformation":"4 years experience"
+  
+     }(attributes you want to update)
+    
+
+
+
+Response:
+ {
+    "password": "$2b$10$f45V.BM5jM4oWFJlY3HIuO3rFnTYIyXP7WmOmR2qSlYplM8Zf.3M6",
+    "dayOff": "Saturday",
+    "changePassword": true,
+    "_id": "5fdee52cc00cd1cbee4927bf",
+    "name": "first",
+    "email": "first@gy",
+    "salary": 1000,
+    "officeLocation": "l4",
+    "extraInformation": "4 years experience",
+    "id": "hr-2",
+    "__v": 0
+} or error in case there is an error or messages in case of mistakes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+department is handled from the department route not here
+
+
+
+
+16)update an acadamic member Functionality:updates an existing  acadamic member
+
+Route:/acadamic/ac-1
+
+Request type:put
+
+
+
+Request body:     { 
+   
+  "gender":"male",
+"officeLocation":"l4",
+ "extraInformation":"4 years experience"
+  
+     }(attributes you want to update)
+    
+    
+
+
+
+Response:
+ {
+    "courses": [],
+    "password": "$2b$10$I.0VwuaAw6KKZWPP36X61.am0giDotxOAuHkFdk.849DeeBlgL8cK",
+    "dayOff": "Saturday",
+    "instructorFor": [],
+    "coordinatorFor": [],
+    "changePassword": true,
+    "_id": "5fdee646c00cd1cbee4927c4",
+    "name": "first",
+    "email": "first22@gy",
+    "salary": 2000,
+    "officeLocation": "l4",
+    "extraInformation": "4 years experience",
+    "gender": "male",
+    "id": "ac-1",
+    "__v": 0
+} or error in case there is an error or messages in case of mistakes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+17)delete a hr member Functionality:deletes an existing  hr member
+
+Route:/hrStaff/hr2
+
+Request type:delete
+
+
+
+Request body:     { 
+  
+     }
+    
+    
+
+
+
+Response:
+ {
+    "message": "hrStaff deleted"
+} or error in case there is an error 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+18)delete an acadamic member Functionality:deletes an existing  acadamic member
+
+Route:/acadamic/ac-1
+
+Request type:delete
+
+
+
+Request body:     { 
+  
+     }
+    
+    
+
+
+
+Response:
+ {
+    "message": "academicMember deleted"
+} or error in case there is an error 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+19)add a missing signin/signout 
+
+Route:/attendance/hr-1
+
+Request type:post
+
+
+
+Request body:      { 
+   
+        "signIn":"2020-12-12T07:24:00",
+        "signOut":"2020-12-12T08:24:00"
+     
+     }
+    
+    
+
+
+
+Response:
+{
+    "message": "success"
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+20)View any staff member attendance record.
+
+Route:/attendance/hr-1
+
+Request type:get
+
+
+
+Request body:      { 
+   
+ 
+     }
+    
+    
+
+
+
+Response:
+{
+    "signIn": [
+        "2020-12-12T07:24:00.000Z"
+    ],
+    "signOut": [
+        "2020-12-12T08:24:00.000Z"
+    ],
+    "_id": "5fdee12da03de7cb0671a7c0",
+    "staffId": "hr-1",
+    "__v": 0
+}(the attendannce record)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+21)View staff members with missing hours/days.
+
+Route:/attendance
+
+Request type:get
+
+
+
+Request body:      { 
+   
+ 
+     }
+    
+    
+
+
+
+Response:
+[
+    "hr-1",
+    "hr-3",
+    "ac-2"
+](list of people with missing attendance)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+22)Update the salary of a acadamic member.
+
+Route:/acadamic/salary/ac-2
+
+Request type:put
+
+
+
+Request body:   { 
+   
+        "salary":1
+     
+     }
+    
+    
+
+
+
+Response:
+{
+    "courses": [],
+    "password": "$2b$10$Jr8YZr3MHl1eRJvtw42X1eUE1QhcqhgliEwIdYiogdBPymRx6Ao7a",
+    "dayOff": "Saturday",
+    "instructorFor": [],
+    "coordinatorFor": [],
+    "changePassword": true,
+    "_id": "5fdeece1a91abccd926de3d4",
+    "name": "first",
+    "email": "first22@gy",
+    "salary": 1,
+    "officeLocation": "l2",
+    "extraInformation": "3 years experience",
+    "gender": "female",
+    "id": "ac-2",
+    "__v": 0
+}(person with updated salary)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+23)Update the salary of a hr member.
+
+Route:/hrStaff/salary/hr-1
+
+Request type:put
+
+
+
+Request body:   { 
+   
+        "salary":1
+     
+     }
+    
+    
+
+
+
+Response:
+{
+    "password": "$2b$10$15s8ZzEoQO2A8fUETJosQeQMwicUco2rbWhjBb5ciFRFgjV67ta0u",
+    "dayOff": "Saturday",
+    "changePassword": true,
+    "_id": "5fdee12da03de7cb0671a7be",
+    "name": "samia",
+    "email": "samy21@gy",
+    "id": "hr-1",
+    "__v": 0,
+    "salary": 1
+}}(person with updated salary)
 ######################################## MARIAM ########################################

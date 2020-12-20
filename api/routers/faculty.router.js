@@ -25,7 +25,7 @@ facultyRouter.route('/:facultyName')
   try{
         const result= await facultyModel.deleteOne({name : req.params.facultyName})
         res.status(200).json({
-          message: 'faculty deleted',
+          message: 'done',
       });
       try{
         const result= await departmentModel.updateMany({faculty: req.params.facultyName},{faculty: "undefined"})

@@ -1,5 +1,5 @@
 const express = require('express')
-const bcrypt=require(('bcrypt'));
+const bcrypt=require(('bcryptjs'));
 const academicMemberRouter = express.Router()
 const locationModel = require('../../Models/location.model');
 const academicMember = require('../../Models/academicMember.model');
@@ -12,6 +12,7 @@ const courseModel = require('../../Models/course.model');
 const departementModel = require('../../Models/department.model');
 const requestsModel = require('../../Models/requests.model');
 const slotsModel = require('../../Models/slots.model');
+const replacementModel = require('../../Models/replacements.model');
 academicMemberRouter.route('/')
 .post(
   async (req, res) => {
@@ -23,7 +24,8 @@ academicMemberRouter.route('/')
     extraInformation:req.body.extraInformation,
     gender:req.body.gender,
     role:req.body.role,
-    acadamic:req.body.acadamic
+    acadamic:req.body.acadamic,
+    dayOff:req.body.dayOff
     });   
         try{
           const hr = await hrModel.find({email:req.body.email}); 
@@ -55,7 +57,7 @@ newacademicMember.password=req.body.password;
         if(req.body.officeLocation){
             const location=await locationModel.findOne({name : req.body.officeLocation});
             if(!location){
-                res.status(500).json({
+              res.send({
                    message: "location does not exist"
                   }); 
                   return;}
@@ -109,8 +111,9 @@ academicMemberRouter.route('/:id')
     const deleteAttendance=await attendanceModel.deleteOne({staffId : req.params.id});
     const updateCourseCooordinator=await courseModel.updateMany({coordinator : req.params.id},{coordinator : "undefined"});
     const updatedepartmentStaff=await departementModel.updateMany({staffIds: { $elemMatch: {$eq:req.params.id}}},{ $pullAll: {staffIds: [req.params.id] }});
-    const updaterequests=await requestsModel.deleteOne({from : req.params.id});
-    const updateslots=await slotsModel.updateOne({academicMember : req.params.id},{academicMember : "undefined"});
+    const updaterequests=await replacementModel.updateMany({academicMember : req.params.id},{academicMember : "undefined"});
+    const updaterepacements=await requestsModel.deleteOne({from : req.params.id});
+    const updateslots=await slotsModel.updateMany({academicMember : req.params.id},{academicMember : "undefined"});
   const result= await academicMember.deleteOne({id : req.params.id})
       res.status(200).json({
         message: 'academicMember deleted',
@@ -130,12 +133,7 @@ academicMemberRouter.route('/:id')
         message: "emaill already exists"
        }); 
        return;
-    }}     if(req.body.dayOff){
-      res.status(500).json({
-        message: "unallowed to change day off"
-       }); 
-       return
-    }
+    }}   
        if(req.body.officeLocation){
           const location=await locationModel.findOne({name : req.body.officeLocation});
     if(!location){
@@ -161,8 +159,8 @@ const result= await academicMember.findOneAndUpdate
 ({id : req.params.id}, req.body, {new: true});
 if(staff.officeLocation){
 const new1= await locationModel.updateOne({name:staff.officeLocation},   { $inc: {officeOccupants:-1}});
-}
-const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})
+
+const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})}
 res.send(result);}
 else{
   const result= await academicMember.findOneAndUpdate

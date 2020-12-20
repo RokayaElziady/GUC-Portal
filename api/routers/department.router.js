@@ -22,17 +22,26 @@ if(req.body.courseNames){
          const courses=await courseModel.find().where('name').in(req.body.courseNames).exec();
             //some courses do not exist
             if(courses.length!=req.body.courseNames.length)
-            {res.status(500).json({
+            { res.send({
                                 message: "some courses do not exist or not array"
                                }); 
                                return;
             }
           }
+          if(req.body.HOD){
+            const staffs=await acadamicMemberModel.findOne({id:req.body.HOD})
+            if(!staffs)
+            { res.send({
+              message: "HOD does not exist or not array"
+             }); 
+             return;}
+
+          }
          if(req.body.staffIds){   
             //some staff do not exist
             const staffs=await acadamicMemberModel.find().where('id').in(req.body.staffIds).exec();
             if(staffs.length!==req.body.staffIds.length)
-            {res.status(500).json({
+            { res.send({
                                 message: "some staff members do not exist or not array"
                                }); 
                                return;
@@ -42,7 +51,7 @@ if(req.body.courseNames){
         if(req.body.faculty){
         const faculty=await facultyModel.findOne({name : req.body.faculty});
         if(!faculty){
-            res.status(500).json({
+          res.send({
                message: "faculty does not exist or not array"
               }); 
               return;
@@ -82,7 +91,7 @@ const department= await  departmentModel.findOne({name : req.params.departmentNa
 const staff3=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"undefined"})
       const result= await departmentModel.deleteOne({name : req.params.departmentName})
       res.status(200).json({
-        message: 'department deleted',
+        message: 'done',
     });
      }
         catch(err){    console.log(err);
@@ -98,7 +107,7 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
         if(req.body.faculty){
             const faculty=await facultyModel.findOne({name : req.body.faculty});
             if(!faculty){
-                res.status(500).json({
+              res.send({
                    message: "faculty does not exist or not array"
                   }); 
                   return;
@@ -107,12 +116,21 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
                 const courses=await courseModel.find().where('name').in(req.body.courseNames).exec();
                    //some courses do not exist
                    if(courses.length!=req.body.courseNames.length)
-                   {res.status(500).json({
+                   { res.send({
                                        message: "some courses do not exist or not array"
                                       }); 
                                       return;
                    }
                  }
+                 if(req.body.HOD){
+                  const staffs=await acadamicMemberModel.findOne({id:req.body.HOD})
+                  if(!staffs)
+                  {res.json({
+                    message: "HOD does not exist or not array"
+                   }); 
+                   return;}
+      
+                }
                 if(req.body.staffIds){   
                    //some staff do not exist
                    const staffs=await acadamicMemberModel.find().where('id').in(req.body.staffIds).exec();

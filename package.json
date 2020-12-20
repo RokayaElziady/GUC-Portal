@@ -1,7 +1,7 @@
 {
   "name": "guc-portal",
   "version": "1.0.0",
-  "description": "",
+  "description": "//////////////////////////////////////////////////////////////////////////////////////////////////////////\r Functionality: for academic member to view schedule\r Route: /schedule/viewSchedule\r Request type: GET\r Response(the sccedule with replacements if available):\r {\r     \"msg\": \"success\",\r     \"schedule\": [\r         {\r             \"_id\": \"5fda1caf83892c0618ca7744\",\r             \"academicMember\": \"m2\",\r             \"slots\": [\r                 {\r                     \"_id\": \"5fda1e946836e85428741830\",\r                     \"location\": \"c6\"\r                 },\r                 {\r                     \"_id\": \"5fda1eb746fc231f08366524\",\r                     \"location\": \"c6\"\r                 }\r             ],\r             \"replacements\": [],\r             \"__v\": 0\r         }\r     ]\r }\r //////////////////////////////////////////////////////////////////////////////////////////////\r Functionality: for academic member to send replacement request\r Route: /request/sendReplacementRequest\r Request type: POST\r Request body(the slot id the id of one you want to replace with and optionally a reason):\r {\r    \"to\":\"lala\",\r    \"slot\":\"5fd8f8139f79a23eecf3d785\",\r    \"reason\":\"ay kalam\"",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

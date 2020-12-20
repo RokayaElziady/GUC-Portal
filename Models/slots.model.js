@@ -11,7 +11,7 @@ var slots = new Schema({
   course:{type:String },
   location:{type:String},
   order:{type: String,
-    enum: [slotOrder.FIRST,
+  enum: [slotOrder.FIRST,
            slotOrder.SECOND,
            slotOrder.THIRD,
            slotOrder.FOURTH,

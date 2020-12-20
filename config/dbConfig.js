@@ -8,6 +8,11 @@ const connectDB = async () => {
     .connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
+
+useFindAndModify: false,
+server: {socketOptions: {socketTimeoutMS: 10000}}
+
     })
     .then(() => {
       console.log('MongoDB Connected…')

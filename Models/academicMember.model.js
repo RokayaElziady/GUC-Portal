@@ -21,7 +21,10 @@ var academicMember = new Schema({
   coordinatorFor:[String],
   changePassword:{type:Boolean,default:true},
   annualLeaves:{type:Number},
-  accidentalLeaves:{type:Number}
+  accidentalLeaves: { type: Number },
+  lastDayUpdated: {
+    type: Date
+  }
 })
 
 var academicMemberModel = mongoose.model('academicMember', academicMember)

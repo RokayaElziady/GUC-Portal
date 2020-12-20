@@ -16,7 +16,7 @@ const {
 const { route } = require('./schedule.router');
 
 router.get('/courseCoverage', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -51,7 +51,7 @@ router.get('/courseCoverage', async (req, res) => {
 });
 
 router.get('/slotsAssignment', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -66,7 +66,7 @@ router.get('/slotsAssignment', async (req, res) => {
 });
 
 router.get('/viewStaffByDep', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -81,7 +81,7 @@ router.get('/viewStaffByDep', async (req, res) => {
 });
 
 router.get('/viewStaffByCourse', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -93,7 +93,7 @@ router.get('/viewStaffByCourse', async (req, res) => {
 });
 
 router.post('/assignSlotToMember', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -135,7 +135,7 @@ router.post('/assignSlotToMember', async (req, res) => {
     res.send("slot assigned successfully");
 });
 router.post('/updateSlotAssignmentToMember', async (req, res) => {
-     let authorizationToken = authorizeCourseInstructor();
+     let authorizationToken = await authorizeCourseInstructor(req);
      if (!authorizationToken.aurthorized) {
          res.send("You are not authorized for this request");
          return;
@@ -177,7 +177,7 @@ router.post('/updateSlotAssignmentToMember', async (req, res) => {
     res.send("Assigned same slot to same Member but with new course successfully");
 })
 router.post('/deleteSlotAssignmentFromMember', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -211,7 +211,7 @@ router.post('/deleteSlotAssignmentFromMember', async (req, res) => {
 });
 
 router.post('/makeCoordinator', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -246,7 +246,7 @@ router.post('/makeCoordinator', async (req, res) => {
 });
 
 router.post('/assignAcademicToCourse', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -284,7 +284,7 @@ router.post('/assignAcademicToCourse', async (req, res) => {
     res.send("academic assigned Successfully");
 })
 router.post('/removeAcademicFromCourse', async (req, res) => {
-    let authorizationToken = authorizeCourseInstructor();
+    let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
         return;
@@ -328,15 +328,31 @@ router.post('/removeAcademicFromCourse', async (req, res) => {
 });
 
 //STUBS
-function authorizeCourseInstructor(request) {
+async function authorizeCourseInstructor(request) {
     // if (request.user.role === "Course Instructor")
     //     return true;
     // return false;
+    let x = await isInstructor(request.user.id);
+    if (!x.aurthorized)
+        return { aurthorized: false };
+    
     return {
         // id:req.user.id,
-        id:"1",
+        id:request.user.id,
          aurthorized: true,
-         courseNames:[ "CSEN201"]
+         courseNames:x.courseNames
      };
 }
+async function isInstructor(id) {
+    let myMem = await academicMemberModel.find({ id: id });
+    if (myMem.length == 0)
+        return { aurthorized: false };
+    myMem = myMem[0];
+    if (!myMem.instructorFor)
+        return { aurthorized: false };
+    if (myMem.instructorFor.length == 0)
+        return { aurthorized: false };
+    return { aurthorized: true, courseNames: myMem.instructorFor };
+}
+
 module.exports = router;
