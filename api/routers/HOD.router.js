@@ -12,11 +12,7 @@ const {
 } = require('../enums');
 
 router.post('/makeInstructor', async (req, res) => {
-<<<<<<< HEAD
-    const authorizationToken = authorizeHOD();
-=======
     const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -58,11 +54,7 @@ router.post('/makeInstructor', async (req, res) => {
 
 router.post('/deleteInstructor', async (req, res) => {
 
-<<<<<<< HEAD
-   const authorizationToken = authorizeHOD();
-=======
    const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -108,11 +100,7 @@ router.post('/deleteInstructor', async (req, res) => {
 
 router.post('/updateInstructor', async (req, res) => {
 
-<<<<<<< HEAD
-   const authorizationToken = authorizeHOD();
-=======
    const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -175,11 +163,7 @@ router.post('/updateInstructor', async (req, res) => {
 
 router.get('/viewStaffByDepartment', async (req, res) => {
    
-<<<<<<< HEAD
-   const authorizationToken = authorizeHOD();
-=======
    const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -204,11 +188,7 @@ router.get('/viewStaffByDepartment', async (req, res) => {
 
 router.post('/viewStaffByCourseName', async (req, res) => {
     
-<<<<<<< HEAD
-   const authorizationToken = authorizeHOD();
-=======
    const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -240,11 +220,7 @@ router.post('/viewStaffByCourseName', async (req, res) => {
 });
 
 router.get('/viewDaysOffInDepartment', async (req, res) => {
-<<<<<<< HEAD
-    const authorizationToken = authorizeHOD();
-=======
     const authorizationToken =await  authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -268,23 +244,15 @@ router.get('/viewDaysOffInDepartment', async (req, res) => {
         daysOffInDep.filter((academicMember) => academicMember.id.localeCompare(req.body.academicID) == 0);
 
     }
-<<<<<<< HEAD
-    daysOffInDep = daysOffInDep.map((member) => member.dayOff);
-=======
     
     daysOffInDep = daysOffInDep.map((member) => {
         return { dayOff: member.dayOff, academicMember: member.id };
     } );
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     res.send(daysOffInDep);
 });
 
 router.get('/viewChangeDayOffRequests', async (req, res) => {
-<<<<<<< HEAD
-    const authorizationToken = authorizeHOD();
-=======
     const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -308,11 +276,7 @@ router.get('/viewChangeDayOffRequests', async (req, res) => {
 });
 
 router.get('/viewLeaveRequests', async (req, res) => {
-<<<<<<< HEAD
-    const authorizationToken = authorizeHOD();
-=======
     const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -333,11 +297,7 @@ router.get('/viewLeaveRequests', async (req, res) => {
 });
 
 router.post('/rejectRequest', async (req, res) => {
-<<<<<<< HEAD
-    const authorizationToken = authorizeHOD();
-=======
     const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -365,20 +325,12 @@ router.post('/rejectRequest', async (req, res) => {
     res.send("request rejected successfully")
 });
 router.post('/acceptRequest', async (req, res) => {
-<<<<<<< HEAD
-    const authorizationToken = authorizeHOD();
-=======
     const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
-<<<<<<< HEAD
-    let reqID = req.body.id;
-=======
     let reqID = req.body._id;
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     let myAcademic;
     let myReq;
     let x=await requestsModel.find({
@@ -396,13 +348,7 @@ router.post('/acceptRequest', async (req, res) => {
         return;
     }
 
-<<<<<<< HEAD
-    await requestsModel.updateMany({_id: reqID}, {status: requestStatus.ACCEPTED}, (err, docs) => {
-        
-    });
-=======
    
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     let leaveRequestTypes = [requestType.LEAVE, requestType.SICK_LEAVE, requestType.ANNUAL_LEAVE,
     requestType.MATERNITY_LEAVE,requestType.ACCIDENTAL_LEAVE,requestType.COMPENSATION_LEAVE
     ]
@@ -412,12 +358,6 @@ router.post('/acceptRequest', async (req, res) => {
         return;
     }
     if (myReq.type != requestType.CHANGE_DAY_OFF) {
-<<<<<<< HEAD
-        res.send("Leave Request Accepted");
-        return;
-    }
-
-=======
         //IF ANNUAL OR ACCIDENTAL
         if (myReq.type == requestType.ANNUAL_LEAVE || myReq.type == requestType.ACCIDENTAL_LEAVE) { 
             updateAllMembersLeaves(authorizationToken.id);
@@ -491,7 +431,6 @@ router.post('/acceptRequest', async (req, res) => {
      }, {
          status: requestStatus.ACCEPTED
      });
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     await academicMemberModel.updateOne({ id: myAcademic }, { dayOff: myReq.dayOff })
     await notificationModel.insertMany([{
         academicMember: myAcademic,
@@ -502,11 +441,7 @@ router.post('/acceptRequest', async (req, res) => {
 })
 
 router.get('/courseCoverage', async (req, res) => {
-<<<<<<< HEAD
-    const authorizationToken = authorizeHOD();
-=======
     const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -550,11 +485,7 @@ router.get('/courseCoverage', async (req, res) => {
 });
 
 router.post('/teachingAssignmentsOfCourse', async (req, res) => {
-<<<<<<< HEAD
-     const authorizationToken = authorizeHOD();
-=======
      const authorizationToken = await authorizeHOD(req);
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
      if (!authorizationToken.aurthorized) {
          res.send("you are not HOD : NOT AUTHORIZED");
          return;
@@ -573,8 +504,6 @@ router.post('/teachingAssignmentsOfCourse', async (req, res) => {
 })
 
 //STUBS
-<<<<<<< HEAD
-=======
 async function updateAllMembersLeaves(MyID) {
     let Me = await academicMemberModel.find({ id: MyID });
     Me = Me[0];
@@ -656,7 +585,6 @@ async function SlotsInDayOff(academicID, dayOff) {
     });
     return res;
 }
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
 async function getDepartment(academicID) {
   
       let res=await academicMemberModel.find({
@@ -665,20 +593,11 @@ async function getDepartment(academicID) {
     return res[0].department;
 }
 // NOT TESTED FROM HERE
-<<<<<<< HEAD
-function authorizeHOD(request) {
-=======
 async function authorizeHOD(request) {
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
     // if (request.user.role == "HOD")
     //     return true;
     // return false;
     //GET THE HOD'S DEPARTMENT FROM HIS/HER ID
-<<<<<<< HEAD
-    return {aurthorized:true,department:"CSEN"};
-    
-}
-=======
    
     let x = await isHOD(request.user.id);
     if (x.valid == 1) {
@@ -698,5 +617,4 @@ async function isHOD(id) {
     myDep = myDep[0];
     return {valid:1,department:myDep.name}
 }
->>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
 module.exports = router;
