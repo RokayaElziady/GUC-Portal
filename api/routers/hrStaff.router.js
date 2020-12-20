@@ -18,7 +18,10 @@ hrStaffRouter.route('/')
     gender:req.body.gender,
 
     });  
-        try{
+        try{if(!(req.body.id.includes("hr-"))){
+          res.send("you are not an hr");
+          return;
+        }
           const acadamic = await academicMemberModel.find({email:req.body.email});
           if(acadamic.length>0){
             res.status(500).json({
@@ -88,7 +91,10 @@ newhrStaff.password=req.body.password;
     );
 hrStaffRouter.route('/:id')
 .delete(async (req, res)=>{ 
-  try{
+  try{if(!(req.body.id.includes("hr-"))){
+    res.send("you are not an hr");
+    return;
+  }
    
     const hr= await hrStaff.findOne({id : req.params.id})
     if(hr){
@@ -166,7 +172,10 @@ res.send(result);
             }})
  hrStaffRouter.route('/salary/:id')
  .put( async(req, res)=>
- {  
+ {  if(!(req.body.id.includes("hr-"))){
+  res.send("you are not an hr");
+  return;
+}
      try{    
 
  const result= await hrStaff.findOneAndUpdate({id :req.params.id}, {salary:req.body.salary}, {new: true});

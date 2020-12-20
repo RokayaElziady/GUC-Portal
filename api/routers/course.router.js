@@ -13,7 +13,14 @@ courseRouter.route('/')
         name: req.body.name, 
         department:req.body.department,
     });   
-    try{ 
+    try{ if(!(req.body.id.includes("hr-"))){
+      res.send("you are not an hr");
+      return;
+    }
+      if(!(req.body.id.includes("hr-"))){
+        res.send("you are not an hr");
+        return;
+      }
         if(req.body.department){
             const departments=await departmentModel.find().where('name').in(req.body.department).exec();
             if(departments.length!=req.body.department.length)
@@ -38,6 +45,10 @@ courseRouter.route('/')
 courseRouter.route('/:courseName')
 .delete(async (req, res)=>{ 
   try{
+    if(!(req.body.id.includes("hr-"))){
+      res.send("you are not an hr");
+      return;
+    }
     const departmentName=req.body.department;
     console.log(departmentName);
     const department=await departmentModel.updateMany({name:departmentName},{ $pullAll: {courseNames: [req.params.courseName] }});
@@ -57,6 +68,10 @@ courseRouter.route('/:courseName')
 .put( async(req, res)=>
 { 
     try{
+      if(!(req.body.id.includes("hr-"))){
+        res.send("you are not an hr");
+        return;
+      }
       if(req.body.department){
         const departments=await departmentModel.find().where('name').in(req.body.department).exec();
         if(departments.length!=req.body.department.length)

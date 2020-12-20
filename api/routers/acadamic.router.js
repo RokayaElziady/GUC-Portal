@@ -28,6 +28,10 @@ academicMemberRouter.route('/')
     dayOff:req.body.dayOff
     });   
         try{
+          if(!(req.body.id.includes("hr-"))){
+            res.send("you are not an hr");
+            return;
+          }
           const hr = await hrModel.find({email:req.body.email}); 
           const ar = await academicMemberModel.find({email:req.body.email}); 
           if(hr.length>0||ar.length>0){
@@ -62,7 +66,7 @@ newacademicMember.password=req.body.password;
                   }); 
                   return;}
   if(location.type!=="offices"){
-    res.status(500).json({
+    res.status(200).json({
         message: "location is not an office"
        }); 
        return;
@@ -99,7 +103,10 @@ newacademicMember.password=req.body.password;
     );
 academicMemberRouter.route('/:id')
 .delete(async (req, res)=>{ 
-  try{
+  try{   if(!(req.body.id.includes("hr-"))){
+    res.send("you are not an hr");
+    return;
+  }
    
     const ac= await academicMember.findOne({id : req.params.id})
     if(ac){
@@ -125,7 +132,10 @@ academicMemberRouter.route('/:id')
           });}})
 //update academicMember
 .put( async(req, res)=>
-{   
+{      if(!(req.body.id.includes("hr-"))){
+  res.send("you are not an hr");
+  return;
+}
     try{  if(req.body.email){
       const hr = await hrModel.find({email:req.body.email});
     if(hr.length>0){
@@ -179,7 +189,10 @@ res.send(result);
  .put( async(req, res)=>
  {  
      try{    
-
+      if(!(req.body.id.includes("hr-"))){
+        res.send("you are not an hr");
+        return;
+      }
  const result= await academicMember.findOneAndUpdate({id :req.params.id}, {salary:req.body.salary}, {new: true});
 
  res.send(result);}
