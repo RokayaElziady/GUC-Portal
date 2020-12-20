@@ -16,7 +16,10 @@ departmentRouter.route('/')
         staffIds:req.body.staffIds
     });   
     try{ 
-      
+      if(!(req.body.id.includes("hr-"))){
+        res.send("you are not an hr");
+        return;
+      }   
    
 if(req.body.courseNames){
          const courses=await courseModel.find().where('name').in(req.body.courseNames).exec();
@@ -85,6 +88,10 @@ if(req.body.courseNames){
 departmentRouter.route('/:departmentName')
 .delete(async (req, res)=>{ 
   try{
+    if(!(req.body.id.includes("hr-"))){
+      res.send("you are not an hr");
+      return;
+    }
 const department= await  departmentModel.findOne({name : req.params.departmentName})
   
   const course2=await courseModel.updateMany({department: { $elemMatch: {$eq:req.params.departmentName}}},{ $pullAll: {department: [req.params.departmentName] }});
@@ -102,7 +109,10 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
 //update department if staff or course changed or name or other attributes
 .put( async(req, res)=>
 { 
-    try{
+    try{if(!(req.body.id.includes("hr-"))){
+      res.send("you are not an hr");
+      return;
+    }
         const department= await  departmentModel.findOne({name : req.params.departmentName});
         if(req.body.faculty){
             const faculty=await facultyModel.findOne({name : req.body.faculty});

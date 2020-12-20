@@ -16,7 +16,7 @@ var academicMember = new Schema({
   extraInformation:{type:String},
   password:{type:String,default:"1234"},
   dayOff:{type:String,default:"Saturday"},
-  role: { type: String },
+  role: { type: String ,required:true},
   instructorFor: [String],
   coordinatorFor:[String],
   changePassword:{type:Boolean,default:true},

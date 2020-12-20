@@ -10,7 +10,15 @@ const { compare } = require('bcryptjs');
 attendanceRouter.route('/:id')
 .post(
   async (req, res) => {
-try{  if(req.body.signIn||req.body.signOut){
+try{     if(!(req.body.id.includes("hr-"))||req.params.id==req.body.id){
+  res.send("you are not an hr or you can't add for yourself");
+  return;
+}
+if(new Date(req.body.signIn).getTime()>new Date(Date.now()).getTime()||new Date(req.body.signOut)>new Date(Date.now()).getTime()){
+  res.send("can not add in the future");
+  return;
+}
+if(req.body.signIn||req.body.signOut){
         if(req.body.signIn){
           var date=new Date(req.body.signIn);
         
@@ -56,6 +64,10 @@ res.status(200).json({
     .get(
         async (req, res) => {
       try{ 
+        if(!(req.body.id.includes("hr-"))){
+          res.send("you are not an hr");
+          return;
+        }
        const result=await attendanceModel.findOne({staffId:req.params.id});
        res.send(result);}
 
@@ -71,7 +83,10 @@ attendanceRouter.route('/')
 .get(
     async (req, res) => {
   try{ 
-  
+    if(!(req.body.id.includes("hr-"))){
+      res.send("you are not an hr");
+      return;
+    }
       const date=new Date(Date.now()) ;  
    
       var startDate=new Date();

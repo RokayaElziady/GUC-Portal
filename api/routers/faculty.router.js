@@ -9,7 +9,10 @@ facultyRouter.route('/')
     const newfaculty= new facultyModel({
         name: req.body.name, 
     }) 
-    try{ 
+    try{ if(!(req.body.id.includes("hr-"))){
+      res.send("you are not an hr");
+      return;
+    }
         const result= await newfaculty.save()
         res.send(result)} 
         catch(err){
@@ -22,7 +25,10 @@ facultyRouter.route('/')
     );
 facultyRouter.route('/:facultyName')
 .delete(async (req, res)=>{ 
-  try{
+  try{if(!(req.body.id.includes("hr-"))){
+    res.send("you are not an hr");
+    return;
+  }
         const result= await facultyModel.deleteOne({name : req.params.facultyName})
         res.status(200).json({
           message: 'done',
@@ -42,7 +48,10 @@ facultyRouter.route('/:facultyName')
           });}})
 //update faculty
 .put( async(req, res)=>
-{ try{
+{ try{if(!(req.body.id.includes("hr-"))){
+  res.send("you are not an hr");
+  return;
+}
             const result= await facultyModel.findOneAndUpdate
             ({name : req.params.facultyName}, req.body, {new: true});
             res.send(result);
