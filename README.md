@@ -1144,7 +1144,28 @@ Response:
     "message": "hrStaff deleted"
 } or error in case there is an error 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-17)delete an acadamic member Functionality:deletes an existing  acadamic member
+18)delete an acadamic member Functionality:deletes an existing  acadamic member
+
+Route:/acadamic/ac-1
+
+Request type:delete
+
+
+
+Request body:     { 
+  
+     }
+    
+    
+
+
+
+Response:
+ {
+    "message": "academicMember deleted"
+} or error in case there is an error 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+19)add a missing signin/signout 
 
 Route:/acadamic/ac-1
 

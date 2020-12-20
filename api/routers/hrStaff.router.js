@@ -96,7 +96,9 @@ hrStaffRouter.route('/:id')
         const new1= await locationModel.updateOne({name:hr.officeLocation},   { $inc: {officeOccupants:-1}});
         }
     }
+ 
   const result= await hrStaff.deleteOne({id : req.params.id})
+  const deleteAttendance=await attendanceModel.deleteOne({staffId : req.params.id});
       res.status(200).json({
         message: 'hrStaff deleted',
     });
