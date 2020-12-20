@@ -1167,14 +1167,17 @@ Response:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 19)add a missing signin/signout 
 
-Route:/acadamic/ac-1
+Route:/attendance/hr-1
 
-Request type:delete
+Request type:post
 
 
 
-Request body:     { 
-  
+Request body:      { 
+   
+        "signIn":"2020-12-12T07:24:00",
+        "signOut":"2020-12-12T08:24:00"
+     
      }
     
     
@@ -1182,7 +1185,129 @@ Request body:     {
 
 
 Response:
- {
-    "message": "academicMember deleted"
-} or error in case there is an error 
+{
+    "message": "success"
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+20)View any staff member attendance record.
+
+Route:/attendance/hr-1
+
+Request type:get
+
+
+
+Request body:      { 
+   
+ 
+     }
+    
+    
+
+
+
+Response:
+{
+    "signIn": [
+        "2020-12-12T07:24:00.000Z"
+    ],
+    "signOut": [
+        "2020-12-12T08:24:00.000Z"
+    ],
+    "_id": "5fdee12da03de7cb0671a7c0",
+    "staffId": "hr-1",
+    "__v": 0
+}(the attendannce record)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+21)View staff members with missing hours/days.
+
+Route:/attendance
+
+Request type:get
+
+
+
+Request body:      { 
+   
+ 
+     }
+    
+    
+
+
+
+Response:
+[
+    "hr-1",
+    "hr-3",
+    "ac-2"
+](list of people with missing attendance)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+22)Update the salary of a acadamic member.
+
+Route:/acadamic/salary/ac-2
+
+Request type:put
+
+
+
+Request body:   { 
+   
+        "salary":1
+     
+     }
+    
+    
+
+
+
+Response:
+{
+    "courses": [],
+    "password": "$2b$10$Jr8YZr3MHl1eRJvtw42X1eUE1QhcqhgliEwIdYiogdBPymRx6Ao7a",
+    "dayOff": "Saturday",
+    "instructorFor": [],
+    "coordinatorFor": [],
+    "changePassword": true,
+    "_id": "5fdeece1a91abccd926de3d4",
+    "name": "first",
+    "email": "first22@gy",
+    "salary": 1,
+    "officeLocation": "l2",
+    "extraInformation": "3 years experience",
+    "gender": "female",
+    "id": "ac-2",
+    "__v": 0
+}(person with updated salary)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+23)Update the salary of a hr member.
+
+Route:/hrStaff/salary/hr-1
+
+Request type:put
+
+
+
+Request body:   { 
+   
+        "salary":1
+     
+     }
+    
+    
+
+
+
+Response:
+{
+    "password": "$2b$10$15s8ZzEoQO2A8fUETJosQeQMwicUco2rbWhjBb5ciFRFgjV67ta0u",
+    "dayOff": "Saturday",
+    "changePassword": true,
+    "_id": "5fdee12da03de7cb0671a7be",
+    "name": "samia",
+    "email": "samy21@gy",
+    "id": "hr-1",
+    "__v": 0,
+    "salary": 1
+}}(person with updated salary)
 ######################################## MARIAM ########################################
