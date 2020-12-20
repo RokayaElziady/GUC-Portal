@@ -14,20 +14,25 @@ const courseRoute=require('./api/routers/course.router');
 const departmentRoute=require('./api/routers/department.router');
 const attendance=require('./api/routers/attendance.router');
 const schedule=require('./api/routers/schedule.router')
+const staff=require('./api/routers/staffMembers.router')
+const log=require('./api/routers/logging.route')
 const locationModel = require('./Models/location.model');
 const requestsModel = require('./Models/requests.model');
 const academicMemberModel = require('./Models/academicMember.model');
 const scheduleModel = require('./Models/schedule.model');
 connectDB()
+app.use('/logging',log)
 app.use(verify)
 app.use('/hrStaff',hrRoute);
-app.use('/acadamic',acadamicRoute);
+app.use('/academic',acadamicRoute);
 app.use('/courses',courseRoute);
 app.use('/location',location);
 app.use('/faculties',facultyRoute);
 app.use('/departments',departmentRoute);
 app.use('/attendance',attendance);
 app.use('/schedule',schedule)
+app.use('/staff',staff)
+
 app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
@@ -67,3 +72,6 @@ if (process.env.PORT) {
 } else {
   app.listen(port, () => console.log(`Server up and running on ${port}`))
 }
+
+
+
