@@ -6,7 +6,7 @@ const academicMemberModel=require('../../Models/academicMember.model');
 const hrmodel = require('../../Models/hr.model');
 const requestsModel=require('../../Models/requests.model');
 const { request } = require('express');
-const { compare } = require('bcrypt');
+const { compare } = require('bcryptjs');
 attendanceRouter.route('/:id')
 .post(
   async (req, res) => {

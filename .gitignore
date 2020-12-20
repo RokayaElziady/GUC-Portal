@@ -1,4 +1,8 @@
 node_modules
 package-lock.json
 test.js
+<<<<<<< HEAD
 /config/keys_dev.js
+=======
+config/keys_dev.js
+>>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98

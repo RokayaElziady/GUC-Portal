@@ -1011,10 +1011,13 @@ Response{
 } the inserted staff or    message: "location does not exist" or office full or ...
 })
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<<<<<< HEAD
 department is handled from the department route not here
 
 
 
+=======
+>>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
 14)add an acadamic member Functionality:adds a new  acadamic member
 
 Route:/acadamic
@@ -1054,9 +1057,12 @@ Response:
     "__v": 0
 } or error in case there is an error
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<<<<<< HEAD
 department is handled from the department route not here
 
 
+=======
+>>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
 15)update a hr member Functionality:updates an existing  hr member
 
 Route:/hrStaff/hr-2
@@ -1091,11 +1097,14 @@ Response:
     "__v": 0
 } or error in case there is an error or messages in case of mistakes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<<<<<< HEAD
 department is handled from the department route not here
 
 
 
 
+=======
+>>>>>>> 3801b1b0f91487d5d92fe4c6b74babe374d6db98
 16)update an acadamic member Functionality:updates an existing  acadamic member
 
 Route:/acadamic/ac-1
