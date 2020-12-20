@@ -9,8 +9,9 @@ const verify=(req, res,next)=>{
     //}
  //   try{
      //   const verified= jwt.verify(token, process.env.TOKEN_SECRET)
-        req.id="k"
-        req.role="coordinator"
+  //       req.user.id="20"
+  // req.user.role = "HOD"
+  req.user={id:"1",role:"HOD"}
         next()
     //}
     //catch(err){

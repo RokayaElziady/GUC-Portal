@@ -12,7 +12,7 @@ const {
 } = require('../enums');
 
 router.post('/makeInstructor', async (req, res) => {
-    const authorizationToken = authorizeHOD();
+    const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -54,7 +54,7 @@ router.post('/makeInstructor', async (req, res) => {
 
 router.post('/deleteInstructor', async (req, res) => {
 
-   const authorizationToken = authorizeHOD();
+   const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -100,7 +100,7 @@ router.post('/deleteInstructor', async (req, res) => {
 
 router.post('/updateInstructor', async (req, res) => {
 
-   const authorizationToken = authorizeHOD();
+   const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -163,7 +163,7 @@ router.post('/updateInstructor', async (req, res) => {
 
 router.get('/viewStaffByDepartment', async (req, res) => {
    
-   const authorizationToken = authorizeHOD();
+   const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -188,7 +188,7 @@ router.get('/viewStaffByDepartment', async (req, res) => {
 
 router.post('/viewStaffByCourseName', async (req, res) => {
     
-   const authorizationToken = authorizeHOD();
+   const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -220,7 +220,7 @@ router.post('/viewStaffByCourseName', async (req, res) => {
 });
 
 router.get('/viewDaysOffInDepartment', async (req, res) => {
-    const authorizationToken = authorizeHOD();
+    const authorizationToken =await  authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -244,12 +244,15 @@ router.get('/viewDaysOffInDepartment', async (req, res) => {
         daysOffInDep.filter((academicMember) => academicMember.id.localeCompare(req.body.academicID) == 0);
 
     }
-    daysOffInDep = daysOffInDep.map((member) => member.dayOff);
+    
+    daysOffInDep = daysOffInDep.map((member) => {
+        return { dayOff: member.dayOff, academicMember: member.id };
+    } );
     res.send(daysOffInDep);
 });
 
 router.get('/viewChangeDayOffRequests', async (req, res) => {
-    const authorizationToken = authorizeHOD();
+    const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -273,7 +276,7 @@ router.get('/viewChangeDayOffRequests', async (req, res) => {
 });
 
 router.get('/viewLeaveRequests', async (req, res) => {
-    const authorizationToken = authorizeHOD();
+    const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -294,7 +297,7 @@ router.get('/viewLeaveRequests', async (req, res) => {
 });
 
 router.post('/rejectRequest', async (req, res) => {
-    const authorizationToken = authorizeHOD();
+    const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -322,12 +325,12 @@ router.post('/rejectRequest', async (req, res) => {
     res.send("request rejected successfully")
 });
 router.post('/acceptRequest', async (req, res) => {
-    const authorizationToken = authorizeHOD();
+    const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
-    let reqID = req.body.id;
+    let reqID = req.body._id;
     let myAcademic;
     let myReq;
     let x=await requestsModel.find({
@@ -345,9 +348,7 @@ router.post('/acceptRequest', async (req, res) => {
         return;
     }
 
-    await requestsModel.updateMany({_id: reqID}, {status: requestStatus.ACCEPTED}, (err, docs) => {
-        
-    });
+   
     let leaveRequestTypes = [requestType.LEAVE, requestType.SICK_LEAVE, requestType.ANNUAL_LEAVE,
     requestType.MATERNITY_LEAVE,requestType.ACCIDENTAL_LEAVE,requestType.COMPENSATION_LEAVE
     ]
@@ -357,10 +358,79 @@ router.post('/acceptRequest', async (req, res) => {
         return;
     }
     if (myReq.type != requestType.CHANGE_DAY_OFF) {
-        res.send("Leave Request Accepted");
+        //IF ANNUAL OR ACCIDENTAL
+        if (myReq.type == requestType.ANNUAL_LEAVE || myReq.type == requestType.ACCIDENTAL_LEAVE) { 
+            updateAllMembersLeaves(authorizationToken.id);
+            let academic = await academicMemberModel.find({ id: myAcademic });
+            academic = academic[0];
+            //ANNUAL
+            if (myReq.type == requestType.ANNUAL_LEAVE) {
+                if (academic.annualLeaves >= 1) {
+                     await requestsModel.updateMany({
+                         _id: reqID
+                     }, {
+                         status: requestStatus.ACCEPTED
+                     });
+                    await academicMemberModel.updateMany({ id: myAcademic }, { annualLeaves: academic.annualLeaves - 1 });
+                     await notificationModel.insertMany([{
+                         academicMember: myAcademic,
+                         request: reqID
+                     }]);
+                    res.send("ANNUAL LEAVE REQUEST ACCEPTED");
+                    return;
+                }
+                 res.send("cannot accept annual leave request there is no enough balance");
+                return;
+            }
+            //ACCIDENTAL
+            if (academic.annualLeaves >= 1 && academic.accidentalLeaves < 6) {
+                await requestsModel.updateMany({
+                    _id: reqID
+                }, {
+                    status: requestStatus.ACCEPTED
+                });
+                await academicMemberModel.updateMany({
+                    id: myAcademic
+                }, {
+                        annualLeaves: academic.annualLeaves - 1,
+                        accidentalLeaves: academic.accidentalLeaves + 1
+                });
+                await notificationModel.insertMany([{
+                    academicMember: myAcademic,
+                    request: reqID
+                }]);
+                res.send("ACCIDENTAL LEAVE REQUEST ACCEPTED");
+                return;
+            }
+            res.send("cannot accept accidental leave request there is no enough balance")
+            return;
+        }
+        //IF NORMAL LEAVE REQ ACCEPTED
+         await requestsModel.updateMany({
+             _id: reqID
+         }, {
+             status: requestStatus.ACCEPTED
+         });
+        await notificationModel.insertMany([{
+            academicMember: myAcademic,
+            request: reqID
+        }]);
+        res.send("Normal Leave Request Accepted");
         return;
     }
-
+    //CHECK IF THE MEMBER HAS ANY SLOTS IN THE DAY IN THE REQ ENTERED
+    let inValidSlots = await SlotsInDayOff(myAcademic, myReq.dayOff);
+    //IF DAY OFF REQ NOT ACCEPTED
+    if (inValidSlots.length != 0) {
+        res.send("Cannot change day off while having a slot in that day");
+        return;
+    }
+    //IF DAY OFF REQ ACCEPTED
+     await requestsModel.updateMany({
+         _id: reqID
+     }, {
+         status: requestStatus.ACCEPTED
+     });
     await academicMemberModel.updateOne({ id: myAcademic }, { dayOff: myReq.dayOff })
     await notificationModel.insertMany([{
         academicMember: myAcademic,
@@ -371,7 +441,7 @@ router.post('/acceptRequest', async (req, res) => {
 })
 
 router.get('/courseCoverage', async (req, res) => {
-    const authorizationToken = authorizeHOD();
+    const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
         return;
@@ -415,7 +485,7 @@ router.get('/courseCoverage', async (req, res) => {
 });
 
 router.post('/teachingAssignmentsOfCourse', async (req, res) => {
-     const authorizationToken = authorizeHOD();
+     const authorizationToken = await authorizeHOD(req);
      if (!authorizationToken.aurthorized) {
          res.send("you are not HOD : NOT AUTHORIZED");
          return;
@@ -434,6 +504,87 @@ router.post('/teachingAssignmentsOfCourse', async (req, res) => {
 })
 
 //STUBS
+async function updateAllMembersLeaves(MyID) {
+    let Me = await academicMemberModel.find({ id: MyID });
+    Me = Me[0];
+    let lastUpdated = Me.lastDayUpdated;
+    today = new Date();
+    if (today.getFullYear() == lastUpdated.getFullYear()) {
+        if (today.getMonth() == lastUpdated.getMonth()) {
+            return;
+        }
+        else {
+            if (today.getDate() < 11) {
+                let x = today.getMonth() - 1;
+                if (x == -1)
+                    x = 11;
+                if (x == lastUpdated.getMonth())
+                    return;
+            }
+        }
+    }
+    if (today.getFullYear() == lastUpdated.getFullYear() + 1) {
+        if (today.getMonth == 0 && lastUpdated.getMonth == 11) {
+            if (today.getDate() < 11)
+                return;
+        }
+    }
+    if (today.getDate() >= 11) {
+        today.setDate(11);
+    }
+    else {
+        today.setDate(11);
+        let x = today.getMonth() - 1;
+        if (x == -1)
+            x = 11;
+        today.setMonth(x);
+    }
+    if (today.getMonth() == 0) {
+        await academicMemberModel.updateMany({}, {
+            lastDayUpdated: today,
+            accidentalLeaves: 0,
+            //ASSUME THAT THE MEMBER HAS 0.5 LEFT FROM LAST DECEMBER
+            annualLeaves: 3
+        });
+    }
+    else {
+
+        let monthsPassed = today.getMonth() - lastUpdated.getMonth();
+        if (lastUpdated.getFullYear() < today.getFullYear()) {
+            monthsPassed = today.getMonth() + 1;
+             await academicMemberModel.updateMany({}, {
+                 lastDayUpdated: today,
+                 accidentalLeaves: 0,
+                 //ASSUME THAT THE MEMBER HAS 0.5 LEFT FROM LAST DECEMBER
+                 annualLeaves: 0.5+monthsPassed*2.5
+             });
+        }
+        else {
+            let allMembers = await academicMemberModel.find({});
+            for (let i = 0; i < allMembers.length; i++) {
+                let annualPassed = allMembers[i].annualLeaves;
+                if (annualPassed) { 
+                await academicMemberModel.updateMany({
+                    id: allMembers[i].id
+                }, {
+                    lastDayUpdated: today,
+                    annualLeaves: annualPassed + 2.5 * monthsPassed
+                })
+            }
+            }
+           
+        }
+
+    }
+
+}
+async function SlotsInDayOff(academicID, dayOff) {
+    let res = await slotsModel.find({
+        academicMember: academicID,
+        day: dayOff
+    });
+    return res;
+}
 async function getDepartment(academicID) {
   
       let res=await academicMemberModel.find({
@@ -442,12 +593,28 @@ async function getDepartment(academicID) {
     return res[0].department;
 }
 // NOT TESTED FROM HERE
-function authorizeHOD(request) {
+async function authorizeHOD(request) {
     // if (request.user.role == "HOD")
     //     return true;
     // return false;
     //GET THE HOD'S DEPARTMENT FROM HIS/HER ID
-    return {aurthorized:true,department:"CSEN"};
+   
+    let x = await isHOD(request.user.id);
+    if (x.valid == 1) {
+        let myID = request.user.id;
+        let myDep = x.department;
+        return { aurthorized: true, department: myDep, id: myID };
+    }
+    else
+        return { aurthorized: false };
     
+}
+async function isHOD(id) {
+    let myDep = await departmentModel.find({ HOD: id });
+    if (myDep.length == 0) {
+        return { valid: -1 };
+    }
+    myDep = myDep[0];
+    return {valid:1,department:myDep.name}
 }
 module.exports = router;
