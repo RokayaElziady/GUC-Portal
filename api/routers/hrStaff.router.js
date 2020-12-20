@@ -16,7 +16,7 @@ hrStaffRouter.route('/')
     officeLocation:req.body.officeLocation,
     extraInformation:req.body.extraInformation,
     gender:req.body.gender,
-    acadamic:req.body.acadamic
+
     });  
         try{
           const acadamic = await academicMemberModel.find({email:req.body.email});

@@ -13,7 +13,14 @@ locationRouter.route('/')
         type: req.body.type,
         capacity: req.body.capacity,
     }) 
-    try{ const result= await newLocation.save()
+    try{ const find= await locationModel.findOne({name:req.body.name})
+    if(find){
+      res.status(200).json({
+        message:"locatiion exists"
+      });
+      return;
+    }
+      const result= await newLocation.save()
         res.send(result)} 
         catch(err){
           console.log(err);
@@ -29,7 +36,7 @@ locationRouter.route('/:locationName')
   try{
         const result= await locationModel.deleteOne({name : req.params.locationName})
         res.status(200).json({
-          message: 'location deleted',
+          message: 'done',
       });
 
         const result2= await slotModel.updateMany({location: req.params.locationName},{location: "unallocated"})

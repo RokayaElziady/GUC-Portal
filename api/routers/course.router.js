@@ -42,7 +42,7 @@ courseRouter.route('/:courseName')
     console.log(departmentName);
     const department=await departmentModel.updateMany({name:departmentName},{ $pullAll: {courseNames: [req.params.courseName] }});
     res.status(200).json({
-      message: 'course deleted from department',
+      message: 'done',
   });
      }
         catch(err){  
@@ -60,7 +60,7 @@ courseRouter.route('/:courseName')
       if(req.body.department){
         const departments=await departmentModel.find().where('name').in(req.body.department).exec();
         if(departments.length!=req.body.department.length)
-        {res.status(500).json({
+        {res.status(200).json({
                             message: "some departments do not exist or not array"
                            }); 
                            return;

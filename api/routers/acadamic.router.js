@@ -55,7 +55,7 @@ newacademicMember.password=req.body.password;
         if(req.body.officeLocation){
             const location=await locationModel.findOne({name : req.body.officeLocation});
             if(!location){
-                res.status(500).json({
+              res.send({
                    message: "location does not exist"
                   }); 
                   return;}
