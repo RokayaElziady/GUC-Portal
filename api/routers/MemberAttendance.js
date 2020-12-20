@@ -20,14 +20,14 @@ try{
  var date=new Date(Date.now());
 date.setTime( date.getTime() - date.getTimezoneOffset()*60*1000 );
 
-const result=await attendanceModel.updateOne({staffId:req.body.id},{$push:{signIn: date}});
-const result2=await attendanceModel.findOne({staffId:req.body.id})
+const result=await attendanceModel.updateOne({staffId:req.user.id},{$push:{signIn: date}});
+const result2=await attendanceModel.findOne({staffId:req.user.id})
 result2.signIn.sort(function (a, b) {
   if (a > b) return 1;
   if (a < b) return -1;
   return 0;
 });
-const result3=await attendanceModel.updateOne({staffId:req.body.id},{signIn: result2.signIn });
+const result3=await attendanceModel.updateOne({staffId:req.user.id},{signIn: result2.signIn });
 res.status(200).json({
   message: 'success',
 });
@@ -46,14 +46,14 @@ res.status(200).json({
 try{  
   var date=new Date(Date.now());
   date.setTime( date.getTime() - date.getTimezoneOffset()*60*1000 );
-    const result=await attendanceModel.updateOne({staffId:req.body.id},{$push:{signOut: date,}});
-    const result2=await attendanceModel.findOne({staffId:req.body.id})
+    const result=await attendanceModel.updateOne({staffId:req.user.id},{$push:{signOut: date,}});
+    const result2=await attendanceModel.findOne({staffId:req.user.id})
     result2.signOut.sort(function (a, b) {
       if (a > b) return 1;
       if (a < b) return -1;
       return 0;
     });
-    const result3=await attendanceModel.updateOne({staffId:req.body.id},{signOut: result2.signOut });
+    const result3=await attendanceModel.updateOne({staffId:req.user.id},{signOut: result2.signOut });
 res.status(200).json({
   message: 'success',
 });
@@ -73,11 +73,11 @@ res.status(200).json({
         async (req, res) => {
       try{
 if(!req.body.month){
-  const result=await attendanceModel.findOne({staffId:req.body.id});
+  const result=await attendanceModel.findOne({staffId:req.user.id});
   res.send(result);
   return;
 }
-else{  const result=await attendanceModel.findOne({staffId:req.body.id});
+else{  const result=await attendanceModel.findOne({staffId:req.user.id});
        const res2=result.signIn.filter(element => element.getMonth() ==req.body.month);
       const res3=result.signOut.filter(element => element.getMonth() ==req.body.month);
       let attend={
@@ -127,13 +127,13 @@ Memberattendance.route('/missingdays')
       startDate.setMilliseconds(0);
     }
   let absence=[];
-    const result=await attendanceModel.findOne({staffId:req.body.id});
-    let hrPeople=await hrmodel.findOne({id:req.body.id});
-    let acPeople=await academicMemberModel.findOne({id:req.body.id});
-   let requests=await requestsModel.findOne({id:req.body.id});
+    const result=await attendanceModel.findOne({staffId:req.user.id});
+    let hrPeople=await hrmodel.findOne({id:req.user.id});
+    let acPeople=await academicMemberModel.findOne({id:req.user.id});
+   let requests=await requestsModel.findOne({id:req.user.id});
 for(var i=new Date(startDate);i.getDate()<=endDate.getDate()&&i.getMonth()<=endDate.getMonth();i.setDate(i.getDate()+1)){
   if(!(i.getDay()=="5")){
-  if(req.body.id.includes("hr-")){
+  if(req.user.id.includes("hr-")){
   person=hrPeople;}
   else{
     person=acPeople;
@@ -178,7 +178,7 @@ if(!temp||!temp2||temp.length==0||temp2.length==0){
  console.log("here")
   let accepted=false;
   if(requests){
- let req2=requests.filter(element=>element.from==req.body.id);
+ let req2=requests.filter(element=>element.from==req.user.id);
 if(req2){
  for(let l=0;l<req2.length;l++){
 if(new Date(req2[l].dateOfRequest).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='Accidental leave'||req2[l].type=='anual leave'||req2[l].type=='sick leave'||req2[l].type=='maternity leave'||req2[l].type=='compensation leave'||req2[l].type=='leave')){
@@ -243,13 +243,13 @@ console.log(absence)
       startDate.setMilliseconds(0);
     }
   let absence=[];
-    const result=await attendanceModel.findOne({staffId:req.body.id});
-    let hrPeople=await hrmodel.findOne({id:req.body.id});
-    let acPeople=await academicMemberModel.findOne({id:req.body.id});
-   let requests=await requestsModel.findOne({id:req.body.id});
+    const result=await attendanceModel.findOne({staffId:req.user.id});
+    let hrPeople=await hrmodel.findOne({id:req.user.id});
+    let acPeople=await academicMemberModel.findOne({id:req.user.id});
+   let requests=await requestsModel.findOne({id:req.user.id});
 for(var i=new Date(startDate);i.getDate()<=endDate.getDate()&&i.getMonth()<=endDate.getMonth();i.setDate(i.getDate()+1)){
   if(!(i.getDay()=="5")){
-  if(req.body.id.includes("hr-")){
+  if(req.user.id.includes("hr-")){
   person=hrPeople;}
   else{
     person=acPeople;
@@ -294,7 +294,7 @@ if(!temp||!temp2||temp.length==0||temp2.length==0){
  console.log("here")
   let accepted=false;
   if(requests){
- let req2=requests.filter(element=>element.from==req.body.id);
+ let req2=requests.filter(element=>element.from==req.user.id);
 if(req2){
  for(let l=0;l<req2.length;l++){
 if(new Date(req2[l].dateOfRequest).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='Accidental leave'||req2[l].type=='anual leave'||req2[l].type=='sick leave'||req2[l].type=='maternity leave'||req2[l].type=='compensation leave'||req2[l].type=='leave')){
@@ -359,10 +359,10 @@ Memberattendance.route('/missinghours')
       startDate.setMilliseconds(0);
     }
   let absence=[];
-    const result=await attendanceModel.findOne({staffId:req.body.id});
-    let hrPeople=await hrmodel.findOne({id:req.body.id});
-    let acPeople=await academicMemberModel.findOne({id:req.body.id});
-   let requests=await requestsModel.findOne({id:req.body.id});
+    const result=await attendanceModel.findOne({staffId:req.user.id});
+    let hrPeople=await hrmodel.findOne({id:req.user.id});
+    let acPeople=await academicMemberModel.findOne({id:req.user.id});
+   let requests=await requestsModel.findOne({id:req.user.id});
    let person; 
    let dayoff   
      let remaining=0;

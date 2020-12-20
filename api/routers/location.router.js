@@ -13,7 +13,7 @@ locationRouter.route('/')
         type: req.body.type,
         capacity: req.body.capacity,
     }) 
-    try{if(!(req.body.id.includes("hr-"))){
+    try{if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     } const find= await locationModel.findOne({name:req.body.name})
@@ -36,7 +36,7 @@ locationRouter.route('/')
 //delete location and make slots there unallocated
 locationRouter.route('/:locationName')
 .delete(async (req, res)=>{ 
-  try{if(!(req.body.id.includes("hr-"))){
+  try{if(!(req.user.id.includes("hr-"))){
     res.send("you are not an hr");
     return;
   }
@@ -57,7 +57,7 @@ locationRouter.route('/:locationName')
           });}})
 //update location
 .put( async(req, res)=>
-{ try{ if(!(req.body.id.includes("hr-"))){
+{ try{ if(!(req.user.id.includes("hr-"))){
   res.send("you are not an hr");
   return;
 }  

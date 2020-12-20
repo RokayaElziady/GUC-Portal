@@ -10,7 +10,7 @@ const { compare } = require('bcryptjs');
 attendanceRouter.route('/:id')
 .post(
   async (req, res) => {
-try{     if(!(req.body.id.includes("hr-"))||req.params.id==req.body.id){
+try{     if(!(req.user.id.includes("hr-"))||req.params.id==req.user.id){
   res.send("you are not an hr or you can't add for yourself");
   return;
 }
@@ -64,7 +64,7 @@ res.status(200).json({
     .get(
         async (req, res) => {
       try{ 
-        if(!(req.body.id.includes("hr-"))){
+        if(!(req.user.id.includes("hr-"))){
           res.send("you are not an hr");
           return;
         }
@@ -83,7 +83,7 @@ attendanceRouter.route('/')
 .get(
     async (req, res) => {
   try{ 
-    if(!(req.body.id.includes("hr-"))){
+    if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }

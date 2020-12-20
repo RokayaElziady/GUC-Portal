@@ -19,7 +19,7 @@ const verify=async (req, res,next)=>{
         const verified= await jwt.verify(token,"HS256")
          req.user=verified
          console.log(req.user)
-         req.id="ac-2"
+        
         
          //return res.send("SUCCESS")
          next()

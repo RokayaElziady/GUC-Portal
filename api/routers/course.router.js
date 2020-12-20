@@ -13,11 +13,11 @@ courseRouter.route('/')
         name: req.body.name, 
         department:req.body.department,
     });   
-    try{ if(!(req.body.id.includes("hr-"))){
+    try{ if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }
-      if(!(req.body.id.includes("hr-"))){
+      if(!(req.user.id.includes("hr-"))){
         res.send("you are not an hr");
         return;
       }
@@ -45,7 +45,7 @@ courseRouter.route('/')
 courseRouter.route('/:courseName')
 .delete(async (req, res)=>{ 
   try{
-    if(!(req.body.id.includes("hr-"))){
+    if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }
@@ -68,7 +68,7 @@ courseRouter.route('/:courseName')
 .put( async(req, res)=>
 { 
     try{
-      if(!(req.body.id.includes("hr-"))){
+      if(!(req.user.id.includes("hr-"))){
         res.send("you are not an hr");
         return;
       }

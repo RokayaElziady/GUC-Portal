@@ -18,7 +18,7 @@ hrStaffRouter.route('/')
     gender:req.body.gender,
 
     });  
-        try{if(!(req.body.id.includes("hr-"))){
+        try{if(!(req.user.id.includes("hr-"))){
           res.send("you are not an hr");
           return;
         }
@@ -91,7 +91,7 @@ newhrStaff.password=req.body.password;
     );
 hrStaffRouter.route('/:id')
 .delete(async (req, res)=>{ 
-  try{if(!(req.body.id.includes("hr-"))){
+  try{if(!(req.user.id.includes("hr-"))){
     res.send("you are not an hr");
     return;
   }
@@ -172,7 +172,7 @@ res.send(result);
             }})
  hrStaffRouter.route('/salary/:id')
  .put( async(req, res)=>
- {  if(!(req.body.id.includes("hr-"))){
+ {  if(!(req.user.id.includes("hr-"))){
   res.send("you are not an hr");
   return;
 }

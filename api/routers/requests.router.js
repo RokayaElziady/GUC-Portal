@@ -38,7 +38,7 @@ router.post('/sendReplacementRequest',
         id: reciever
       })
       sender1 = await academicMemberModel.find({
-        id: req.id
+        id: req.user.id
       })
 
       slot1 = await slotsModel.find({
@@ -64,7 +64,7 @@ router.post('/sendReplacementRequest',
         }
       })
 
-     if(slot1[0].academicMember!=req.id){
+     if(slot1[0].academicMember!=req.user.id){
       return res.json({
         error: 'you are not teaching this slot ',
       })
@@ -98,7 +98,7 @@ router.post('/sendReplacementRequest',
       }
        
             const request = new requestsModel({
-              from: req.id,
+              from: req.user.id,
               to: reciever,
               type: requestType.REPLACEMENT,
               reason: req.body.reason,
@@ -107,7 +107,7 @@ router.post('/sendReplacementRequest',
             })
             request.save();
 
-            const reqq=requestsModel.find({from: req.id, to: reciever, type: requestType.REPLACEMENT,reason: req.body.reason,status: requestStatus.PENDING,slot: slot})
+            const reqq=requestsModel.find({from: req.user.id, to: reciever, type: requestType.REPLACEMENT,reason: req.body.reason,status: requestStatus.PENDING,slot: slot})
 
             var notification=new notificationModel({
               academicMember:reciever,
@@ -132,7 +132,7 @@ router.post('/sendReplacementRequest',
 router.get('/viewSentReplacementRequest',
   async (req, res) => {
     try {
-      const requests =await requestsModel.find({to: req.id})
+      const requests =await requestsModel.find({to: req.user.id})
       return res.json({
         msg: ' success',
         requests
@@ -151,7 +151,7 @@ router.get('/viewSentReplacementRequest',
 router.get('/viewRecievedReplacementRequest',
   async (req, res) => {
     try {
-      const requests=await requestsModel.find({from: req.id })
+      const requests=await requestsModel.find({from: req.user.id })
 
       return res.json({
         msg: ' success',
@@ -174,7 +174,7 @@ router.post('/sendSlotLinkingRequest',
     try {
         const slot=req.body.slot;
         const slot1=await slotsModel.find({_id:slot});
-        const sender1= await academicMemberModel.find({id:req.id})
+        const sender1= await academicMemberModel.find({id:req.user.id})
       if (slot1.length === 0) {
         return res.json({
           error: 'this slot does not exist',
@@ -201,7 +201,7 @@ router.post('/sendSlotLinkingRequest',
           })       
         }
 
-      var mySlots=(await scheduleModel.find({academicMember:req.id}))[0].slots
+      var mySlots=(await scheduleModel.find({academicMember:req.user.id}))[0].slots
 
       mySlots=mySlots.filter((s)=>{
         if (s.day === slot1[0].day && s.order===slot1[0].order) {
@@ -220,7 +220,7 @@ router.post('/sendSlotLinkingRequest',
             _id: slot1[0].course
           })
           const request = new requestsModel({
-            from: req.id,
+            from: req.user.id,
             to: course[0].coordinator,
             type: requestType.SLOT_LINKING,
             status: requestStatus.PENDING,
@@ -250,9 +250,9 @@ router.post('/sendChangeDayOffRequest',
     try {
       const dayOff = req.body.day;
       const sender1 = await academicMemberModel.find({
-        id: req.id
+        id: req.user.id
       })
-      var mySlots=(await scheduleModel.find({academicMember:req.id}))[0].slots
+      var mySlots=(await scheduleModel.find({academicMember:req.user.id}))[0].slots
 
       mySlots=mySlots.filter((s)=>{
         if (s.day ===dayOff) {
@@ -270,7 +270,7 @@ router.post('/sendChangeDayOffRequest',
       })
 
       const request = new requestsModel({
-        from: req.id,
+        from: req.user.id,
         to: dep[0].HOD,
         type: requestType.CHANGE_DAY_OFF,
         reason: req.body.reason,
@@ -302,7 +302,7 @@ async (req, res) => {
         const replacements=req.body.replacements
         const requestIds=req.body.requests
         const date=req.body.date;
-        const sender1= await academicMemberModel.find({id:req.id})
+        const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({_id:sender1[0].department})
 
         var datereq = new Date(date);  // dateStr you get from mongodb
@@ -348,7 +348,7 @@ async (req, res) => {
       }
 
             const request=new requestsModel({
-              from:req.id,
+              from:req.user.id,
               to:dep[0].HOD,
               type:requestType.ANNUAL_LEAVE,
               reason:reason,
@@ -378,9 +378,9 @@ async (req, res) => {
       try {
           const reason=req.body.reason;
           const date=req.body.date;
-          const sender1= await academicMemberModel.find({id:req.id})
+          const sender1= await academicMemberModel.find({id:req.user.id})
           const dep=await departementModel.find({_id:sender1[0].department})
-        //  const leaves=await leavesModel.find({academicMember:req.id})
+        //  const leaves=await leavesModel.find({academicMember:req.user.id})
            
           if(sender1[0].accidentalLeaves>=6){
             return res.json({
@@ -389,7 +389,7 @@ async (req, res) => {
           }
           
               const request=new requestsModel({
-                from:req.id,
+                from:req.user.id,
                 to:dep[0].HOD,
                 type:requestType.ACCIDENTAL_LEAVE,
                 reason:reason,
@@ -415,7 +415,7 @@ async (req, res) => {
     router.post('/sendSickLeaveRequest',
 async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
+      if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
         return res.json({
           error:'only a TA or an Academic coordinator can use this function',
          })  
@@ -423,7 +423,7 @@ async (req, res) => {
         const reason=req.body.reason;
         const date=req.body.date;
         const documents=req.body.documents;
-        const sender1= await academicMemberModel.find({id:req.id})
+        const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({_id:sender1[0].department})
 
 
@@ -467,7 +467,7 @@ async (req, res) => {
         }
 
             const request=new requestsModel({
-              from:req.id,
+              from:req.user.id,
               to:dep[0].HOD,
               type:requestType.SICK_LEAVE,
               reason:reason,
@@ -495,7 +495,7 @@ async (req, res) => {
   router.post('/sendMaternityLeaveRequest',
 async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
+      if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
         return res.json({
           error:'only a TA or an Academic coordinator can use this function',
          })  
@@ -503,7 +503,7 @@ async (req, res) => {
         const reason=req.body.reason;
         const date=req.body.date;
         const documents=req.body.documents;
-        const sender1= await academicMemberModel.find({id:req.id})
+        const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({_id:sender1[0].department})
         var datereq = new Date(date);
         var d = datereq.getDate();
@@ -545,7 +545,7 @@ async (req, res) => {
         }
 
             const request=new requestsModel({
-              from:req.id,
+              from:req.user.id,
               to:dep[0].HOD,
               type:requestType.MATERNITY_LEAVE,
               reason:reason,
@@ -571,14 +571,14 @@ async (req, res) => {
   router.post('/sendCompensationLeaveRequest',
 async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
+      if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
         return res.json({
           error:'only a TA or an Academic coordinator can use this function',
          })  
       }
         const reason=req.body.reason;
         const date=req.body.date;
-        const sender1= await academicMemberModel.find({id:req.id})
+        const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({_id:sender1[0].department})
 
         if(!reason ||reason===''|| reason.length===0){
@@ -588,7 +588,7 @@ async (req, res) => {
         }
 
             const request=new requestsModel({
-              from:req.id,
+              from:req.user.id,
               to:dep[0].HOD,
               type:requestType.COMPENSATION_LEAVE,
               reason:reason,
@@ -614,13 +614,13 @@ async (req, res) => {
 router.get('/viewAllSubmittedRequests',
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
+      if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
         return res.json({
           error:'only a TA or an Academic coordinator can use this function',
          })  
       }
       const requests = await requestsModel.find({
-        from: req.id
+        from: req.user.id
       })
       if (requests.length === 0) {
         return res.json({
@@ -647,7 +647,7 @@ router.get('/viewAllSubmittedRequests',
 router.get('/viewAllAcceptedRequests',
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
+      if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
         return res.json({
           error:'only a TA or an Academic coordinator can use this function',
          })  
@@ -686,7 +686,7 @@ router.get('/viewAllAcceptedRequests',
 router.get('/viewAllRejectedRequests',
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
+      if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
         return res.json({
           error:'only a TA or an Academic coordinator can use this function',
          })  
@@ -728,7 +728,7 @@ router.get('/viewAllRejectedRequests',
 router.get('/viewAllPendingRequests',
   async (req, res) => {
     try {
-      if(req.role!="teachingAssistant" && req.role!="coordinator"){
+      if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
         return res.json({
           error:'only a TA or an Academic coordinator can use this function',
          })  
@@ -767,7 +767,7 @@ router.get('/viewAllPendingRequests',
     router.put('/cancelRequest',
     async (req, res) => {
       try {
-        if(req.role!="teachingAssistant" && req.role!="coordinator"){
+        if(req.user.role!="teachingAssistant" && req.user.role!="coordinator"){
           return res.json({
             error:'only a TA or an Academic coordinator can use this function',
            })  
@@ -781,7 +781,7 @@ router.get('/viewAllPendingRequests',
                 })
               }
               const reqSender=request1[0].from
-              if(reqSender!=req.id){
+              if(reqSender!=req.user.id){
                 return res.json({
                   error: 'You Canot cancel a request not sent by you',
                 })
@@ -844,7 +844,7 @@ router.get('/viewAllPendingRequests',
            })  
         }
 
-        if( request1[0].to!=req.id){
+        if( request1[0].to!=req.user.id){
           return res.json({
             error:'you canot reject a request not sent to you',
            })  
@@ -887,7 +887,7 @@ router.get('/viewAllPendingRequests',
              })  
           }
   
-          if( request1[0].to!=req.id){
+          if( request1[0].to!=req.user.id){
             return res.json({
               error:'you canot accept a request not sent to you',
              })  
@@ -930,13 +930,13 @@ router.get('/viewAllPendingRequests',
 router.get('/viewAllSlotLinkingRequests',
   async (req, res) => {
     try {
-      const sender1=await  academicMemberModel.find({id:req.id})
-      if( sender1.length===0||req.role!='coordinator'){
+      const sender1=await  academicMemberModel.find({id:req.user.id})
+      if( sender1.length===0||req.user.role!='coordinator'){
         return res.json({
           error:'you cannot view slot linking request as you are not a coordinator',
          })  
       }
-      var requests= await requestsModel.find({to:req.id,type:requestType.SLOT_LINKING})
+      var requests= await requestsModel.find({to:req.user.id,type:requestType.SLOT_LINKING})
                 return res.json({
                  msg:'success',
                        requests
@@ -972,16 +972,16 @@ router.get('/viewAllSlotLinkingRequests',
          })  
       }
 
-      const sender1=await  academicMemberModel.find({id:req.id,role:"coordinator"})
+      const sender1=await  academicMemberModel.find({id:req.user.id,role:"coordinator"})
 
-      if(sender1.length===0||req.role!='coordinator'){
+      if(sender1.length===0||req.user.role!='coordinator'){
         return res.json({
           error:'you cannot add slots as you are not a coordinator',
          })  
       }
      // console.log("alalal")
      
-      const course1=await courseModel.find({coordinator:req.id})
+      const course1=await courseModel.find({coordinator:req.user.id})
       if(course1.length===0){
         return res.json({
           error:'there is no courses that you are currently coordinating ',
@@ -1053,7 +1053,7 @@ router.get('/viewAllSlotLinkingRequests',
          })  
       }
 
-      const sender1=await  academicMemberModel.find({email:req.id,role:"coordinator"})
+      const sender1=await  academicMemberModel.find({email:req.user.id,role:"coordinator"})
 
       if(sender1.length===0||sender1[0].role!='coordinator'){
         return res.json({
@@ -1061,7 +1061,7 @@ router.get('/viewAllSlotLinkingRequests',
          })  
       }
      
-      const course=await  courseModel.find({coordinator:req.id})
+      const course=await  courseModel.find({coordinator:req.user.id})
       if(course.length===0){
         return res.json({
           error:'there is no courses that you are currently coordinating ',
@@ -1129,7 +1129,7 @@ router.get('/viewAllSlotLinkingRequests',
   async (req, res) => {
     try {
       const slotId=req.body.slot
-      const sender1=await  academicMemberModel.find({email:req.id,role:"coordinator"})
+      const sender1=await  academicMemberModel.find({email:req.user.id,role:"coordinator"})
 
       if(sender1.length===0||sender1[0].role!='coordinator'){
         return res.json({
@@ -1137,7 +1137,7 @@ router.get('/viewAllSlotLinkingRequests',
          })  
       }
      
-      const course=await  courseModel.find({coordinator:req.id})
+      const course=await  courseModel.find({coordinator:req.user.id})
       if(course.length===0){
         return res.json({
           error:'there is no courses that you are currently coordinating ',
@@ -1186,7 +1186,7 @@ router.get('/viewAllSlotLinkingRequests',
         const request=req.body.request
 
         const request1=await requestsModel.find({_id:request})
-        const sender1=await academicMemberModel.find({id:req.id,role:"coordinator"})
+        const sender1=await academicMemberModel.find({id:req.user.id,role:"coordinator"})
 
         if(!request1 || request1.length===0){
           return res.json({
@@ -1207,7 +1207,7 @@ router.get('/viewAllSlotLinkingRequests',
            })  
         }
        
-        const course=await  courseModel.find({coordinator:req.id})
+        const course=await  courseModel.find({coordinator:req.user.id})
         if(course.length===0){
           return res.json({
             error:'there is no courses that you are currently coordinating ',
@@ -1260,7 +1260,7 @@ router.get('/viewAllSlotLinkingRequests',
         const request=req.body.request
 
         const request1=await requestsModel.find({_id:request})
-        const sender1=await academicMemberModel.find({id:req.id,role:"coordinator"})
+        const sender1=await academicMemberModel.find({id:req.user.id,role:"coordinator"})
 
         if(!request1 || request1.length===0){
           return res.json({
@@ -1281,7 +1281,7 @@ router.get('/viewAllSlotLinkingRequests',
            })  
         }
        
-        const course=await  courseModel.find({coordinator:req.id})
+        const course=await  courseModel.find({coordinator:req.user.id})
         if(course.length===0){
           return res.json({
             error:'there is no courses that you are currently coordinating ',

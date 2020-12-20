@@ -16,7 +16,7 @@ departmentRouter.route('/')
         staffIds:req.body.staffIds
     });   
     try{ 
-      if(!(req.body.id.includes("hr-"))){
+      if(!(req.user.id.includes("hr-"))){
         res.send("you are not an hr");
         return;
       }   
@@ -88,7 +88,7 @@ if(req.body.courseNames){
 departmentRouter.route('/:departmentName')
 .delete(async (req, res)=>{ 
   try{
-    if(!(req.body.id.includes("hr-"))){
+    if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }
@@ -109,7 +109,7 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
 //update department if staff or course changed or name or other attributes
 .put( async(req, res)=>
 { 
-    try{if(!(req.body.id.includes("hr-"))){
+    try{if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }

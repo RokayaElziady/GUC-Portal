@@ -42,11 +42,9 @@ async (req, res) => {
       // })
 
       // x.save()
-
-        console.log(req.id)
      
-       const schedule = await scheduleModel.find({academicMember:req.id})
-       const replacements=await replacementModel.find({academicMember:req.id})
+       const schedule = await scheduleModel.find({academicMember:req.user.id})
+       const replacements=await replacementModel.find({academicMember:req.user.id})
        console.log(schedule)
         if(!schedule || schedule.length===0){
             return res.json({

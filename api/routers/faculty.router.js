@@ -9,7 +9,7 @@ facultyRouter.route('/')
     const newfaculty= new facultyModel({
         name: req.body.name, 
     }) 
-    try{ if(!(req.body.id.includes("hr-"))){
+    try{ if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }
@@ -25,7 +25,7 @@ facultyRouter.route('/')
     );
 facultyRouter.route('/:facultyName')
 .delete(async (req, res)=>{ 
-  try{if(!(req.body.id.includes("hr-"))){
+  try{if(!(req.user.id.includes("hr-"))){
     res.send("you are not an hr");
     return;
   }
@@ -48,7 +48,7 @@ facultyRouter.route('/:facultyName')
           });}})
 //update faculty
 .put( async(req, res)=>
-{ try{if(!(req.body.id.includes("hr-"))){
+{ try{if(!(req.user.id.includes("hr-"))){
   res.send("you are not an hr");
   return;
 }
