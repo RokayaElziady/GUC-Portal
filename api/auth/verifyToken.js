@@ -5,17 +5,20 @@ const logoutModel = require('../../Models/logout.model')
 
 
 const verify=async (req, res,next)=>{
+ // console.log("lala")
     const token= req.headers.token
+   
     const s=await logoutModel.find({token:token})
-    if(s!=null || s.length>0){
-      return res.status(401).status('Access deined, you are not loggod in') 
+  //  console.log(s)
+    if(s!=null && s.length>0){
+      return res.status(401).send('Access deined, you are not loggod in') 
     }
     if(!token)  
     {
-        return res.status(401).status('Access deined')
+        return res.status(401).send('Access deined')
     }
    try{
-       
+    console.log(token)
         const verified= await jwt.verify(token,"HS256")
          req.user=verified
          console.log(req.user)

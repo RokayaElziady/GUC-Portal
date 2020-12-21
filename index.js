@@ -16,6 +16,8 @@ const attendance=require('./api/routers/attendance.router');
 const schedule=require('./api/routers/schedule.router')
 const staff=require('./api/routers/staffMembers.router')
 const log=require('./api/routers/logging.route')
+const HOD=require('./api/routers/HOD.router')
+const courseInstructor=require('./api/routers/courseInstructor.router')
 const locationModel = require('./Models/location.model');
 const requestsModel = require('./Models/requests.model');
 const academicMemberModel = require('./Models/academicMember.model');
@@ -33,9 +35,12 @@ app.use('/attendance',attendance);
 app.use('/schedule',schedule)
 app.use('/staff',staff)
 
+app.use('/HOD', HOD);
+app.use('/courseInstructor', courseInstructor);
 app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
+
 
 // var loc=new requestsModel({
 //   from:"kaka"
@@ -49,18 +54,13 @@ app.use((req, res) => {
 
 
 // var x=new academicMemberModel({
-//   id:"k",
-//   name:"haa",
-//   email:"jajaj"
+//   id:"ac-1",
+//   name:"a",
+//   email:"a",
+//   password:"$2b$10$aaqp1b3ld7Aht2.0icNyGeMensZG.6W9vlQfewd.Jzwb/vjtFIuBi",
+//   role:"coordinator"
 // })
 // x.save()
-
-var y=new scheduleModel({
-  academicMember:"k"
-})
-y.save()
-
-
 
 
 

@@ -2,7 +2,7 @@ const express = require('express')
 
 const router= express.Router()
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const academicMemberModel = require('../../Models/academicMember.model')
 const Vtokens= require('../auth/verifyToken');
 const hrStaff = require('../../Models/hr.model');
@@ -99,7 +99,7 @@ console.log("pass"+correctPassword);
     if(userHrStaff){
         console.log("entered hr member")
         console.log("comparing password with bcrypted password")
-        const correctPassword=bycrypt.compare(password,userHrStaff.password)
+        const correctPassword=bcrypt.compare(password,userHrStaff.password)
         if(!correctPassword){
             return res.status(400).send('Invalid Password')
         }
@@ -120,9 +120,15 @@ console.log("pass"+correctPassword);
                 // const token = jwt.sign(payload, key);
                 // res.header('auth-token', token); 
        
-             const token =await jwt.sign(payload,"HS256")
-            
-            res.setHeader('token',token).send(token);
+                console.log("hhea")
+                const token =await jwt.sign(payload,"HS256")
+             
+               res.header('token',token).send(token)
+              
+               var decoded =await jwt.verify(token, 'HS256');
+         
+               console.log(decoded.id) 
+               
             
 
     }}
