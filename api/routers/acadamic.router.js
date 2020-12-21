@@ -86,6 +86,13 @@ newacademicMember.password=req.body.password;
       const schedule=new scheduleModel({
         academicMember:newacademicMember.id
       });
+      if(req.body.department){
+        const new4= await departementModel.findOne({name:req.body.department})
+        if(!new4){
+          res.status(200).json({
+            message: "no such department"
+           }); 
+           return;}}
         const result= await newacademicMember.save()
         const result2= await newAttendance.save()
         const result3= await schedule.save()
@@ -93,7 +100,10 @@ newacademicMember.password=req.body.password;
         if(req.body.officeLocation){
         const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})}
         if(req.body.department){
-        const new3= await departementModel.updateOne({name:req.body.department},{ $push: {staffIds:newacademicMember.id}})}
+          const new4= await departementModel.findOne({name:req.body.department})
+        
+          }
+        const new3= await departementModel.updateOne({name:req.body.department},{ $push: {staffIds:newacademicMember.id}})
         res.send(result)} 
         catch(err){
           console.log(err);
