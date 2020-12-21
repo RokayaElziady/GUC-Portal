@@ -16,8 +16,11 @@ const attendance=require('./api/routers/attendance.router');
 const schedule=require('./api/routers/schedule.router')
 const staff=require('./api/routers/staffMembers.router')
 const log=require('./api/routers/logging.route')
+<<<<<<< HEAD
 const HOD=require('./api/routers/HOD.router')
 const courseInstructor=require('./api/routers/courseInstructor.router')
+=======
+>>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
 const locationModel = require('./Models/location.model');
 const requestsModel = require('./Models/requests.model');
 const academicMemberModel = require('./Models/academicMember.model');
@@ -35,13 +38,19 @@ app.use('/attendance',attendance);
 app.use('/schedule',schedule)
 app.use('/staff',staff)
 
+<<<<<<< HEAD
 app.use('/HOD', HOD);
 app.use('/courseInstructor', courseInstructor);
+=======
+>>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
 app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
 // var loc=new requestsModel({
 //   from:"kaka"
 // })
@@ -54,6 +63,7 @@ app.use((req, res) => {
 
 
 // var x=new academicMemberModel({
+<<<<<<< HEAD
 //   id:"ac-1",
 //   name:"a",
 //   email:"a",
@@ -62,6 +72,21 @@ app.use((req, res) => {
 // })
 // x.save()
 
+=======
+//   id:"k",
+//   name:"haa",
+//   email:"jajaj"
+// })
+// x.save()
+
+var y=new scheduleModel({
+  academicMember:"k"
+})
+y.save()
+
+
+
+>>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
 
 
 const port = 3000

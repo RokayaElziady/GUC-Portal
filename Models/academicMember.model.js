@@ -8,7 +8,7 @@ var academicMember = new Schema({
   id:{type:String,unique: true,required:true},
   name:{type:String,required:true},
   email:{type:String,unique: true,required:true},
-  gender:{type:String},
+  gender:{type:String,required:true},
   department:{type:String},
   courses:[String],
   salary:{type:Number},
@@ -20,8 +20,8 @@ var academicMember = new Schema({
   instructorFor: [String],
   coordinatorFor:[String],
   changePassword:{type:Boolean,default:true},
-  annualLeaves:{type:Number},
-  accidentalLeaves: { type: Number },
+  annualLeaves:{type:Number,default:0},
+  accidentalLeaves: { type: Number,default:0 },
   lastDayUpdated: {
     type: Date
   }

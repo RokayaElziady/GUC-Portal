@@ -8,6 +8,7 @@ const acadamicMemberModel=require('../../Models/academicMember.model');
 locationRouter.route('/')
 .post(
   async (req, res) => {
+    console.log("here")
     const newLocation= new locationModel({
         name: req.body.name, 
         type: req.body.type,

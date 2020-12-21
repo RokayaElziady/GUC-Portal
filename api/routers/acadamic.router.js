@@ -25,7 +25,8 @@ academicMemberRouter.route('/')
     gender:req.body.gender,
     role:req.body.role,
     acadamic:req.body.acadamic,
-    dayOff:req.body.dayOff
+    dayOff:req.body.dayOff,
+    department:req.body.department
     });   
         try{
           if(!(req.user.id.includes("hr-"))){
@@ -91,6 +92,8 @@ newacademicMember.password=req.body.password;
         const count2=await counterModel.updateOne({academicCount:newCount-1},{academicCount:newCount});
         if(req.body.officeLocation){
         const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})}
+        if(req.body.department){
+        const new3= await departementModel.updateOne({name:req.body.department},{ $push: {staffIds:newacademicMember.id}})}
         res.send(result)} 
         catch(err){
           console.log(err);
