@@ -26,10 +26,21 @@ const slotOrder={
   FIFTH:'5th'
 }
 
+const days={
+  SUNDAY:'sunday',
+  MONDAY:'monday',
+  TUESDAY:'tuesday',
+  WEDNESDAY:'wednesday',
+  THURSDAY:'thursday',
+  FRIDAY:'friday',
+  SAUTURDAY:'saturday'
+}
+
 
 
 module.exports = {
   requestType,
   requestStatus,
   slotOrder,
+  days
 }
