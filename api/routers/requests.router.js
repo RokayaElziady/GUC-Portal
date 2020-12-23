@@ -13,8 +13,30 @@ const leavesModel=require("../../Models/leaves.model")
 const replacementModel = require('../../Models/replacements.model')
 
 
+const {
+  validateAcceptReplacementRequest,
+  validateAcceptSlotLinkingRequest,
+  validateAddSlot,
+  validateCancelRequest,
+  validateDeleteSlot,
+  validateRejectReplacementRequest,
+  validateRejectSlotLinkingRequest,
+  validateSendAccidentalLeaveRequest,
+  validateSendAnnualLeaveRequest,
+  validateSendChangeDayOffRequest,
+  validateSendCompensationLeaveRequest,
+  validateSendMaternityLeaveRequest,
+  validateSendReplacementRequest,
+  validateSendSickLeaveRequest,
+  validateSendSlotLinkingRequest,
+  validateUpdateSlot,
 
-router.post('/sendReplacementRequest',
+
+}
+=require('../../middleware/requests.validation')
+
+
+router.post('/sendReplacementRequest',validateSendReplacementRequest,
   async (req, res) => {
     try {
 
@@ -168,7 +190,7 @@ router.get('/viewRecievedReplacementRequest',
 
 
 
-router.post('/sendSlotLinkingRequest',
+router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
 
   async (req, res) => {
     try {
@@ -246,7 +268,7 @@ router.post('/sendSlotLinkingRequest',
 
 
 
-router.post('/sendChangeDayOffRequest',
+router.post('/sendChangeDayOffRequest',validateSendChangeDayOffRequest,
   async (req, res) => {
     try {
       const dayOff = req.body.day;
@@ -294,7 +316,7 @@ router.post('/sendChangeDayOffRequest',
 
 
 
-  router.post('/sendAnnualLeaveRequest',
+  router.post('/sendAnnualLeaveRequest',validateSendAnnualLeaveRequest,
 async (req, res) => {
     try {
         const reason=req.body.reason;
@@ -372,7 +394,7 @@ async (req, res) => {
   )
 
 
-  router.post('/sendAccidentalLeaveRequest',
+  router.post('/sendAccidentalLeaveRequest',validateSendAccidentalLeaveRequest,
   async (req, res) => {
       try {
           const reason=req.body.reason;
@@ -411,7 +433,7 @@ async (req, res) => {
      
     )
 
-    router.post('/sendSickLeaveRequest',
+    router.post('/sendSickLeaveRequest',validateSendSickLeaveRequest,
 async (req, res) => {
     try {
         const reason=req.body.reason;
@@ -486,7 +508,7 @@ async (req, res) => {
   )
 
 
-  router.post('/sendMaternityLeaveRequest',
+  router.post('/sendMaternityLeaveRequest',validateSendMaternityLeaveRequest,
 async (req, res) => {
     try {
         const reason=req.body.reason;
@@ -557,7 +579,7 @@ async (req, res) => {
    
   )
 
-  router.post('/sendCompensationLeaveRequest',
+  router.post('/sendCompensationLeaveRequest',validateSendCompensationLeaveRequest,
 async (req, res) => {
     try {
         const reason=req.body.reason;
@@ -730,7 +752,7 @@ router.get('/viewAllPendingRequests',
   }
     )
 
-    router.put('/cancelRequest',
+    router.put('/cancelRequest',validateCancelRequest,
     async (req, res) => {
       try {
               const request=req.body.request;
@@ -792,7 +814,7 @@ router.get('/viewAllPendingRequests',
       )
 
 
-      router.post('/rejectReplacementRequest',
+      router.post('/rejectReplacementRequest',validateRejectReplacementRequest,
     async (req, res) => {
       try {
         const request=req.body.request
@@ -835,7 +857,7 @@ router.get('/viewAllPendingRequests',
       )
 
 
-      router.post('/acceptReplacementRequest',
+      router.post('/acceptReplacementRequest',validateAcceptReplacementRequest,
       async (req, res) => {
         try {
           const request=req.body.request
@@ -916,7 +938,7 @@ router.get('/viewAllSlotLinkingRequests',
 
 
 
-  router.post('/addSlot',
+  router.post('/addSlot',validateAddSlot,
   async (req, res) => {
     try {
       const startTime=req.body.startTime
@@ -992,7 +1014,7 @@ router.get('/viewAllSlotLinkingRequests',
 
 
 
-  router.put('/updateSlot',
+  router.put('/updateSlot',validateUpdateSlot,
   async (req, res) => {
     try {
       const startTime=req.body.startTime
@@ -1084,7 +1106,7 @@ router.get('/viewAllSlotLinkingRequests',
     )
 
 
-    router.delete('/deleteSlot',
+    router.delete('/deleteSlot',validateDeleteSlot,
   async (req, res) => {
     try {
       const slotId=req.body.slot
@@ -1139,7 +1161,7 @@ router.get('/viewAllSlotLinkingRequests',
      
     )
 
-    router.post('/acceptSlotLinkingRequest',
+    router.post('/acceptSlotLinkingRequest',validateAcceptSlotLinkingRequest,
     async (req, res) => {
       try {
         const request=req.body.request
@@ -1213,7 +1235,7 @@ router.get('/viewAllSlotLinkingRequests',
       )
 
 
-    router.post('/rejectSlotLinkingRequest',
+    router.post('/rejectSlotLinkingRequest',validateRejectSlotLinkingRequest,
     async (req, res) => {
       try {
         const request=req.body.request
