@@ -141,8 +141,8 @@ academicMemberRouter.route('/:id')
     const deleteAttendance=await attendanceModel.deleteOne({staffId : req.params.id});
     const updateCourseCooordinator=await courseModel.updateMany({coordinator : req.params.id},{coordinator : "undefined"});
     const updatedepartmentStaff=await departementModel.updateMany({staffIds: { $elemMatch: {$eq:req.params.id}}},{ $pullAll: {staffIds: [req.params.id] }});
-    const updaterequests=await replacementModel.updateMany({academicMember : req.params.id},{academicMember : "undefined"});
-    const updaterepacements=await requestsModel.deleteOne({from : req.params.id});
+    const updaterequests=await replacementModel.deleteMany({academicMember : req.params.id});
+    const updaterepacements=await requestsModel.updateMany({from : req.params.id},{from : "undefined"});
     const updateslots=await slotsModel.updateMany({academicMember : req.params.id},{academicMember : "undefined"});
   const result= await academicMember.deleteOne({id : req.params.id})
       res.status(200).json({

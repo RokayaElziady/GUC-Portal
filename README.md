@@ -202,7 +202,8 @@ Request body(the date of request and the optional reason  and replacement member
 {
 "date":"2020-12-18T17:00:21.826Z",
 "reason":"traffic jam",
-"replacements":["user1","user2"]
+"replacements":["ac-1","ac-2"]
+"requests":["5fda4ddc86909332a44a56cc","5fda4ddc86909332a44a55ch"]
 }
 
 Response(the created request):
@@ -210,14 +211,14 @@ Response(the created request):
     "msg": "request created successfully",
     "request": {
         "replacementMembers": [
-            "user1",
-            "user2"
+            "ac-1",
+            "ac-2"
         ],
         "_id": "5fda4ddc86909332a44a55cc",
-        "from": "m4",
-        "to": "moh",
+        "from": "ac-3",
+        "to": "ac-3",
         "type": "anual leave",
-        "reason": "traffic jam",
+        "reason": "sick",
         "status": "pending",
         "dateOfRequest": "2020-12-18T17:00:21.826Z",
         "dateSubmitted": "2020-12-16T18:11:40.207Z"

@@ -345,7 +345,7 @@ for(var i=new Date(startDate);i.getDate()<=endDate.getDate()&&i.getMonth()<=endD
   let dayoff;
 if(person){
    dayoff=getDay(person.dayOff);}
- dayoff="blabla"
+ 
   if(!(i.getDay()==dayoff)){
   let temp=[];
   let temp2=[];
@@ -461,7 +461,7 @@ for(var i=new Date(startDate);i.getDate()<=endDate.getDate()&&i.getMonth()<=endD
   let dayoff;
 if(person){
    dayoff=getDay(person.dayOff);}
- dayoff="blabla"
+ 
   if(!(i.getDay()==dayoff)){
   let temp=[];
   let temp2=[];
