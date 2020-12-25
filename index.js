@@ -45,70 +45,32 @@ app.use((req, res) => {
 })
 
 
-// var loc=new locationModel({
-//   name:"l1",
-//   type:"offices",
-// })
-// loc.save()
-
-// loc=new locationModel({
-//   name:"l2",
-//   type:"lecture halls"
-// })
-
-// loc.save()
-
-
-// var cor=new courseModel({
-//   name:"math",
-//   department:"MET"
-// })
-
-// cor.save()
-
-// var cor=new courseModel({
-//   name:"cs",
-//   department:"MET"
-// })
-
-// cor.save()
-
-// var dep=new departementModel({
-//   name:"MET",
-//   HOD:"hagar"
-// })
-
-// dep.save()
-
-// var a=new academicMemberModel({
-//   id:"ac-1",
-//   name:"rokaya",
-//   email:"rokaya",
-//   gender:"female",
-//   role:"coordinator",
-//   department:"MET",
-//   password:"$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
-//   changePassword:true
-
-// })
-// a.save()
-
-
-// var x=new academicMemberModel({
-//   id:"ac-2",
-//   name:"b",
-//   email:"b",
-//   password:"$2b$10$aaqp1b3ld7Aht2.0icNyGeMensZG.6W9vlQfewd.Jzwb/vjtFIuBi",
-//   role:"TA",
-//   gender:"female"
-// })
-// x.save()
-
-// var x=new scheduleModel({
-//   academicMember:"ac-2"
-// })
-
-// x.save()
+async function test() {
+  await academicMemberModel.insertMany([{
+    id: "coordinator1",
+    name: "hi",
+     gender:"female",
+    role:"hi",
+    email: "coordinator1",
+    password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
+    department: "EN",
+    courses: ["CSEN201"]
+  },
+    {
+      role: "hi",
+      name: "hi",
+        gender: "female",
+    id: "coordinator2",
+    email: "coordinator2",
+    password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
+    department: "EN",
+    courses: ["CSEN201"]
+    }]);
+  
+}
+//test().then(()=>{console.log("added to database successfully")})
+//MYTOKEN
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE2MDg4OTQyNjJ9.Sv8t8zyWG1b_3_2b9KS-LpjBbglZo0T2ttmahuVzgsk
 
 const port = 3000
 if (process.env.PORT) {

@@ -242,6 +242,21 @@ router.post('/makeCoordinator',validateMakeCoordinator, async (req, res) => {
         res.send("the academic is already a coordinator for the course");
         return;
     }
+    if (myAcademic.coordinatorFor.length != 0) {
+        res.send("the academic is already a coordinator for another course");
+        return;
+    }
+    let courseFromModel = await courseModel.find({ name: myCourse });
+    courseFromModel = courseFromModel[0];
+    if (courseFromModel.coordinator && courseFromModel.coordinator.length != 0) {
+        res.send("The course already has another coordiator");
+        return;
+    }
+    await courseModel.updateOne({
+        name: myCourse
+    }, {
+        coordinator:myAcademic.id
+    })
     myAcademic.coordinatorFor.push(myCourse);
     await academicMemberModel.updateOne({
         id: myAcademic.id
