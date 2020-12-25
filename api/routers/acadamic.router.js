@@ -90,6 +90,7 @@ newacademicMember.password=req.body.password;
       const schedule=new scheduleModel({
         academicMember:newacademicMember.id
       });
+     
       if(req.body.department){
         const new4= await departementModel.findOne({name:req.body.department})
         if(!new4){
@@ -100,6 +101,7 @@ newacademicMember.password=req.body.password;
         const result= await newacademicMember.save()
         const result2= await newAttendance.save()
         const result3= await schedule.save()
+       
         const count2=await counterModel.updateOne({academicCount:newCount-1},{academicCount:newCount});
         if(req.body.officeLocation){
         const new2= await locationModel.updateOne({name:req.body.officeLocation},{ $inc: {officeOccupants:1}})}

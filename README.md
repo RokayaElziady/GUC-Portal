@@ -665,7 +665,6 @@ Response(success mssg):
 }
 
 
-
 ######################################## HAGAR ########################################
 Functionality: make an academic member Instructor Route: /HOD/makeInstructor Request type: POST Request body: { "academicID" : "ac-1", "courseName":"CSEN704"} Response: Messages describing the status of the request like "you are not HOD : NOT AUTHORIZED" "Academic Id doesn't exist" "Course Name doesn't exist" "Academic is not in your department" "Course is not under your department" "instructor added"
 
