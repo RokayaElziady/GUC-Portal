@@ -45,20 +45,6 @@ app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
 
-
-async function test() {
- await hrmodel.insertMany([{
-   id: "hr-100",
-   name: "ay7aga",
-   email: "ayemail",
-   password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36"
- }])
-}
-//test().then(()=>{console.log("added to database successfully")})
-//MYTOKEN
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEwMCIsImlhdCI6MTYwODkwODMwN30.r-uS2YDtjXLOMf07tLWm3Skyj2GqafOH6lL0sYoEfqM
-
-
 const port = 3000
 if (process.env.PORT) {
   app.listen(process.env.PORT, () =>

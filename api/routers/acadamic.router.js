@@ -87,6 +87,7 @@ newacademicMember.password=req.body.password;
        const newAttendance=new attendanceModel({
         staffId:newacademicMember.id
       });
+      console.log(newacademicMember.id)
       const schedule=new scheduleModel({
         academicMember:newacademicMember.id
       });

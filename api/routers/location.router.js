@@ -9,7 +9,8 @@ const{
   validatePostlocation,
   validatePutlocation
 
- }=require('../../middleware/location.validation')
+ }=require('../../middleware/location.validation');
+const scheduleModel = require('../../Models/schedule.model');
 locationRouter.route('/')
 .post(validatePostlocation,
   async (req, res) => {
@@ -39,7 +40,7 @@ locationRouter.route('/')
       }
     }
     );
-//delete location and make slots there unallocated
+//delete location and make slots there undefined
 locationRouter.route('/:locationName')
 .delete(async (req, res)=>{ 
   try{if(!(req.user.id.includes("hr-"))){
@@ -55,10 +56,13 @@ locationRouter.route('/:locationName')
         res.status(200).json({
           message: 'done',
       });
-
-        const result2= await slotModel.updateMany({location: req.params.locationName},{location: "unallocated"})
-        const result3= await hrModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "unallocated"})
-        const result4= await acadamicMemberModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "unallocated"})
+      const sch2=await scheduleModel.updateMany( {
+        slots: { $elemMatch: { location:req.params.locationName } }
+      },
+      { $set: { "slots.$.location" : "undefined" } });
+        const result2= await slotModel.updateMany({location: req.params.locationName},{location: "undefined"})
+        const result3= await hrModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "undefined"})
+        const result4= await acadamicMemberModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "undefined"})
   
      }
      
@@ -82,14 +86,18 @@ if(!find){
             ({name : req.params.locationName}, req.body, {new: true});
             res.send(result);
             if(req.body.name){
+              const sch2=await scheduleModel.updateMany( {
+                slots: { $elemMatch: { location:req.params.locationName } }
+              },
+              { $set: { "slots.$.location" : req.body.name } });
                 const result= await slotModel.updateMany({location: req.params.locationName},{location: req.body.name});
                 const result3= await hrModel.updateMany({officeLocation: req.params.locationName},{officeLocation: req.body.name});
                 const result4= await acadamicMemberModel.updateMany({officeLocation: req.params.locationName},{officeLocation: req.body.name});
               }
               //handles if an office is no longer an office
               if(req.body.type!="offices"&&locationUpdated.type=="offices"){
-                const result5= await hrModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "unallocated"})
-                const result6= await acadamicMemberModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "unallocated"})
+                const result5= await hrModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "undefined"})
+                const result6= await acadamicMemberModel.updateMany({officeLocation: req.params.locationName},{officeLocation: "undefined"})
               }
             }
             catch(err){

@@ -12,6 +12,7 @@ var hr = new Schema({
     salary:{type:Number},
     officeLocation:{type:String},
     extraInformation:{type:String},
+    gender:{type:String},
     //changed
     password:{type:String,default:"123456"},
     dayOff:{type:String,default:"Saturday"},

@@ -77,6 +77,11 @@ if(req.body.courseNames){
         for(let i=0;i<req.body.staffIds.length;i++){             
             const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{department:req.body.name})
         }}
+        if(req.body.HOD){
+         
+          const staff6=await acadamicMemberModel.updateOne({id:req.body.HOD},{role:"HOD"})
+        }
+        
         
     } 
         catch(err){
@@ -188,7 +193,10 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
         const updateCourse1=await courseModel.updateMany({department: { $elemMatch: {$eq:req.params.departmentName}}},{ $push: {department: req.body.name }});
         const updateCourse2=await courseModel.updateMany({department: { $elemMatch: {$eq:req.body.name}}},{ $pullAll: {department: [req.params.departmentName] }});
         }
-  
+        if(req.body.HOD){
+         
+          const staff6=await acadamicMemberModel.updateOne({id:req.body.HOD},{role:"HOD"})
+        }
      }
             catch(err){
               console.log(err);

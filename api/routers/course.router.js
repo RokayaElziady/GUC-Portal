@@ -11,7 +11,8 @@ const {
   validatePostcourse,
   validatePutCourse,
 
- }=require('../../middleware/course.validation')
+ }=require('../../middleware/course.validation');
+const scheduleModel = require('../../Models/schedule.model');
 courseRouter.route('/')
 .post(
   validatePostcourse,  async (req, res) => {
@@ -68,6 +69,7 @@ courseRouter.route('/:courseName')
     const acadamic3=await acadamicMemberModel.updateMany({department:departmentName},{ $pullAll: {coordinatorFor: [req.params.courseName] }});
     const department=await departmentModel.updateMany({name:departmentName},{ $pullAll: {courseNames: [req.params.courseName] }});
     const course2=await courseModel.updateMany({name:req.params.courseName},{ $pullAll: {department: [departmentName] }});
+ 
     res.status(200).json({
       message: 'done',
   });
@@ -125,6 +127,10 @@ courseRouter.route('/:courseName')
       const acadamic5=await academicMemberModel.updateMany({coordinatorFor: { $elemMatch: {$eq:req.params.courseName}}},{ $push: {coordinatorFor: name }});
       const acadamic6=await academicMemberModel.updateMany({coordinatorFor: { $elemMatch: {$eq:req.params.courseName}}},{ $pullAll: {coordinatorFor: [req.params.courseName] }});
       const acadamic7=await requestsModel.updateMany({course:req.params.courseName},{course:name});
+      const sch2=await scheduleModel.updateMany( {
+        slots: { $elemMatch: { course:req.params.courseName } }
+      },
+      { $set: { "slots.$.course" : name } });
       const acadamic8=await slotsModel.updateMany({course:req.params.courseName},{course:name});
      }
            }
