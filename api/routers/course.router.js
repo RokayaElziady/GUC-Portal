@@ -58,21 +58,14 @@ courseRouter.route('/:courseName')
     }
     const courseExist=await courseModel.findOne({name:req.params.courseName})
     if(!courseExist){
-<<<<<<< HEAD
-=======
-      console.log("here")
->>>>>>> 1367d048f177a914fee80dfc1ec801c8a66d9992
       res.send("course does not exist");
       return;
     }
     const departmentName=req.body.department;
     console.log(departmentName);
-<<<<<<< HEAD
-=======
     const acadamic=await acadamicMemberModel.updateMany({department:departmentName},{ $pullAll: {courses: [req.params.courseName] }});
     const acadamic2=await acadamicMemberModel.updateMany({department:departmentName},{ $pullAll: {instructorFor: [req.params.courseName] }});
     const acadamic3=await acadamicMemberModel.updateMany({department:departmentName},{ $pullAll: {coordinatorFor: [req.params.courseName] }});
->>>>>>> 1367d048f177a914fee80dfc1ec801c8a66d9992
     const department=await departmentModel.updateMany({name:departmentName},{ $pullAll: {courseNames: [req.params.courseName] }});
     const course2=await courseModel.updateMany({name:req.params.courseName},{ $pullAll: {department: [departmentName] }});
     res.status(200).json({

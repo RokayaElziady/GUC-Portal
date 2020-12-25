@@ -5,11 +5,7 @@ const express = require('express')
 const Memberattendance = express.Router()
 
 const jwt = require('jsonwebtoken');
-<<<<<<< HEAD
 const bcrypt = require('bcryptjs');
-=======
-const bcrypt = require('bcrypt');
->>>>>>> 1367d048f177a914fee80dfc1ec801c8a66d9992
 const academicMemberModel = require('../../Models/academicMember.model')
 const Vtokens= require('../auth/verifyToken');
 const hrStaff = require('../../Models/hr.model');
