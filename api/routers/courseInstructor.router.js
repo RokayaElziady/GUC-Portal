@@ -14,9 +14,6 @@ const {
     requestType
 } = require('../enums');
 const { route } = require('./schedule.router');
-<<<<<<< HEAD
-
-=======
 const{
     validateAssignSlotToMember,
     validateUpdateSlotAssignmentToMember,
@@ -25,7 +22,6 @@ const{
     validateAssignAcademicToCourse,
     validateRemoveAcademicFromCourse
 }=require('../middleware/courseInstructor.validation');
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 router.get('/courseCoverage', async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
@@ -103,11 +99,7 @@ router.get('/viewStaffByCourse', async (req, res) => {
     res.send(acadmics);
 });
 
-<<<<<<< HEAD
-router.post('/assignSlotToMember', async (req, res) => {
-=======
 router.post('/assignSlotToMember', validateAssignSlotToMember,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
@@ -149,11 +141,7 @@ router.post('/assignSlotToMember', validateAssignSlotToMember,async (req, res) =
     await slotsModel.updateOne({ _id: slot[0]._id }, { academicMember: myAcademic.id });
     res.send("slot assigned successfully");
 });
-<<<<<<< HEAD
-router.post('/updateSlotAssignmentToMember', async (req, res) => {
-=======
 router.post('/updateSlotAssignmentToMember', validateUpdateSlotAssignmentToMember,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
      let authorizationToken = await authorizeCourseInstructor(req);
      if (!authorizationToken.aurthorized) {
          res.send("You are not authorized for this request");
@@ -195,11 +183,7 @@ router.post('/updateSlotAssignmentToMember', validateUpdateSlotAssignmentToMembe
     await slotsModel.updateOne({ _id: slot_id }, { course: courseNew });
     res.send("Assigned same slot to same Member but with new course successfully");
 })
-<<<<<<< HEAD
-router.post('/deleteSlotAssignmentFromMember', async (req, res) => {
-=======
 router.post('/deleteSlotAssignmentFromMember', validateDeleteSlotAssignmentFromMember,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
@@ -233,11 +217,7 @@ router.post('/deleteSlotAssignmentFromMember', validateDeleteSlotAssignmentFromM
     res.send("slot assignment deleted successfully")
 });
 
-<<<<<<< HEAD
-router.post('/makeCoordinator', async (req, res) => {
-=======
 router.post('/makeCoordinator',validateMakeCoordinator, async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
@@ -272,11 +252,7 @@ router.post('/makeCoordinator',validateMakeCoordinator, async (req, res) => {
         
 });
 
-<<<<<<< HEAD
-router.post('/assignAcademicToCourse', async (req, res) => {
-=======
 router.post('/assignAcademicToCourse', validateAssignAcademicToCourse,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");
@@ -314,11 +290,7 @@ router.post('/assignAcademicToCourse', validateAssignAcademicToCourse,async (req
     await academicMemberModel.updateOne({ id: myAcademic.id }, { courses: myAcademic.courses })
     res.send("academic assigned Successfully");
 })
-<<<<<<< HEAD
-router.post('/removeAcademicFromCourse', async (req, res) => {
-=======
 router.post('/removeAcademicFromCourse', validateRemoveAcademicFromCourse,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
         res.send("You are not authorized for this request");

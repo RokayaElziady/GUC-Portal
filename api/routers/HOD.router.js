@@ -10,10 +10,6 @@ const {
     requestStatus,
     requestType
 } = require('../enums');
-<<<<<<< HEAD
-
-router.post('/makeInstructor', async (req, res) => {
-=======
 const{
     validateMakeDeleteInstructor,
     validateUpdateInstructor,
@@ -22,7 +18,6 @@ const{
     validateTeachingAssignmentsOfCourse
 }=require("../middleware/HOD.validation");
 router.post('/makeInstructor', validateMakeDeleteInstructor,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
@@ -63,11 +58,7 @@ router.post('/makeInstructor', validateMakeDeleteInstructor,async (req, res) => 
     
 })
 
-<<<<<<< HEAD
-router.post('/deleteInstructor', async (req, res) => {
-=======
 router.post('/deleteInstructor', validateMakeDeleteInstructor,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 
    const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
@@ -113,11 +104,7 @@ router.post('/deleteInstructor', validateMakeDeleteInstructor,async (req, res) =
 
 });
 
-<<<<<<< HEAD
-router.post('/updateInstructor', async (req, res) => {
-=======
 router.post('/updateInstructor', validateUpdateInstructor,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 
    const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
@@ -205,11 +192,7 @@ router.get('/viewStaffByDepartment', async (req, res) => {
     res.send(academicsInDep);
 });
 
-<<<<<<< HEAD
-router.post('/viewStaffByCourseName', async (req, res) => {
-=======
 router.post('/viewStaffByCourseName', validateViewStaffByCourseName,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     
    const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
@@ -319,11 +302,7 @@ router.get('/viewLeaveRequests', async (req, res) => {
     res.send(result);
 });
 
-<<<<<<< HEAD
-router.post('/rejectRequest', async (req, res) => {
-=======
 router.post('/rejectRequest', validateRejectAcceptRequest,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
@@ -351,11 +330,7 @@ router.post('/rejectRequest', validateRejectAcceptRequest,async (req, res) => {
     await notificationModel.insertMany([{academicMember:myAcademic,request:reqID}])
     res.send("request rejected successfully")
 });
-<<<<<<< HEAD
-router.post('/acceptRequest', async (req, res) => {
-=======
 router.post('/acceptRequest', validateRejectAcceptRequest,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
@@ -515,11 +490,7 @@ router.get('/courseCoverage', async (req, res) => {
 
 });
 
-<<<<<<< HEAD
-router.post('/teachingAssignmentsOfCourse', async (req, res) => {
-=======
 router.post('/teachingAssignmentsOfCourse', validateTeachingAssignmentsOfCourse,async (req, res) => {   
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
      const authorizationToken = await authorizeHOD(req);
      if (!authorizationToken.aurthorized) {
          res.send("you are not HOD : NOT AUTHORIZED");

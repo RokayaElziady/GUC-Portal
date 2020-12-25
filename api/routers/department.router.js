@@ -4,18 +4,12 @@ const departmentModel = require('../../Models/department.model');
 const courseModel = require('../../Models/course.model');
 const facultyModel = require('../../Models/faculty.model');
 const acadamicMemberModel= require('../../Models/academicMember.model');
-<<<<<<< HEAD
-const e = require('express');
-departmentRouter.route('/')
-.post(
-=======
 const {
   validatePostdepartment,
   validatePutdepartment
  }=require('../../middleware/department.validation')
 departmentRouter.route('/')
 .post(validatePostdepartment,
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
   async (req, res) => {
  const newdepartment= new departmentModel({
         name: req.body.name, 
@@ -71,30 +65,18 @@ if(req.body.courseNames){
         const result= await newdepartment.save()
         res.send(result);
           //add the department to this courses
-<<<<<<< HEAD
-          if(req.body.courseNames)
-=======
           if(req.body.courseNames){
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
           for(let i=0;i<req.body.courseNames.length;i++){
             const course1=await courseModel.findOne({name:req.body.courseNames[i]});
               if(course1.department==null)
             course1.department=[];             
             course1.department.push(req.body.name)
             const course2=await courseModel.updateOne({name:req.body.courseNames[i]},{department:course1.department})
-<<<<<<< HEAD
-        }
-        if(req.body.staffIds)
-        for(let i=0;i<req.body.staffIds.length;i++){             
-            const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{department:req.body.name})
-        }
-=======
         }}
         if(req.body.staffIds){
         for(let i=0;i<req.body.staffIds.length;i++){             
             const staff=await acadamicMemberModel.updateOne({id:req.body.staffIds[i]},{department:req.body.name})
         }}
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
         
     } 
         catch(err){
@@ -114,14 +96,10 @@ departmentRouter.route('/:departmentName')
       return;
     }
 const department= await  departmentModel.findOne({name : req.params.departmentName})
-<<<<<<< HEAD
-  
-=======
   if(!department){
     res.send("departent does not exist");
     return;
   }
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
   const course2=await courseModel.updateMany({department: { $elemMatch: {$eq:req.params.departmentName}}},{ $pullAll: {department: [req.params.departmentName] }});
 const staff3=await acadamicMemberModel.updateMany({department:req.params.departmentName},{department:"undefined"})
       const result= await departmentModel.deleteOne({name : req.params.departmentName})
@@ -135,25 +113,17 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
             
           });}})
 //update department if staff or course changed or name or other attributes
-<<<<<<< HEAD
-.put( async(req, res)=>
-=======
 .put( validatePutdepartment,async(req, res)=>
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 { 
     try{if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }
-<<<<<<< HEAD
-        const department= await  departmentModel.findOne({name : req.params.departmentName});
-=======
     const department= await  departmentModel.findOne({name : req.params.departmentName})
     if(!department){
       res.send("departent does not exist");
       return;
     }
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
         if(req.body.faculty){
             const faculty=await facultyModel.findOne({name : req.body.faculty});
             if(!faculty){

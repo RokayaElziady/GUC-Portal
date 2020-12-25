@@ -7,22 +7,14 @@ const hrmodel = require('../../Models/hr.model');
 const requestsModel=require('../../Models/requests.model');
 const { request } = require('express');
 const { compare } = require('bcryptjs');
-<<<<<<< HEAD
-attendanceRouter.route('/:id')
-.post(
-  async (req, res) => {
-=======
 const  { validatePostattendance}=require('../../middleware/attendance.validation');
 attendanceRouter.route('/:id')
 .post(
   validatePostattendance, async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 try{     if(!(req.user.id.includes("hr-"))||req.params.id==req.user.id){
   res.send("you are not an hr or you can't add for yourself");
   return;
 }
-<<<<<<< HEAD
-=======
 const hrExist=await hrmodel.findOne({id:req.params.id});
 const arExist=await academicMemberModel.findOne({id:req.params.id});
 
@@ -31,7 +23,6 @@ if(!(hrExist)&&!arExist){
   res.send("no such person");
   return;
 }
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 if(new Date(req.body.signIn).getTime()>new Date(Date.now()).getTime()||new Date(req.body.signOut)>new Date(Date.now()).getTime()){
   res.send("can not add in the future");
   return;

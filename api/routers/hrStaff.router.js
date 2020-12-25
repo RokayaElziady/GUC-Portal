@@ -6,11 +6,6 @@ const hrStaff = require('../../Models/hr.model');
 const counterModel = require('../../Models/counters.model');
 const attendanceModel=require('../../Models/attendence.model');
 const academicMemberModel=require('../../Models/academicMember.model');
-<<<<<<< HEAD
-hrStaffRouter.route('/')
-.post(
-  async (req, res) => {
-=======
 const {
   validatePosthr,
   validatePuthr,
@@ -19,7 +14,6 @@ const {
 hrStaffRouter.route('/')
 .post(
   validatePosthr,async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
  const newhrStaff= new hrStaff({
     name:req.body.name,
     email:req.body.email,
@@ -106,15 +100,11 @@ hrStaffRouter.route('/:id')
     res.send("you are not an hr");
     return;
   }
-<<<<<<< HEAD
-   
-=======
    const staff=await hrStaff.findOne({id : req.params.id});
    if(!staff){
      res.send("staff does not exist");
      return;
    }
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     const hr= await hrStaff.findOne({id : req.params.id})
     if(hr){
       if(hr.officeLocation){
@@ -133,11 +123,6 @@ hrStaffRouter.route('/:id')
             error: err
           });}})
 //update hrStaff
-<<<<<<< HEAD
-.put( async(req, res)=>
-{   
-    try{  if(req.body.email){
-=======
 .put( validatePuthr,async(req, res)=>
 {   
     try{  if(!(req.user.id.includes("hr-"))){
@@ -149,7 +134,6 @@ hrStaffRouter.route('/:id')
        res.send("staff does not exist");
        return;
      }if(req.body.email){
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
       const acadamic = await academicMemberModel.find({email:req.body.email});
     if(acadamic.length>0){
       res.status(500).json({
@@ -204,15 +188,6 @@ res.send(result);
           });
             }})
  hrStaffRouter.route('/salary/:id')
-<<<<<<< HEAD
- .put( async(req, res)=>
- {  if(!(req.user.id.includes("hr-"))){
-  res.send("you are not an hr");
-  return;
-}
-     try{    
-
-=======
  .put( validatePutSalaryhr,async(req, res)=>
  { 
      try{    
@@ -225,7 +200,6 @@ res.send(result);
          res.send("staff does not exist");
          return;
        }
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
  const result= await hrStaff.findOneAndUpdate({id :req.params.id}, {salary:req.body.salary}, {new: true});
 
  res.send(result);}

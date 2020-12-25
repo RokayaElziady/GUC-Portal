@@ -6,11 +6,6 @@ const acadamicMemberModel= require('../../Models/academicMember.model');
 const academicMemberModel = require('../../Models/academicMember.model');
 const requestsModel = require('../../Models/requests.model');
 const slotsModel = require('../../Models/slots.model');
-<<<<<<< HEAD
-courseRouter.route('/')
-.post(
-  async (req, res) => {
-=======
 const {
   validateDeleteCourse,
   validatePostcourse,
@@ -20,7 +15,6 @@ const {
 courseRouter.route('/')
 .post(
   validatePostcourse,  async (req, res) => {
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
  const newcourse= new courseModel({
         name: req.body.name, 
         department:req.body.department,
@@ -55,23 +49,13 @@ courseRouter.route('/')
     }
     );
 courseRouter.route('/:courseName')
-<<<<<<< HEAD
-.delete(async (req, res)=>{ 
-  try{
-=======
 .delete(validateDeleteCourse,async (req, res)=>{ 
   try{
   
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     if(!(req.user.id.includes("hr-"))){
       res.send("you are not an hr");
       return;
     }
-<<<<<<< HEAD
-    const departmentName=req.body.department;
-    console.log(departmentName);
-    const department=await departmentModel.updateMany({name:departmentName},{ $pullAll: {courseNames: [req.params.courseName] }});
-=======
     const courseExist=await courseModel.findOne({name:req.params.courseName})
     if(!courseExist){
       res.send("course does not exist");
@@ -81,7 +65,6 @@ courseRouter.route('/:courseName')
     console.log(departmentName);
     const department=await departmentModel.updateMany({name:departmentName},{ $pullAll: {courseNames: [req.params.courseName] }});
     const course2=await courseModel.updateMany({name:req.params.courseName},{ $pullAll: {department: [departmentName] }});
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     res.status(200).json({
       message: 'done',
   });
@@ -95,27 +78,18 @@ courseRouter.route('/:courseName')
         })
 
 //update course
-<<<<<<< HEAD
-.put( async(req, res)=>
-{ 
-    try{
-=======
 .put(validatePutCourse, async(req, res)=>
 { 
     try{ 
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
       if(!(req.user.id.includes("hr-"))){
         res.send("you are not an hr");
         return;
       }
-<<<<<<< HEAD
-=======
       const courseExist=await courseModel.findOne({name:req.params.courseName})
     if(!courseExist){
       res.send("course does not exist");
       return;
     }
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
       if(req.body.department){
         const departments=await departmentModel.find().where('name').in(req.body.department).exec();
         if(departments.length!=req.body.department.length)
