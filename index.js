@@ -103,7 +103,32 @@ app.use((req, res) => {
 // })
 // x.save()
 
-
+async function test() {
+  await academicMemberModel.insertMany([{
+    id: "coordinator1",
+    name: "hi",
+     gender:"female",
+    role:"hi",
+    email: "coordinator1",
+    password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
+    department: "EN",
+    courses: ["CSEN201"]
+  },
+    {
+      role: "hi",
+      name: "hi",
+        gender: "female",
+    id: "coordinator2",
+    email: "coordinator2",
+    password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
+    department: "EN",
+    courses: ["CSEN201"]
+    }]);
+  
+}
+//test().then(()=>{console.log("added to database successfully")})
+//MYTOKEN
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE2MDg4OTQyNjJ9.Sv8t8zyWG1b_3_2b9KS-LpjBbglZo0T2ttmahuVzgsk
 
 const port = 3000
 if (process.env.PORT) {

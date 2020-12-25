@@ -1,5 +1,5 @@
 module.exports={
-   mongoURI:'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false',
+   mongoURI: '7otty bta3k hna',
    salt: 10,
     signingKey:'3azama',
 }
