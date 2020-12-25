@@ -10,8 +10,14 @@ const {
     requestStatus,
     requestType
 } = require('../enums');
-
-router.post('/makeInstructor', async (req, res) => {
+const{
+    validateMakeDeleteInstructor,
+    validateUpdateInstructor,
+    validateViewStaffByCourseName,
+    validateRejectAcceptRequest,
+    validateTeachingAssignmentsOfCourse
+}=require("../middleware/HOD.validation");
+router.post('/makeInstructor', validateMakeDeleteInstructor,async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
@@ -52,7 +58,7 @@ router.post('/makeInstructor', async (req, res) => {
     
 })
 
-router.post('/deleteInstructor', async (req, res) => {
+router.post('/deleteInstructor', validateMakeDeleteInstructor,async (req, res) => {
 
    const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
@@ -98,7 +104,7 @@ router.post('/deleteInstructor', async (req, res) => {
 
 });
 
-router.post('/updateInstructor', async (req, res) => {
+router.post('/updateInstructor', validateUpdateInstructor,async (req, res) => {
 
    const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
@@ -186,7 +192,7 @@ router.get('/viewStaffByDepartment', async (req, res) => {
     res.send(academicsInDep);
 });
 
-router.post('/viewStaffByCourseName', async (req, res) => {
+router.post('/viewStaffByCourseName', validateViewStaffByCourseName,async (req, res) => {
     
    const authorizationToken = await authorizeHOD(req);
    if (!authorizationToken.aurthorized) {
@@ -296,7 +302,7 @@ router.get('/viewLeaveRequests', async (req, res) => {
     res.send(result);
 });
 
-router.post('/rejectRequest', async (req, res) => {
+router.post('/rejectRequest', validateRejectAcceptRequest,async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
@@ -324,7 +330,7 @@ router.post('/rejectRequest', async (req, res) => {
     await notificationModel.insertMany([{academicMember:myAcademic,request:reqID}])
     res.send("request rejected successfully")
 });
-router.post('/acceptRequest', async (req, res) => {
+router.post('/acceptRequest', validateRejectAcceptRequest,async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
         res.send("you are not HOD : NOT AUTHORIZED");
@@ -484,7 +490,7 @@ router.get('/courseCoverage', async (req, res) => {
 
 });
 
-router.post('/teachingAssignmentsOfCourse', async (req, res) => {
+router.post('/teachingAssignmentsOfCourse', validateTeachingAssignmentsOfCourse,async (req, res) => {   
      const authorizationToken = await authorizeHOD(req);
      if (!authorizationToken.aurthorized) {
          res.send("you are not HOD : NOT AUTHORIZED");

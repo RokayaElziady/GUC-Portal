@@ -22,6 +22,7 @@ const locationModel = require('./Models/location.model');
 const requestsModel = require('./Models/requests.model');
 const academicMemberModel = require('./Models/academicMember.model');
 const scheduleModel = require('./Models/schedule.model');
+const request=require('./api/routers/requests.router')
 connectDB()
 app.use('/logging',log)
 app.use(verify)
@@ -34,6 +35,7 @@ app.use('/departments',departmentRoute);
 app.use('/attendance',attendance);
 app.use('/schedule',schedule)
 app.use('/staff',staff)
+app.use('/request',request)
 app.use('/HOD', HOD);
 app.use('/courseInstructor', courseInstructor);
 app.use((req, res) => {
