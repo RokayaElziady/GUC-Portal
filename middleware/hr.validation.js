@@ -6,7 +6,7 @@ const validatePosthr = (req, res, next) => {
     salary:Joi.number(),
     officeLocation:Joi.string(),
     extraInformation:Joi.string(),
-    gender:Joi.string().required()
+    gender:Joi.string().required().valid('female','male')
     })
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
