@@ -29,7 +29,7 @@ connectDB()
 app.use('/logging',log)
 app.use(verify)
 app.use('/hrStaff',hrRoute);
-app.use('/academic',acadamicRoute);
+app.use('/acadamic',acadamicRoute);
 app.use('/courses',courseRoute);
 app.use('/location',location);
 app.use('/faculties',facultyRoute);

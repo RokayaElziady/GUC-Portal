@@ -1,8 +1,16 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 *you need to add the first hr member manually in the datbase
 
 =======
 >>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
+=======
+<<<<<<< HEAD
+*you need to add the first hr member manually in the datbase
+
+=======
+>>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
+>>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 ######################################## ROKAYA ########################################
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,12 +561,21 @@ Request type: POST
 Request body(slot details  ):
 {
 
+<<<<<<< HEAD
   "startTime":10,
   "endTime":12,
   "day":"sunday",
   "order":"1st",
   "location":"l1",
   "course":"math"
+=======
+   " startTime":"10",
+        "endTime":"12",
+        "day":"monday",
+        "course":"5fd8c3f5e952fd1984ba8d7a",
+        "location":"5fd8d3b3e9bb395fd4b28adf",
+        "order":"5th"
+>>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 
 }
 Response(the cancelled request):
@@ -566,6 +583,7 @@ Response(the cancelled request):
     "msg": "slot added successfully",
     "slot1": {
         "academicMember": "undefined",
+<<<<<<< HEAD
         "_id": "5fe5b18aed6e1a200c8b0d7a",
         "startTime": 10,
         "endTime": 12,
@@ -573,6 +591,14 @@ Response(the cancelled request):
         "course": "math",
         "location": "l1",
         "order": "1st"
+=======
+        "_id": "5fdc8a217431d5129491b56e",
+        "endTime": 12,
+        "day": "monday",
+        "course": "5fd8c3f5e952fd1984ba8d7a",
+        "location": "5fd8d3b3e9bb395fd4b28adf",
+        "order": "5th"
+>>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
     }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -582,6 +608,7 @@ Request type: PUT
 Request body(  slot details):
 {
 
+<<<<<<< HEAD
   "startTime":10,
   "endTime":12,
   "day":"monday",
@@ -589,6 +616,14 @@ Request body(  slot details):
   "location":"l1",
   "slot":"5fe5b213ed6e1a200c8b0d7b"
 
+=======
+   " startTime":"10",
+        "endTime":"17",
+        "day":"thursday",
+        "location":"5fd8d3b3e9bb395fd4b28adf",
+        "order":"1st",
+        "slot":"5fdc8a217431d5129491b56e"
+>>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 }
 Response(success message):
    {

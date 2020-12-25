@@ -5,8 +5,18 @@ const locationModel = require('../../Models/location.model');
 const slotModel = require('../../Models/slots.model');
  const hrModel=require('../../Models/hr.model');
 const acadamicMemberModel=require('../../Models/academicMember.model');
+<<<<<<< HEAD
 locationRouter.route('/')
 .post(
+=======
+const{
+  validatePostlocation,
+  validatePutlocation
+
+ }=require('../../middleware/location.validation')
+locationRouter.route('/')
+.post(validatePostlocation,
+>>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
   async (req, res) => {
     console.log("here")
     const newLocation= new locationModel({
@@ -41,6 +51,14 @@ locationRouter.route('/:locationName')
     res.send("you are not an hr");
     return;
   }
+<<<<<<< HEAD
+=======
+  const find= await locationModel.findOne({name:req.params.locationName})
+ if(!find){
+  res.send("location does not exist");
+  return; 
+ }
+>>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
         const result= await locationModel.deleteOne({name : req.params.locationName})
         res.status(200).json({
           message: 'done',
@@ -57,11 +75,23 @@ locationRouter.route('/:locationName')
             error: err
           });}})
 //update location
+<<<<<<< HEAD
 .put( async(req, res)=>
 { try{ if(!(req.user.id.includes("hr-"))){
   res.send("you are not an hr");
   return;
 }  
+=======
+.put(  validatePutlocation,async(req, res)=>
+{ try{ if(!(req.user.id.includes("hr-"))){
+  res.send("you are not an hr");
+  return;
+}  const find= await locationModel.findOne({name:req.params.locationName})
+if(!find){
+ res.send("location does not exist");
+ return; 
+}
+>>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
   const locationUpdated= await locationModel.findOne
   ({name : req.params.locationName} );  
   const result= await locationModel.findOneAndUpdate
