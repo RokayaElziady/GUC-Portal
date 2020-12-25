@@ -10,6 +10,12 @@ const attendenceModel= require('../../Models/attendence.model');
 const hrmodel = require('../../Models/hr.model');
 const requestsModel= require('../../Models/requests.model');
 const logoutModel=require('../../Models/logout.model')
+const {
+  validateUpdateProfile,
+  validateResetPassword,
+  validateveiwAttendenceRecords,
+  }
+  =require('../../middleware/requests.validation');
 
 
 
@@ -195,9 +201,7 @@ router.put('/resetPassword',async (req, res) => {
        await hrmodel.findOneAndUpdate( { id:req.user.id},{password:password,changePassword:false})
        res.send("successfully updated")
       }
-      if(!userAcdemicMember && !userHrStaff){
-        res.send("you need to log in first")
-    }
+     
     } catch (exception) {
       return res.json({
         error: 'Something went wrong',
@@ -234,8 +238,8 @@ res.status(200).json({
       }
     }
     )
-    router.route('/out')
-.post(
+
+    router.route('/out').post(
   async (req, res) => {
 try{  
   var date=new Date(Date.now());
@@ -272,11 +276,11 @@ if(!req.body.month){
   return;
 }
 else{  const result=await attendenceModel.findOne({staffId:req.user.id});
-       const res2=result.signIn.filter(element => element.getMonth() ==req.body.month);
-      const res3=result.signOut.filter(element => element.getMonth() ==req.body.month);
+       const signin=result.signIn.filter(element => element.getMonth() ==req.body.month);
+      const signout=result.signOut.filter(element => element.getMonth() ==req.body.month);
       let attend={
-        res2,
-        res3
+        signin,
+        signout
       }
        res.send(attend);
      }
@@ -682,11 +686,3 @@ break;
 
 
     module.exports = router;
-
-
-
-
-
-
-
-

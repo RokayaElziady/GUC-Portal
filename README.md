@@ -1459,6 +1459,43 @@ Response:
     "staffId": "ac-3",
     "__v": 0
 }
+//case month with  no enteries in attendence
+Request body:
+  {
+     
+    "month":10
+     
+}
+Response: 
+{
+    "signin": [],
+    "signout": []
+}
+//case filtering by month that has enteries in attendence
+
+Request body:
+{
+     
+    "month":11
+     
+}
+Response: 
+{
+    "signin": [
+        "2020-12-25T17:02:34.908Z",
+        "2020-12-25T17:05:10.612Z",
+        "2020-12-25T17:06:57.123Z",
+        "2020-12-25T17:07:00.875Z"
+    ],
+    "signout": [
+        "2020-12-25T17:03:57.207Z",
+        "2020-12-25T17:06:00.871Z",
+        "2020-12-25T17:06:39.067Z"
+    ]
+}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
