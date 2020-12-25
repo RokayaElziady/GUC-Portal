@@ -53,7 +53,14 @@ router.post('/makeInstructor', validateMakeDeleteInstructor,async (req, res) => 
         }
     let instructorForMe = myAcademic[0].instructorFor;
     instructorForMe.push(courseName);
-    await academicMemberModel.updateOne({ id: academicID }, { instructorFor: instructorForMe });
+    let courses = myAcademic[0].courses;
+    courses.push(courseName);
+    await academicMemberModel.updateOne({
+        id: academicID
+    }, {
+        instructorFor: instructorForMe,
+        courses:courses
+    });
     res.send("instructor added")
     
 })
@@ -469,7 +476,7 @@ router.get('/courseCoverage', async (req, res) => {
 
         let coveredSlots = slotsIncourse.filter((slot) => {
              
-            if (slot.academicMember)
+            if (slot.academicMember && slot.academicMember.toString().localeCompare("undefined")!=0)
                 return true;
             return false;
         });

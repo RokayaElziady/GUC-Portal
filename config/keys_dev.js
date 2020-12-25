@@ -1,5 +1,5 @@
 module.exports={
-   mongoURI: '7otty bta3k hna',
+   mongoURI: '7oto bta3ko hna',
    salt: 10,
     signingKey:'3azama',
 }
