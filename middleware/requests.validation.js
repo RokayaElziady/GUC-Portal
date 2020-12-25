@@ -266,6 +266,70 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
   }
 
 
+  //////////////mariam
+  const validateLogin = (req, res, next) => {
+    const schema = Joi.object({
+      email:Joi.string().required(),
+      password:Joi.string().required()
+    })
+  
+    const isValid = Joi.validate(req.body, schema)
+    if (isValid.error) {
+      return res.json({
+        error: isValid.error.details[0].message,
+      })
+    }
+    return next()
+  }
+
+  const validateUpdateProfile = (req, res, next) => {
+    const schema = Joi.object({
+      
+      email:Joi.string(),
+      gender:Joi.string(),
+      officeLocation:Joi.string(),
+      extraInformation:Joi.string(),
+      password:Joi.string()
+        
+    })
+  
+    const isValid = Joi.validate(req.body, schema)
+    if (isValid.error) {
+      return res.json({
+        error: isValid.error.details[0].message,
+      })
+    }
+    return next()
+  }
+  const validateResetPassword = (req, res, next) => {
+    const schema = Joi.object({
+      password:Joi.string()
+    })
+  
+    const isValid = Joi.validate(req.body, schema)
+    if (isValid.error) {
+      return res.json({
+        error: isValid.error.details[0].message,
+      })
+    }
+    return next()
+  }
+
+  const validateveiwAttendenceRecords = (req, res, next) => {
+    const schema = Joi.object({
+      month:Joi.string()
+    })
+  
+    const isValid = Joi.validate(req.body, schema)
+    if (isValid.error) {
+      return res.json({
+        error: isValid.error.details[0].message,
+      })
+    }
+    return next()
+  }
+
+
 
 
 module.exports = {
@@ -284,7 +348,11 @@ module.exports = {
  validateUpdateSlot,
  validateDeleteSlot,
  validateAcceptSlotLinkingRequest,
- validateRejectSlotLinkingRequest
+ validateRejectSlotLinkingRequest,
+ validateLogin,
+ validateUpdateProfile,
+ validateResetPassword,
+ validateveiwAttendenceRecords
 
 
 

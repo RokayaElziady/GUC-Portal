@@ -1334,4 +1334,207 @@ Response:
     "__v": 0,
     "salary": 1
 }}(person with updated salary)
-######################################## MARIAM ########################################
+########################################MARIAM########################################
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+1)Functionality: A staff member logging in and changing his password if first time to login.
+Route: /logging/login
+Request : POST
+Request body(the email and the password of the staff member (logged in before) ):
+{   "email":"hr2222@gmail.com",
+   "password": "hrmember2"
+}
+Response(token): eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTIiLCJpYXQiOjE2MDg4ODI3ODZ9.MwVHQM7pk431HraCx917FLcohchlK1NkbHP4lJUNHI4
+
+Request body( the email , password and newpassword if first time to login ):
+{  "email":"acdemicTest1@gmail.com",
+   "password": "123456",
+   "newpassword": "acdemicTest1Password"
+}
+
+Response(token):
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiY3MgcHJvZmVzc29yIiwiaWF0IjoxNjA4ODkwMDg3fQ.gGqfhBats6CjayoMC-2fAJzS6sWYIfp9bTVu99dx9WI
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+2)  Functionality:  A staff member logging out 
+Route:  /logging/logout
+Request type: POST
+Request body: no request body (just add the token in the header)
+
+Response:
+logged out successfully!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+3) Functionality: A staff member can view his profile
+Route: /staff/viewProfile
+Request type: GET
+Request body:  no request body (just add the token in the header)
+
+Response:
+{
+    "courses": [],
+    "password": "$2a$10$WDuKu3pZPdq8AMyVrcwtJO/25niQQC3tfiR5497oUtrPgHkOH5x9C",
+    "dayOff": "Saturday",
+    "instructorFor": [],
+    "coordinatorFor": [],
+    "changePassword": false,
+    "annualLeaves": 2.5,
+    "accidentalLeaves": 0,
+    "_id": "5fe5b544f46980507c6144b0",
+    "name": "acdemicTest1",
+    "email": "acdemicTest1@gmail.com",
+    "gender": "female",
+    "role": "cs professor",
+    "id": "ac-3",
+    "__v": 0
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+4) Functionality: A staff member can update his profile
+Route:  /staff/UpdateProfile
+Request type: PUT
+Request body + (add token in header):
+{
+   
+    "password": "newacdemicTest1PasswordUpdated",
+    "email": "acdemicTest1Updated@gmail.com",
+    "gender": "male",
+    "extraInformation" : "i am testing the update profile for acdemicmember1"
+ 
+  
+}
+
+Response:
+
+updated successfully
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+5) Functionality:  A staff member can reset his password
+Route: /staff/resetPassword
+Request type: PUT
+Request body+(token in header):
+{
+    "password": "newacdemicTest1PasswordUpdatedReset"
+}
+
+Response:
+
+successfully updated
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+6) Functionality: staff member  signing in (simulating entering campus)
+Route: /staff/in
+Request type: POST
+Request body: no request body (just token in header)
+
+Response:
+
+{
+    "message": "success"
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+7) Functionality:  staff member  signing out (simulating leaving campus)
+Route: /staff/out
+Request type: POST
+Request body: no request body (just token in header)
+
+Response :
+
+{
+    "message": "success"
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+8) Functionality: staff member view all there attendence records or filter it by month
+Route: /staff/veiwAttendenceRecords
+Request type: GET
+Request body:  no request body (just add the token in the header)
+
+Response:
+
+{
+    "signIn": [
+        "2020-12-25T13:52:47.680Z"
+    ],
+    "signOut": [
+        "2020-12-25T13:55:53.707Z"
+    ],
+    "_id": "5fe5b546f46980507c6144b1",
+    "staffId": "ac-3",
+    "__v": 0
+}
+//case month with  no enteries in attendence
+Request body:
+  {
+     
+    "month":10
+     
+}
+Response: 
+{
+    "signin": [],
+    "signout": []
+}
+//case filtering by month that has enteries in attendence
+
+Request body:
+{
+     
+    "month":11
+     
+}
+Response: 
+{
+    "signin": [
+        "2020-12-25T17:02:34.908Z",
+        "2020-12-25T17:05:10.612Z",
+        "2020-12-25T17:06:57.123Z",
+        "2020-12-25T17:07:00.875Z"
+    ],
+    "signout": [
+        "2020-12-25T17:03:57.207Z",
+        "2020-12-25T17:06:00.871Z",
+        "2020-12-25T17:06:39.067Z"
+    ]
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+9) Functionality:  view missing days
+Route: /staff/missingdays
+Request type: GET
+Request body: no request body (just add the token in the header)
+
+Response:
+
+[
+    "2020-12-12T05:00:32.000Z",
+    "2020-12-13T05:00:32.000Z",
+    "2020-12-14T05:00:32.000Z",
+    "2020-12-15T05:00:32.000Z",
+    "2020-12-16T05:00:32.000Z",
+    "2020-12-17T05:00:32.000Z",
+    "2020-12-19T05:00:32.000Z",
+    "2020-12-20T05:00:32.000Z",
+    "2020-12-21T05:00:32.000Z",
+    "2020-12-22T05:00:32.000Z",
+    "2020-12-23T05:00:32.000Z",
+    "2020-12-24T05:00:32.000Z"
+]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+10) Functionality:  view missing hours or extra hours
+Route: /staff/missinghours
+Request type: GET
+Request body: no request body (just add the token in the header)
+
+Response: -0.05hours
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

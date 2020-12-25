@@ -10,13 +10,18 @@ const attendenceModel= require('../../Models/attendence.model');
 const hrmodel = require('../../Models/hr.model');
 const requestsModel= require('../../Models/requests.model');
 const logoutModel=require('../../Models/logout.model')
+const {
+  validateLogin 
+  }
+  =require('../../middleware/requests.validation');
 
 
 
-router.post('/logout',
+
+router.post('/logout',validateLogin,
   async (req, res) => {
       try{
-          console.log("lalal")
+         // console.log("lalal")
           console.log(req.headers.token)
         var x=new logoutModel({
             token:req.headers.token
@@ -87,8 +92,7 @@ console.log("pass"+correctPassword);
                 // res.header('auth-token', token); 
                 console.log("hhea")
              const token =await jwt.sign(payload,"HS256")
-             
-          
+             await logoutModel.findOneAndDelete({token:token})
             res.header('token',token).send(token)
            
             var decoded =await jwt.verify(token, 'HS256');
@@ -123,7 +127,7 @@ console.log("pass"+correctPassword);
        
                 console.log("hhea")
                 const token =await jwt.sign(payload,"HS256")
-             
+             await logoutModel.findOneAndDelete({token:token})
                res.header('token',token).send(token)
               
                var decoded =await jwt.verify(token, 'HS256');
