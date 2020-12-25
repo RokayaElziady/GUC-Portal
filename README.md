@@ -553,12 +553,12 @@ Request type: POST
 Request body(slot details  ):
 {
 
-   " startTime":"10",
-        "endTime":"12",
-        "day":"monday",
-        "course":"5fd8c3f5e952fd1984ba8d7a",
-        "location":"5fd8d3b3e9bb395fd4b28adf",
-        "order":"5th"
+  "startTime":10,
+  "endTime":12,
+  "day":"sunday",
+  "order":"1st",
+  "location":"l1",
+  "course":"math"
 
 }
 Response(the cancelled request):
@@ -566,12 +566,13 @@ Response(the cancelled request):
     "msg": "slot added successfully",
     "slot1": {
         "academicMember": "undefined",
-        "_id": "5fdc8a217431d5129491b56e",
+        "_id": "5fe5b18aed6e1a200c8b0d7a",
+        "startTime": 10,
         "endTime": 12,
-        "day": "monday",
-        "course": "5fd8c3f5e952fd1984ba8d7a",
-        "location": "5fd8d3b3e9bb395fd4b28adf",
-        "order": "5th"
+        "day": "sunday",
+        "course": "math",
+        "location": "l1",
+        "order": "1st"
     }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -581,12 +582,13 @@ Request type: PUT
 Request body(  slot details):
 {
 
-   " startTime":"10",
-        "endTime":"17",
-        "day":"thursday",
-        "location":"5fd8d3b3e9bb395fd4b28adf",
-        "order":"1st",
-        "slot":"5fdc8a217431d5129491b56e"
+  "startTime":10,
+  "endTime":12,
+  "day":"monday",
+  "order":"3rd",
+  "location":"l1",
+  "slot":"5fe5b213ed6e1a200c8b0d7b"
+
 }
 Response(success message):
    {

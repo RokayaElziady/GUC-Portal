@@ -3,15 +3,13 @@ const { mongoURI } = require('./keys_dev')
 
 const connectDB = async () => {
   const uri = mongoURI
- // console.log(uri)
   mongoose
     .connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-
-useFindAndModify: false,
-server: {socketOptions: {socketTimeoutMS: 10000}}
+      useFindAndModify: false,
+//server: {socketOptions: {socketTimeoutMS: 10000}}
 
     })
     .then(() => {

@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const {days}=require('../api/enums')
+const {days,slotOrder}=require('../api/enums')
 
 const validateSendReplacementRequest = (req, res, next) => {
   const schema = Joi.object({
@@ -182,9 +182,9 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
         startTime:Joi.number().required(),
         endTime:Joi.number().required(),
-        day:Joi.string.valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
+        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
         location:Joi.string().required(),
-        order:Joi.string().required(),
+        order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).required(),
         course:Joi.string().required(),
         academicMember:Joi.string(),
     })
@@ -203,11 +203,11 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
         startTime:Joi.number(),
         endTime:Joi.number(),
-        day:Joi.string.valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY),
+        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY),
         location:Joi.string(),
-        order:Joi.string(),
-        course:Joi.string(),
+        order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH),
         academicMember:Joi.string(),
+        slot:Joi.string().length(24).required()
     })
   
     const isValid = Joi.validate(req.body, schema)

@@ -22,6 +22,9 @@ const locationModel = require('./Models/location.model');
 const requestsModel = require('./Models/requests.model');
 const academicMemberModel = require('./Models/academicMember.model');
 const scheduleModel = require('./Models/schedule.model');
+const courseModel = require('./Models/course.model');
+const departementModel = require('./Models/department.model');
+const request=require('./api/routers/requests.router')
 connectDB()
 app.use('/logging',log)
 app.use(verify)
@@ -33,6 +36,7 @@ app.use('/faculties',facultyRoute);
 app.use('/departments',departmentRoute);
 app.use('/attendance',attendance);
 app.use('/schedule',schedule)
+app.use("/request",request)
 app.use('/staff',staff)
 app.use('/HOD', HOD);
 app.use('/courseInstructor', courseInstructor);
@@ -40,15 +44,54 @@ app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
 
-// var loc=new requestsModel({
-//   from:"kaka"
+
+// var loc=new locationModel({
+//   name:"l1",
+//   type:"offices",
 // })
 // loc.save()
 
 // loc=new locationModel({
-//   name:"lala3"
+//   name:"l2",
+//   type:"lecture halls"
 // })
+
 // loc.save()
+
+
+// var cor=new courseModel({
+//   name:"math",
+//   department:"MET"
+// })
+
+// cor.save()
+
+// var cor=new courseModel({
+//   name:"cs",
+//   department:"MET"
+// })
+
+// cor.save()
+
+// var dep=new departementModel({
+//   name:"MET",
+//   HOD:"hagar"
+// })
+
+// dep.save()
+
+// var a=new academicMemberModel({
+//   id:"ac-1",
+//   name:"rokaya",
+//   email:"rokaya",
+//   gender:"female",
+//   role:"coordinator",
+//   department:"MET",
+//   password:"$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
+//   changePassword:true
+
+// })
+// a.save()
 
 
 // var x=new academicMemberModel({
