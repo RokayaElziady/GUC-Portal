@@ -952,7 +952,6 @@ router.get('/viewAllSlotLinkingRequests',
       const location=req.body.location
       const order=req.body.order
       const course=req.body.course
-      const academicMember=req.body.academicMember
 
       const loc=await  locationModel.find({name:location})
       if(!loc || loc.length===0){

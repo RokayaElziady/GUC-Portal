@@ -187,7 +187,6 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
         location:Joi.string().required(),
         order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).required(),
         course:Joi.string().required(),
-        academicMember:Joi.string(),
     })
   
     const isValid = Joi.validate(req.body, schema)
@@ -317,7 +316,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
 
   const validateveiwAttendenceRecords = (req, res, next) => {
     const schema = Joi.object({
-      month:Joi.string()
+      month:Joi.number()
     })
   
     const isValid = Joi.validate(req.body, schema)
