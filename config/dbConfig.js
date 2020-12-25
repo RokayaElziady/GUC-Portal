@@ -9,7 +9,6 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
-//server: {socketOptions: {socketTimeoutMS: 10000}}
 
     })
     .then(() => {
