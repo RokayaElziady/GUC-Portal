@@ -32,7 +32,8 @@ var requests = new Schema({
   replacementMembers:[{type:String,
                    default: 'undefined'}] ,
 
-  documentsDriveLink:{type:String}                 
+  documentsDriveLink:{type:String},   
+  compensationDay:{type:Date}              
 
 
 })

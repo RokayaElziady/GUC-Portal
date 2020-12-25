@@ -37,7 +37,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
 
   const validateSendChangeDayOffRequest = (req, res, next) => {
     const schema = Joi.object({
-      day:Joi.string.valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
+      day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
       reason:Joi.string()
     })
   
@@ -123,6 +123,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
       date:Joi.date().iso().required(),
       reason:Joi.string().required(),
+      compensationDay:Joi.date().iso().required(),
     })
   
     const isValid = Joi.validate(req.body, schema)

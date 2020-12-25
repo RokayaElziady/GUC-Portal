@@ -95,15 +95,20 @@ app.use((req, res) => {
 
 
 // var x=new academicMemberModel({
-//   id:"ac-1",
-//   name:"a",
-//   email:"a",
+//   id:"ac-2",
+//   name:"b",
+//   email:"b",
 //   password:"$2b$10$aaqp1b3ld7Aht2.0icNyGeMensZG.6W9vlQfewd.Jzwb/vjtFIuBi",
-//   role:"coordinator"
+//   role:"TA",
+//   gender:"female"
 // })
 // x.save()
 
+// var x=new scheduleModel({
+//   academicMember:"ac-2"
+// })
 
+// x.save()
 
 const port = 3000
 if (process.env.PORT) {

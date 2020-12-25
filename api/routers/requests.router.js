@@ -105,14 +105,13 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
           }
 
       var recieverSlots=(await scheduleModel.find({academicMember:reciever}))[0].slots
-      
 
       recieverSlots=recieverSlots.filter((s)=>{
         if (s.day === slot1[0].day && s.order===slot1[0].order) {
           return s
         }
       })
-
+             
       if(recieverSlots.length!=0){
         return res.json({
           error: 'the member you are sending to have teaching in this slot,try another free member',
@@ -129,7 +128,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
             })
             request.save();
 
-            const reqq=requestsModel.find({from: req.user.id, to: reciever, type: requestType.REPLACEMENT,reason: req.body.reason,status: requestStatus.PENDING,slot: slot})
+            const reqq= await requestsModel.find({from: req.user.id, to: reciever, type: requestType.REPLACEMENT,reason: req.body.reason,status: requestStatus.PENDING,slot: slot})
 
             var notification=new notificationModel({
               academicMember:reciever,
@@ -210,6 +209,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
             return c
           }
         })
+       
         if (senderCourses.length === 0) {
           return res.json({
             error: 'you donot teach this course',
@@ -222,9 +222,8 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
             error: 'this slot is already linked to another member',
           })       
         }
-
-      var mySlots=(await scheduleModel.find({academicMember:req.user.id}))[0].slots
-
+      var mySlots=((await scheduleModel.find({academicMember:req.user.id}))[0]).slots
+      
       mySlots=mySlots.filter((s)=>{
         if (s.day === slot1[0].day && s.order===slot1[0].order) {
           return s
@@ -276,20 +275,23 @@ router.post('/sendChangeDayOffRequest',validateSendChangeDayOffRequest,
       var mySlots=(await scheduleModel.find({academicMember:req.user.id}))[0].slots
 
       mySlots=mySlots.filter((s)=>{
-        if (s.day ===dayOff) {
+        if (s.day===dayOff) {
           return s
         }
       })
+     
 
       if(mySlots.length!=0){
         return res.json({
           error: 'you already have teaching in this day you canot change day off to a day where you have teaching in',
         })
       }
+      
       const dep = await departementModel.find({
         name: sender1[0].department
       })
 
+     
       const request = new requestsModel({
         from: req.user.id,
         to: dep[0].HOD,
@@ -298,7 +300,8 @@ router.post('/sendChangeDayOffRequest',validateSendChangeDayOffRequest,
         status: requestStatus.PENDING,
         dayOff: dayOff,
       })
-      request.save();
+      request.save()
+
       return res.json({
         msg: 'request created successfully',
         request
@@ -519,8 +522,7 @@ async (req, res) => {
         var datereq = new Date(date);
         var d = datereq.getDate();
         var m = datereq.getMonth()+1;
-        var y=datereq.getFullYear()
-
+        var y=datereq.getFullYear()  
           if((m+3)>12){
             m=(m+3)%12
             y++;
@@ -537,7 +539,7 @@ async (req, res) => {
        var m1 = datetoday.getMonth()+1;
        var y1=datereq.getFullYear()
 
-        if(y1>y||(y1===y && m<m1) ){
+        if(y1>y||(y1===y && m<m1)||(y===y1&& m1<=m && d1>d) ){
           return res.json({
             error: 'matrenity leave should be submitted within 3 month',
           })
@@ -562,6 +564,7 @@ async (req, res) => {
               reason:reason,
               status:requestStatus.PENDING,
               dateOfRequest:date,
+              documentsDriveLink:documents
             })
               request.save();
                   return res.json({
@@ -584,6 +587,7 @@ async (req, res) => {
     try {
         const reason=req.body.reason;
         const date=req.body.date;
+        const compensationDay=req.body.compensationDay
         const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({name:sender1[0].department})
 
@@ -600,6 +604,7 @@ async (req, res) => {
               reason:reason,
               status:requestStatus.PENDING,
               dateOfRequest:date,
+              compensationDay:compensationDay
             })
               request.save();
                   return res.json({
@@ -876,7 +881,7 @@ router.get('/viewAllPendingRequests',
              })  
           }
           var x=new replacementModel({
-            id:request1[0].to,
+            academicMember:request1[0].to,
             slot:request1[0].slot
           }) 
           x.save()
@@ -1209,8 +1214,8 @@ router.get('/viewAllSlotLinkingRequests',
         slot[0].academicMember=request1[0].from
         console.log(request1[0].from)
         await scheduleModel.findOneAndUpdate({academicMember:request1[0].from},{$push:{slots:slot[0]}})
-        await slotsModel.findByIdAndUpdate(slot[0]._id,{academicMember:request1[0].from})
-        console.log("tata")
+        //await slotsModel.findByIdAndUpdate(slot[0]._id,{academicMember:request1[0].from})
+        //console.log("tata")
 
         var notification=new notificationModel({
           academicMember:request1[0].from,

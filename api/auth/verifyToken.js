@@ -18,10 +18,10 @@ const verify=async (req, res,next)=>{
         return res.status(401).send('Access deined')
     }
    try{
-    console.log(token)
+   // console.log(token)
         const verified= await jwt.verify(token,"HS256")
          req.user=verified
-         console.log(req.user)
+     //    console.log(req.user)
         
         
          //return res.send("SUCCESS")

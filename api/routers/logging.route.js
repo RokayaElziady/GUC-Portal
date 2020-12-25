@@ -87,6 +87,7 @@ console.log("pass"+correctPassword);
                 // res.header('auth-token', token); 
                 console.log("hhea")
              const token =await jwt.sign(payload,"HS256")
+             
           
             res.header('token',token).send(token)
            

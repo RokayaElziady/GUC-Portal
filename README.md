@@ -1,16 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 *you need to add the first hr member manually in the datbase
 
-=======
->>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
-=======
-<<<<<<< HEAD
-*you need to add the first hr member manually in the datbase
-
-=======
->>>>>>> d0d7395c6b9571637b3520e7eb74a04a1c712856
->>>>>>> 7dab368c06079ef26a9f15d4b7c71f20a12bb599
 ######################################## ROKAYA ########################################
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,19 +11,29 @@ Response(the sccedule with replacements if available):
     "msg": "success",
     "schedule": [
         {
-            "_id": "5fda1caf83892c0618ca7744",
-            "academicMember": "m2",
+            "_id": "5fe5d2a217d1163ebc3b9580",
+            "academicMember": "ac-2",
             "slots": [
                 {
-                    "_id": "5fda1e946836e85428741830",
-                    "location": "c6"
-                },
-                {
-                    "_id": "5fda1eb746fc231f08366524",
-                    "location": "c6"
+                    "academicMember": "ac-2",
+                    "_id": "5fe5bdcb48f1f75a545457fe",
+                    "startTime": 10,
+                    "endTime": 12,
+                    "day": "monday",
+                    "course": "math",
+                    "location": "l1",
+                    "order": "3rd",
+                    "__v": 0
                 }
             ],
-            "replacements": [],
+            "__v": 0
+        }
+    ],
+    "replacements": [
+        {
+            "_id": "5fe5d6fdbabba923780a56b7",
+            "academicMember": "ac-1",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
             "__v": 0
         }
     ]
@@ -45,24 +44,24 @@ Route: /request/sendReplacementRequest
 Request type: POST
 Request body(the slot id the id of one you want to replace with and optionally a reason):
 {
-   "to":"lala",
-   "slot":"5fd8f8139f79a23eecf3d785",
-   "reason":"ay kalam"
-
-} 
+  "slot":"5fe5b18aed6e1a200c8b0d7a",  
+  "to":"ac-2",
+  "reason":"urgent"
+}
 Response(the created request):
    {
     "msg": "request created successfully",
     "request": {
-        "replacementMember": "undefined",
-        "_id": "5fda234256407e428457119b",
-        "from": "lalabb",
-        "to": "lala",
+        "replacementMembers": [],
+        "_id": "5fe5d38541b4950f942a47af",
+        "from": "ac-1",
+        "to": "ac-2",
         "type": "replacement",
-        "reason": "ay kalam",
+        "reason": "urgent",
         "status": "pending",
-        "slot": "5fd8f8139f79a23eecf3d785",
-        "dateSubmitted": "2020-12-16T15:09:54.407Z"
+        "slot": "5fe5b18aed6e1a200c8b0d7a",
+        "dateSubmitted": "2020-12-25T11:56:53.253Z",
+        "__v": 0
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,15 +73,51 @@ Response(list of requests):
     "msg": " success",
     "requests": [
         {
-            "replacementMember": "undefined",
-            "_id": "5fda234256407e428457119b",
-            "from": "lalabb",
-            "to": "lala",
+            "replacementMembers": [],
+            "_id": "5fe5d2b817d1163ebc3b9581",
+            "from": "ac-1",
+            "to": "ac-2",
             "type": "replacement",
-            "reason": "ay kalam",
+            "reason": "urgent",
             "status": "pending",
-            "slot": "5fd8f8139f79a23eecf3d785",
-            "dateSubmitted": "2020-12-16T15:09:54.407Z",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
+            "dateSubmitted": "2020-12-25T11:53:28.076Z",
+            "__v": 0
+        },
+        {
+            "replacementMembers": [],
+            "_id": "5fe5d320c8ffc80f94ff08dc",
+            "from": "ac-1",
+            "to": "ac-2",
+            "type": "replacement",
+            "reason": "urgent",
+            "status": "pending",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
+            "dateSubmitted": "2020-12-25T11:55:12.188Z",
+            "__v": 0
+        },
+        {
+            "replacementMembers": [],
+            "_id": "5fe5d34d7e24523e14005286",
+            "from": "ac-1",
+            "to": "ac-2",
+            "type": "replacement",
+            "reason": "urgent",
+            "status": "accepted",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
+            "dateSubmitted": "2020-12-25T11:55:57.285Z",
+            "__v": 0
+        },
+        {
+            "replacementMembers": [],
+            "_id": "5fe5d38541b4950f942a47af",
+            "from": "ac-1",
+            "to": "ac-2",
+            "type": "replacement",
+            "reason": "urgent",
+            "status": "pending",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
+            "dateSubmitted": "2020-12-25T11:56:53.253Z",
             "__v": 0
         }
     ]
@@ -97,15 +132,14 @@ Response(list of requests):
     "msg": " success",
     "requests": [
         {
-            "replacementMember": "undefined",
-            "_id": "5fda234256407e428457119b",
-            "from": "lalabb",
-            "to": "lala",
-            "type": "replacement",
-            "reason": "ay kalam",
-            "status": "pending",
-            "slot": "5fd8f8139f79a23eecf3d785",
-            "dateSubmitted": "2020-12-16T15:09:54.407Z",
+            "replacementMembers": [],
+            "_id": "5fe5d780babba923780a56b9",
+            "from": "ac-2",
+            "to": "ac-1",
+            "type": "slot linking",
+            "status": "accepted",
+            "slot": "5fe5bdcb48f1f75a545457fe",
+            "dateSubmitted": "2020-12-25T12:13:52.708Z",
             "__v": 0
         }
     ]
@@ -119,20 +153,19 @@ Request type: POST
 Request body(the slot id):
 {
 "slot":"5fd8f8139f79a23eecf3d785"
-
 }
 Response(the created request):
    {
     "msg": "request created successfully",
     "request": {
-        "replacementMember": "undefined",
-        "_id": "5fda2998b3a9194798ed88da",
-        "from": "lala",
-        "to": "rokaya",
+        "replacementMembers": [],
+        "_id": "5fe5c2ad3ed6802028e40d90",
+        "from": "ac-1",
+        "to": "ac-1",
         "type": "slot linking",
         "status": "pending",
-        "slot": "5fd8f8139f79a23eecf3d785",
-        "dateSubmitted": "2020-12-16T15:36:56.227Z"
+        "slot": "5fe5b18aed6e1a200c8b0d7a",
+        "dateSubmitted": "2020-12-25T10:45:01.588Z"
     }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,23 +174,23 @@ Route: /request/sendChangeDayOffRequest
 Request type: POST
 Request body(the day and the optional reason ):
 {
-"day":"monday",
+"day":"tuesday",
 "reason":"traffic jam"
 
 }
 Response(the created request):
-   {
+ {
     "msg": "request created successfully",
     "request": {
-        "replacementMember": "undefined",
-        "_id": "5fda3d254e8cfd2638cffd56",
-        "from": "m4",
-        "to": "moh",
+        "replacementMembers": [],
+        "_id": "5fe5dbe344c6532810597324",
+        "from": "ac-2",
+        "to": "hagar",
         "type": "change day off",
-        "reason": "traffic jam",
         "status": "pending",
-        "dayOff": "monday",
-        "dateSubmitted": "2020-12-16T17:00:21.826Z"
+        "dayOff": "tuesday",
+        "reason":"traffic jam"
+        "dateSubmitted": "2020-12-25T12:32:35.594Z"
     }
 }
 
@@ -198,7 +231,7 @@ Request type: POST
 Request body(the date of request and the optional reason  ):
 {
 "date":"2020-12-18T17:00:21.826Z",
-"reason":"traffic jam"
+"reason": "accident",
 }
 
 Response(the created request):
@@ -206,16 +239,17 @@ Response(the created request):
     "msg": "request created successfully",
     "request": {
         "replacementMembers": [],
-        "_id": "5fda51c9663a0223c858fe75",
-        "from": "m4",
-        "to": "moh",
+        "_id": "5fe5dd5144c6532810597327",
+        "from": "ac-2",
+        "to": "hagar",
         "type": "Accidental leave",
-        "reason": "traffic jam",
+        "reason": "accident",
         "status": "pending",
         "dateOfRequest": "2020-12-18T17:00:21.826Z",
-        "dateSubmitted": "2020-12-16T18:28:25.414Z"
+        "dateSubmitted": "2020-12-25T12:38:41.409Z"
     }
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -236,8 +270,8 @@ Response(the created request):
     "request": {
         "replacementMembers": [],
         "_id": "5fda57e16696ff164433cb96",
-        "from": "m4",
-        "to": "moh",
+        "from": "ac-2",
+        "to": "hagar",
         "type": "sick leave",
         "reason": "traffic jam",
         "status": "pending",
@@ -254,7 +288,7 @@ Request type: POST
 Request body(the date of request and the optional reason  ):
 {
 "date":"2020-12-18T17:00:21.826Z",
-"reason":"traffic jam",
+"reason":"bawled",
 "documents":"https://drive.google.com/file/d/1615Jon8tEK7qoRlcQjqOcVlk03L2BN-V/view?usp=sharing"
 }
 
@@ -265,10 +299,10 @@ Response(the created request):
     "request": {
         "replacementMembers": [],
         "_id": "5fda5acc51847d5c5cf9d9dc",
-        "from": "m6",
-        "to": "moh",
+        "from": "ac-2",
+        "to": "hagar",
         "type": "maternity leave",
-        "reason": "traffic jam",
+        "reason": "bawled",
         "status": "pending",
         "dateOfRequest": "2020-12-18T17:00:21.826Z",
         "dateSubmitted": "2020-12-16T19:06:52.043Z",
@@ -283,23 +317,26 @@ Route: /request/sendCompensationLeaveRequest
 Request type: POST
 Request body(the date of request and the  reason  ):
 {
-"date":"2020-12-18T17:00:21.826Z",
-"reason":"traffic jam"
+ "date":"2020-09-28",
+ "reason":"accident",
+ "compensationDay":"2020-12-30"
 }
+
 
 Response(the created request):
    {
     "msg": "request created successfully",
     "request": {
         "replacementMembers": [],
-        "_id": "5fda5d0dc8e1db13c8397273",
-        "from": "m6",
-        "to": "moh",
+        "_id": "5fe5e46b0a88230878a935fe",
+        "from": "ac-2",
+        "to": "hagar",
         "type": "compensation leave",
-        "reason": "traffic jam",
+        "reason": "accident",
         "status": "pending",
-        "dateOfRequest": "2020-12-18T17:00:21.826Z",
-        "dateSubmitted": "2020-12-16T19:16:29.606Z"
+        "compensationDay": "2020-12-30T00:00:00.000Z",
+        "dateOfRequest": "2020-09-28T00:00:00.000Z",
+        "dateSubmitted": "2020-12-25T13:08:59.308Z"
     }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -314,22 +351,23 @@ Response(array of requests):
         {
             "replacementMembers": [],
             "_id": "5fda5acc51847d5c5cf9d9dc",
-            "from": "m6",
-            "to": "moh",
+            "from": "ac-1",
+            "to": "hagar",
             "type": "maternity leave",
-            "reason": "traffic jam",
+            "reason": "bawled",
             "status": "pending",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
             "dateSubmitted": "2020-12-16T19:06:52.043Z",
+            "documentsDriveLink":"https://drive.google.com/file/d/1615Jon8tEK7qoRlcQjqOcVlk03L2BN-V/view?usp=sharing",
             "__v": 0
         },
         {
             "replacementMembers": [],
             "_id": "5fda5d0dc8e1db13c8397273",
-            "from": "m6",
-            "to": "moh",
-            "type": "compensation leave",
-            "reason": "traffic jam",
+            "from": "ac-2",
+            "to": "hagar",
+            "type": "sick leave",
+            "reason": "sick",
             "status": "pending",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
             "dateSubmitted": "2020-12-16T19:16:29.606Z",
@@ -349,9 +387,9 @@ Response(array of requests):
         {
             "replacementMembers": [],
             "_id": "5fda5acc51847d5c5cf9d9dc",
-            "from": "m6",
-            "to": "moh",
-            "type": "maternity leave",
+             "from": "ac-2",
+            "to": "hagar",
+            "type": "accidental leave",
             "reason": "traffic jam",
             "status": "accepted",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
@@ -361,9 +399,9 @@ Response(array of requests):
         {
             "replacementMembers": [],
             "_id": "5fda5d0dc8e1db13c8397273",
-            "from": "m6",
-            "to": "moh",
-            "type": "compensation leave",
+             "from": "ac-2",
+            "to": "hagar",
+            "type": "accidental leave",
             "reason": "traffic jam",
             "status": "accepted",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
@@ -374,29 +412,7 @@ Response(array of requests):
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-Functionality: for academic member to send compensation leave request
-Route: /request/cancelRequest
-Request type: PUT
-Request body(the date of request and the  reason  ):
-{
 
-    "request":"5fda5d0dc8e1db13c8397273"
-}
-Response(the created request):
-   {
-    "msg": "request created successfully",
-    "request": {
-        "replacementMembers": [],
-        "_id": "5fda5d0dc8e1db13c8397273",
-        "from": "m6",
-        "to": "moh",
-        "type": "compensation leave",
-        "reason": "traffic jam",
-        "status": "pending",
-        "dateOfRequest": "2020-12-18T17:00:21.826Z",
-        "dateSubmitted": "2020-12-16T19:16:29.606Z"
-    }
-}
 Functionality: for academic member to view requests sent by him where status is rejected
 Route: /request/viewAllRejectedRequests
 Request type: GET
@@ -408,9 +424,9 @@ Response(array of requests):
         {
             "replacementMembers": [],
             "_id": "5fda5acc51847d5c5cf9d9dc",
-            "from": "m6",
-            "to": "moh",
-            "type": "maternity leave",
+             "from": "ac-2",
+            "to": "hagar",
+            "type": "accidental leave",
             "reason": "traffic jam",
             "status": "rejected",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
@@ -420,9 +436,9 @@ Response(array of requests):
         {
             "replacementMembers": [],
             "_id": "5fda5d0dc8e1db13c8397273",
-            "from": "m6",
-            "to": "moh",
-            "type": "compensation leave",
+           "from": "ac-2",
+            "to": "hagar",
+            "type": "accidental leave",
             "reason": "traffic jam",
             "status": "rejected",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
@@ -443,9 +459,9 @@ Response(array of requests):
         {
             "replacementMembers": [],
             "_id": "5fda5acc51847d5c5cf9d9dc",
-            "from": "m6",
-            "to": "moh",
-            "type": "maternity leave",
+             "from": "ac-2",
+            "to": "hagar",
+            "type": "accidental leave",
             "reason": "traffic jam",
             "status": "pending",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
@@ -455,9 +471,9 @@ Response(array of requests):
         {
             "replacementMembers": [],
             "_id": "5fda5d0dc8e1db13c8397273",
-            "from": "m6",
-            "to": "moh",
-            "type": "compensation leave",
+            "from": "ac-2",
+            "to": "hagar",
+            "type": "accidental leave",
             "reason": "traffic jam",
             "status": "pending",
             "dateOfRequest": "2020-12-18T17:00:21.826Z",
@@ -467,11 +483,12 @@ Response(array of requests):
     ]
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Functionality: to cancel a request
+Functionality: for academic member to cancel request
 Route: /request/cancelRequest
 Request type: PUT
 Request body(the date of request and the  reason  ):
 {
+
     "request":"5fda5d0dc8e1db13c8397273"
 }
 Response(the cancelled request):
@@ -480,18 +497,19 @@ Response(the cancelled request):
     "request1": [
         {
             "replacementMembers": [],
-            "_id": "5fda5d0dc8e1db13c8397273",
-            "from": "m6",
-            "to": "moh",
-            "type": "compensation leave",
-            "reason": "traffic jam",
+            "_id": "5fe5dd5144c6532810597327",
+            "from": "ac-2",
+            "to": "hagar",
+            "type": "Accidental leave",
+            "reason": "accident",
             "status": "canceled",
-            "dateOfRequest": "2020-12-18T17:00:21.826Z",
-            "dateSubmitted": "2020-12-16T19:16:29.606Z",
+            "dateOfRequest": "2020-12-12T00:00:00.000Z",
+            "dateSubmitted": "2020-12-25T12:38:41.409Z",
             "__v": 0
         }
     ]
 }
+///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Functionality: for coordinator view all slot linking requests
@@ -503,55 +521,37 @@ Response(array of requests):
     "requests": [
         {
             "replacementMembers": [],
-            "_id": "5fd8acc78d798060a0446b73",
-            "dateSubmitted": "2020-12-15T12:32:07.722Z",
-            "replacementMember": "undefined",
-            "to": "rokaya",
-            "type": "slot linking",
-            "__v": 0
-        },
-        {
-            "replacementMembers": [],
-            "_id": "5fd8acc78d798060a0446b74",
-            "dateSubmitted": "2020-12-15T12:32:07.722Z",
-            "replacementMember": "undefined",
-            "to": "rokaya",
-            "type": "slot linking",
-            "__v": 0
-        },
-        {
-            "replacementMembers": [],
-            "_id": "5fd8acc78d798060a0446b76",
-            "dateSubmitted": "2020-12-15T12:32:07.722Z",
-            "replacementMember": "undefined",
-            "to": "rokaya",
-            "type": "slot linking",
-            "__v": 0
-        },
-        {
-            "replacementMembers": [],
-            "_id": "5fd8faa3f54f8e4c9ce05e65",
-            "dateSubmitted": "2020-12-15T18:04:15.540Z",
-            "replacementMember": "undefined",
-            "from": "nadine",
-            "to": "rokaya",
-            "type": "slot linking",
-            "status": "accepted",
-            "slot": "5fd8f8139f79a23eecf3d785",
-            "__v": 0
-        },
-        {
-            "replacementMembers": [],
-            "_id": "5fda2998b3a9194798ed88da",
-            "replacementMember": "undefined",
-            "from": "lala",
-            "to": "rokaya",
+            "_id": "5fe5c39e3ed6802028e40d91",
+            "from": "ac-1",
+            "to": "ac-1",
             "type": "slot linking",
             "status": "pending",
-            "slot": "5fd8f8139f79a23eecf3d785",
-            "dateSubmitted": "2020-12-16T15:36:56.227Z",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
+            "dateSubmitted": "2020-12-25T10:49:02.508Z",
             "__v": 0
-        }
+        },
+        {
+            "replacementMembers": [],
+            "_id": "5fe5c39f3ed6802028e40d92",
+            "from": "ac-1",
+            "to": "ac-1",
+            "type": "slot linking",
+            "status": "pending",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
+            "dateSubmitted": "2020-12-25T10:49:03.636Z",
+            "__v": 0
+        },
+        {
+            "replacementMembers": [],
+            "_id": "5fe5c3a03ed6802028e40d93",
+            "from": "ac-1",
+            "to": "ac-1",
+            "type": "slot linking",
+            "status": "accepted",
+            "slot": "5fe5b18aed6e1a200c8b0d7a",
+            "dateSubmitted": "2020-12-25T10:49:04.628Z",
+            "__v": 0
+        },
     ]
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -569,7 +569,7 @@ Request body(slot details  ):
   "course":"math"
 
 }
-Response(the cancelled request):
+Response(the added slot):
    {
     "msg": "slot added successfully",
     "slot1": {
