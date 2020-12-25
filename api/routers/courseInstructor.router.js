@@ -9,6 +9,7 @@ const courseModel = require('../../Models/course.model');
 const departmentModel = require('../../Models/department.model');
 const requestsModel = require('../../Models/requests.model');
 const slotsModel = require('../../Models/slots.model');
+const scheduleModel = require('../../Models/schedule.model');
 const {
     requestStatus,
     requestType
@@ -39,7 +40,7 @@ router.get('/courseCoverage', async (req, res) => {
         for (let j = 0; j < slotsForCourses.length; j++){
             if (slotsForCourses[j].course.toString().localeCompare(c) == 0) {
                 y++;
-                if (slotsForCourses[j].academicMember)
+                if (slotsForCourses[j].academicMember.toString().localeCompare("undefined")!=0)
                     x++;
             }
         }
@@ -112,7 +113,7 @@ router.post('/assignSlotToMember', validateAssignSlotToMember,async (req, res) =
         res.send("wrong slot _id");
         return;
     }
-    if (slot[0].academicMember) {
+    if (slot[0].academicMember && slot[0].academicMember.toString().localeCompare("undefined")!=0) {
         res.send(" slot already assigned to someOne else");
         return;
     }
@@ -138,49 +139,90 @@ router.post('/assignSlotToMember', validateAssignSlotToMember,async (req, res) =
         res.send("YOU or academic member don't teach the course");
         return;
     }
+    //NOT tested
+    let mySchedule = await scheduleModel.find({
+        academicMember: myAcademic.id
+    });
+    mySchedule = mySchedule[0];
+    if (mySchedule.slots.length != 0) {
+        let slotOverlap = mySchedule.slots.filter((s) => {
+            return s.day.localeCompare(slot[0].day) == 0 && s.order.localeCompare(slot[0].order) == 0
+        });
+        if (slotOverlap.length != 0) {
+            res.send('Member Already has a slot at this time in the day');
+            return;
+        }
+    }
+    
+
+    
     await slotsModel.updateOne({ _id: slot[0]._id }, { academicMember: myAcademic.id });
+    let slot2 = await slotsModel.find({
+        _id: slot_id
+    });
+    mySchedule.slots.push(slot2[0]);
+    await scheduleModel.updateOne({
+        academicMember: myAcademic.id
+    }, {
+        slots: mySchedule.slots
+    });
     res.send("slot assigned successfully");
 });
-router.post('/updateSlotAssignmentToMember', validateUpdateSlotAssignmentToMember,async (req, res) => {
-     let authorizationToken = await authorizeCourseInstructor(req);
-     if (!authorizationToken.aurthorized) {
-         res.send("You are not authorized for this request");
-         return;
-     }
-     let slot_id = req.body._id;
+router.post('/updateSlotAssignmentToMember', validateUpdateSlotAssignmentToMember, async (req, res) => {
+    let authorizationToken = await authorizeCourseInstructor(req);
+    if (!authorizationToken.aurthorized) {
+        res.send("You are not authorized for this request");
+        return;
+    }
+    let slot_id = req.body._id;
     let myAcademic = req.body.academicID;
     let courseNew = req.body.courseName;
 
-     let slot = await slotsModel.find({
-         _id: slot_id
-     });
-     if (slot.length == 0) {
-         res.send("wrong slot _id");
-         return;
-     }
-     if (authorizationToken.courseNames.filter(
-             (course) => course.toString().localeCompare(slot[0].course) == 0).length == 0) {
-         res.send("you are not an instructor for the course given in this slot");
-         return;
-     }
-     if (authorizationToken.courseNames.filter(
-             (course) => course.toString().localeCompare(courseNew) == 0).length == 0) {
-         res.send("you are not an instructor for the New course");
-         return;
-     }
+    let slot = await slotsModel.find({
+        _id: slot_id
+    });
+    if (slot.length == 0) {
+        res.send("wrong slot _id");
+        return;
+    }
+    if (authorizationToken.courseNames.filter(
+        (course) => course.toString().localeCompare(slot[0].course) == 0).length == 0) {
+        res.send("you are not an instructor for the course given in this slot");
+        return;
+    }
+    if (authorizationToken.courseNames.filter(
+        (course) => course.toString().localeCompare(courseNew) == 0).length == 0) {
+        res.send("you are not an instructor for the New course");
+        return;
+    }
     let academicFromModel = await academicMemberModel.find({ id: myAcademic });
     academicFromModel = academicFromModel[0];
     if (academicFromModel.courses.filter(
-        (course)=>course.toString().localeCompare(courseNew)==0
+        (course) => course.toString().localeCompare(courseNew) == 0
     ).length == 0) {
         res.send("academic doesn't teach the new course");
         return;
     }
-     if (!slot[0].academicMember || slot[0].academicMember.toString().localeCompare(myAcademic) != 0) {
-         res.send("The slot is not Assigned to the academic member inserted");
-         return;
-     }
+    if (!slot[0].academicMember || slot[0].academicMember.toString().localeCompare(myAcademic) != 0) {
+        res.send("The slot is not Assigned to the academic member inserted");
+        return;
+    }
     await slotsModel.updateOne({ _id: slot_id }, { course: courseNew });
+    let newSlot = await slotsModel.find({
+        _id: slot_id
+    });
+    newSlot = newSlot[0];
+    let mySchedule = await scheduleModel.find({ academicMember: myAcademic });
+    mySchedule = mySchedule[0];
+    let newSlots = mySchedule.slots.filter((s) => {
+        return s._id.toString().localeCompare(slot_id) != 0
+    });
+    newSlots.push(newSlot);
+    await scheduleModel.updateOne({
+        academicMember: myAcademic
+    }, {
+        slots: newSlots
+    })
     res.send("Assigned same slot to same Member but with new course successfully");
 })
 router.post('/deleteSlotAssignmentFromMember', validateDeleteSlotAssignmentFromMember,async (req, res) => {
@@ -207,13 +249,22 @@ router.post('/deleteSlotAssignmentFromMember', validateDeleteSlotAssignmentFromM
         res.send("The slot is not Assigned to the academic member inserted");
         return;
     }
+    let mySchedule = await scheduleModel.find({
+        academicMember: myAcademic
+    });
+    mySchedule = mySchedule[0].slots;
+    mySchedule = mySchedule.filter((s) => { return s._id.toString().localeCompare(slot_id) != 0 });
+    await scheduleModel.updateOne({
+        academicMember: myAcademic
+    }, {
+        slots:mySchedule
+    })
     await slotsModel.updateOne({
                 _id: slot_id
     }, {
-        $unset: {
-            academicMember: 1
-        }
+       academicMember: 'undefined'
     });
+    
     res.send("slot assignment deleted successfully")
 });
 
@@ -261,8 +312,10 @@ router.post('/makeCoordinator',validateMakeCoordinator, async (req, res) => {
     await academicMemberModel.updateOne({
         id: myAcademic.id
     }, {
-        coordinatorFor: myAcademic.coordinatorFor
+            coordinatorFor: myAcademic.coordinatorFor,
+        role: "coordinator"
     });
+    req.user.role = "coordinator";
     res.send("Made coordinator successfullly")
         
 });
@@ -294,8 +347,10 @@ router.post('/assignAcademicToCourse', validateAssignAcademicToCourse,async (req
     //NOT TESTED 
     let courseFromModel = await courseModel.find({ name: myCourse });
     courseFromModel = courseFromModel[0];
+    console.log(courseFromModel.department);
+    console.log(myAcademic.department);
     if (courseFromModel.department.filter(
-        (dep)=>dep.toString().localeCompare(myAcademic.department)
+        (dep)=>dep.toString().localeCompare(myAcademic.department)==0
     ).length == 0) {
         res.send("Academic member doesn't work under either departments that teach the course")
         return;
@@ -327,6 +382,19 @@ router.post('/removeAcademicFromCourse', validateRemoveAcademicFromCourse,async 
         res.send("the academic doesn't teach this course");
         return;
     }
+    //CHANGE ROLE TO TA AND REMOVE THIS COORDINATOR FROM COURSE 
+    if (myAcademic.coordinatorFor.filter(
+        (course) => course.toString().localeCompare(myCourse) == 0).length != 0) {
+        req.user.role = "TA";
+        await courseModel.updateOne({
+            name: myCourse
+        }, {
+            $unset: {
+                coordinator: 1
+            }
+        });
+
+     }
     await academicMemberModel.updateOne({ id: myAcademic.id }, {
         courses: myAcademic.courses.filter(
             (course) => course.toString().localeCompare(myCourse) != 0
@@ -335,15 +403,24 @@ router.post('/removeAcademicFromCourse', validateRemoveAcademicFromCourse,async 
         ),
         coordinatorFor: myAcademic.coordinatorFor.filter(
             (course) => course.toString().localeCompare(myCourse) != 0
-        )
+        ), role:"TA"
     });
+    let mySchedule = await scheduleModel.find({
+        academicMember: myAcademic.id
+    });
+    mySchedule = mySchedule[0];
+    await scheduleModel.updateOne({
+        academicMember: myAcademic.id
+    }, {
+        slots: mySchedule.slots.filter((s) => {
+            return s.course.toString().localeCompare(myCourse)!=0
+        })
+    })
     await slotsModel.updateMany({
         academicMember: myAcademic.id,
         course: myCourse
     }, {
-        $unset: {
-            academicMember: 1
-        }
+         academicMember: 'undefined'
     });
     
     res.send("all Academic assignments to this Course are removed successfully");

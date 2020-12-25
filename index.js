@@ -24,7 +24,8 @@ const academicMemberModel = require('./Models/academicMember.model');
 const scheduleModel = require('./Models/schedule.model');
 const courseModel = require('./Models/course.model');
 const departementModel = require('./Models/department.model');
-const request=require('./api/routers/requests.router')
+const request=require('./api/routers/requests.router');
+const hrmodel = require('./Models/hr.model');
 connectDB()
 app.use('/logging',log)
 app.use(verify)
@@ -46,31 +47,17 @@ app.use((req, res) => {
 
 
 async function test() {
-  await academicMemberModel.insertMany([{
-    id: "coordinator1",
-    name: "hi",
-     gender:"female",
-    role:"hi",
-    email: "coordinator1",
-    password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
-    department: "EN",
-    courses: ["CSEN201"]
-  },
-    {
-      role: "hi",
-      name: "hi",
-        gender: "female",
-    id: "coordinator2",
-    email: "coordinator2",
-    password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36",
-    department: "EN",
-    courses: ["CSEN201"]
-    }]);
-  
+ await hrmodel.insertMany([{
+   id: "hr-100",
+   name: "ay7aga",
+   email: "ayemail",
+   password: "$2a$10$/eUxJXJPDc6Lm5ZyGe0FA.8dSeem6xXLLNVi30Q7kAl9QLHRxPL36"
+ }])
 }
 //test().then(()=>{console.log("added to database successfully")})
 //MYTOKEN
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE2MDg4OTQyNjJ9.Sv8t8zyWG1b_3_2b9KS-LpjBbglZo0T2ttmahuVzgsk
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEwMCIsImlhdCI6MTYwODkwODMwN30.r-uS2YDtjXLOMf07tLWm3Skyj2GqafOH6lL0sYoEfqM
+
 
 const port = 3000
 if (process.env.PORT) {
