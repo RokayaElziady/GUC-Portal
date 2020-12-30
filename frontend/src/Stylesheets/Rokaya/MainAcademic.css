@@ -1,0 +1,23 @@
+.MainAcademicLogo {
+    margin-top: 0vw;
+     margin-right:-10vw; 
+    width: 12vw;
+    height:3vw;
+  }
+
+ .MainAcademicListFont{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1vw;
+  color: #060067;
+  position: 'relative';
+ } 
+
+ .MainAcademicTableColumn1{
+  width:40vw;
+ } 
+
+ .MainAcademicTableColumn2{
+  width:60vw;
+
+ } 
