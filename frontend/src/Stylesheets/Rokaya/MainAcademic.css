@@ -1,8 +1,20 @@
+/* body {
+  overflow: hidden; 
+} 
+*/
+
+.MainAcademicTable {
+ border-collapse: collapse;
+ padding: 0vw !important;
+ margin: 0vw !important;
+}
+
 .MainAcademicLogo {
-    margin-top: 0vw;
-     margin-right:-10vw; 
+    margin-left:55vw !important; 
     width: 12vw;
     height:3vw;
+    /* margin-top: 10vw !important; */
+    margin-bottom: 45vw; 
   }
 
  .MainAcademicListFont{
@@ -11,13 +23,33 @@
   font-size: 1vw;
   color: #060067;
   position: 'relative';
+  margin-top: 0.1vw;
  } 
 
  .MainAcademicTableColumn1{
-  width:40vw;
+  width:25vw !important;
+  border-spacing:0vw !important;
+  /* padding-top: -10vw !important; */
+  background-color: beige;
+  height: 50vw;
+  padding-top: 0vw !important;
+  padding:0vw !important;
+
+
  } 
 
+ .MainAcademicList{
+  width:25vw !important;
+  /* border-spacing:0vw !important; */
+   /* background-color: red;  */
+   /* margin-top: -20vw !important;  */
+   /* padding-top: 2vw !important; */
+ } 
+
+
+
  .MainAcademicTableColumn2{
-  width:60vw;
+  width:75vw;
+  
 
  } 

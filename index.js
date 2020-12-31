@@ -26,6 +26,11 @@ const courseModel = require('./Models/course.model');
 const departementModel = require('./Models/department.model');
 const request=require('./api/routers/requests.router');
 const hrmodel = require('./Models/hr.model');
+var cors = require('cors');
+const slotsModel = require('./Models/slots.model');
+const replacementModel = require('./Models/replacements.model');
+
+app.use(cors())
 connectDB()
 app.use('/logging',log)
 app.use(verify)
@@ -45,7 +50,13 @@ app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
 
-const port = 3000
+// const s=new replacementModel({
+//   academicMember:"ac-1",
+//   slot:"5fe5bdd648f1f75a545457ff"
+// })
+// s.save()
+
+const port = 3001
 if (process.env.PORT) {
   app.listen(process.env.PORT, () =>
     console.log(`Server up and running on ${process.env.PORT}`)

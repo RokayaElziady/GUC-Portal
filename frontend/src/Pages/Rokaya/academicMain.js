@@ -17,10 +17,10 @@ export default function MainAcademicPage(props) {
   }
   return (
   <Table>
-    <tbody>
-      <tr>
+    <tbody className="MainAcademicTable">
       <td className="MainAcademicTableColumn1">
-        <tr>
+        <tr className="MainAcademicList">
+        <tr >
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>View Schedule</p>
         </tr>
         <tr>
@@ -74,14 +74,16 @@ export default function MainAcademicPage(props) {
         <tr>
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>Cancel Request </p>
         </tr>
-        
+        </tr>
        
       </td>
 
       <td className="MainAcademicTableColumn2">
-     <img className="MainAcademicLogo" src={logo} alt="Logo" />
+        <tr>
+        <img className="MainAcademicLogo" src={logo} alt="Logo" />
+        </tr>
      </td>
-      </tr>
+
      </tbody>
     </Table>
 

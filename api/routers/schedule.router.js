@@ -42,20 +42,40 @@ async (req, res) => {
       // })
 
       // x.save()
-     
+
+
+       
        const schedule = await scheduleModel.find({academicMember:req.user.id})
        const replacements=await replacementModel.find({academicMember:req.user.id})
-       console.log(schedule)
         if(!schedule || schedule.length===0){
             return res.json({
                 error: 'You donnot have a schedule ',
               })
         }
+
+        // const slots=replacements.filter(async (r)=>{
+        //   const s =await slotsModel.find({_id:r.slot})
+        //     if(s.length===0)
+        //          return 
+        //      else{
+        //       return s[0]
+        //      } 
+        // })
+        const slots=[];
+
+        for(var i=0;i<replacements.length;i++){
+          const s =await slotsModel.find({_id:replacements[i].slot})
+          if(s.length>0)
+          slots.push(s[0])
+               
+        }
+        console.log("slots")
+        console.log(slots)
         
             return res.json({
               msg:"success",
                 schedule,
-                replacements
+                slots
             })
          
         

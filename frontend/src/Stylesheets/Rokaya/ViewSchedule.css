@@ -1,0 +1,39 @@
+.viewScheduleCard{
+    border: 0.5vw solid burlywood !important;
+    width:20vw !important;
+    display: flex;
+    /* background-color: crimson; */
+}
+
+.viewScheduleTable{
+    border: 0.15vw solid black ;
+    width:75vw !important;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+}
+.viewScheduleCell{
+    border: 0.15vw solid gray ;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+}
+
+.viewScheduleLogo{
+    margin-left:80vw !important; 
+    width: 12vw;
+    height:3vw;
+   
+}
+
+.viewScheduleHeaders{
+    font-style: normal;
+  font-weight: 600;
+  font-size: 3vw;
+  color: crimson;
+  margin-top: 0.1vw;
+  text-align: center;
+}
+
