@@ -765,12 +765,14 @@ router.get('/viewAllPendingRequests',
             
               if(request1.length===0){
                 return res.json({
+                  statusCode:1,
                   error: 'there is no request with this id',
                 })
               }
               const reqSender=request1[0].from
               if(reqSender!=req.user.id){
                 return res.json({
+                  statusCode:1,
                   error: 'You Canot cancel a request not sent by you',
                 })
               }
@@ -780,6 +782,7 @@ router.get('/viewAllPendingRequests',
                request1[0].status=requestStatus.CANCELED
                 await requestsModel.findByIdAndUpdate(request, {status:requestStatus.CANCELED})
                 return res.json({
+                  statusCode:0,
                   msg: 'cancelled successfully',
                   request1
                 })
@@ -791,6 +794,7 @@ router.get('/viewAllPendingRequests',
                request1[0].status=requestStatus.CANCELED
                 await requestsModel.findByIdAndUpdate(request, {status:requestStatus.CANCELED})
                 return res.json({
+                  statusCode:0,
                   msg: 'cancelled successfully',
                   request1
                 })
@@ -800,11 +804,13 @@ router.get('/viewAllPendingRequests',
                   request1[0].status=requestStatus.CANCELED
                   await requestsModel.findByIdAndUpdate(request, {status:requestStatus.CANCELED})
                 return res.json({
+                  statusCode:0,
                   msg: 'cancelled successfully',
                   request1
                 })
               }
               return res.json({
+                     statusCode:1,
                 error: 'you can only cancel a request which is still pending or a request whose day is yet to come',
               })
 

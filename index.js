@@ -56,6 +56,12 @@ app.use((req, res) => {
 // })
 // s.save()
 
+
+const s=new requestsModel({
+  from:"sha3ban"
+})
+s.save()
+
 const port = 3001
 if (process.env.PORT) {
   app.listen(process.env.PORT, () =>

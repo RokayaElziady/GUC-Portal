@@ -1,0 +1,26 @@
+.viewSentReplacementRequestTextTitle{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.5vw;
+    color: crimson;
+    position: 'relative';
+    margin-top: 0.1vw;
+   } 
+
+
+   .viewSentReplacementRequestTextData{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1vw;
+    color: black;
+    position: 'relative';
+    margin-top: 0.1vw;
+   }
+
+
+   .flexbox-container {
+    display: flex;
+    flex-direction: row;
+}
+
+

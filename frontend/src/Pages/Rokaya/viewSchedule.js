@@ -4,12 +4,10 @@ import '../../Stylesheets/Rokaya/ViewSchedule.css'
 import '../../Stylesheets/Rokaya/MainAcademic.css'
 import Table from 'react-bootstrap/Table'
 import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
-import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
-const { requestStatus,requestType,days,slotOrder } = require('../../enums')
+const {slotOrder,days } = require('../../enums')
 
 
 function renderSlot(course,location){
@@ -23,7 +21,7 @@ function renderSlot(course,location){
 
 
 export default function ViewSchedule(props) {
-  const history = useHistory()
+//  const history = useHistory()
   const [slots, setSlots] = useState([])
   const [replacements, setReplacements] = useState([])
 
@@ -40,9 +38,9 @@ export default function ViewSchedule(props) {
                   if(res.status===200){
                setSlots(res.data.schedule[0].slots)
                setReplacements(res.data.slots)
-               console.log("yyyya")
+              // console.log("yyyya")
                console.log(res.data.slots)
-               console.log(replacements)
+               //console.log(replacements)
                   }
               }).catch((err) => {
                   console.log(err.response)

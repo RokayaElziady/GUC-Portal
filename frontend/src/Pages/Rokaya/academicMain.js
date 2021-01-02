@@ -1,8 +1,7 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import logo from '../../Images/GUC.png'
 import '../../Stylesheets/Rokaya/MainAcademic.css'
 import Table from 'react-bootstrap/Table'
-import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 
 
@@ -15,6 +14,16 @@ export default function MainAcademicPage(props) {
   const viewScheduleClick=()=>{
     history.push("/viewSchedule")
   }
+
+  const viewSentReplacmentsClick=()=>{
+    history.push("/viewSentReplacements")
+  }
+
+  const viewRecievedReplacmentsClick=()=>{
+    history.push("/viewRecievedReplacements")
+  }
+
+
   return (
   <Table>
     <tbody className="MainAcademicTable">
@@ -39,10 +48,10 @@ export default function MainAcademicPage(props) {
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>send Replacement Request</p>
         </tr>
         <tr>
-          <p className="MainAcademicListFont" onClick={viewScheduleClick}>view Sent Replacement Requests </p>
+          <p className="MainAcademicListFont" onClick={viewSentReplacmentsClick}>view Sent Replacement Requests </p>
         </tr>
         <tr>
-          <p className="MainAcademicListFont" onClick={viewScheduleClick}>view Recieved Replacement Requests </p>
+          <p className="MainAcademicListFont" onClick={viewRecievedReplacmentsClick}>view Recieved Replacement Requests </p>
         </tr>
         <tr>
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>Send SlotLinking Request </p>
