@@ -23,6 +23,10 @@ export default function MainAcademicPage(props) {
     history.push("/viewRecievedReplacements")
   }
 
+  const viewAllRequestsClick=()=>{
+    history.push("/viewAllRequests")
+  }
+
 
   return (
   <Table>
@@ -78,7 +82,7 @@ export default function MainAcademicPage(props) {
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>View Notifications </p>
         </tr>
         <tr>
-          <p className="MainAcademicListFont" onClick={viewScheduleClick}>View Request Status </p>
+          <p className="MainAcademicListFont" onClick={viewAllRequestsClick}>View All Submited Requests</p>
         </tr>
         <tr>
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>Cancel Request </p>
