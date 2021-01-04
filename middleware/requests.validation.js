@@ -5,12 +5,14 @@ const validateSendReplacementRequest = (req, res, next) => {
   const schema = Joi.object({
     to: Joi.string().required(),
     slot:Joi.string().length(24).required(),
-    reason:Joi.string()
+    reason:Joi.string(),
+    dateOfRequest:Joi.date().iso().required(),
   })
 
   const isValid = Joi.validate(req.body, schema)
   if (isValid.error) {
     return res.json({
+      statusCode:2,
       error: isValid.error.details[0].message,
     })
   }
@@ -28,6 +30,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -44,6 +47,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -62,6 +66,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -78,6 +83,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -91,11 +97,13 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
       reason:Joi.string(),
       documents:Joi.string().required(),
 
+
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -113,6 +121,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -129,6 +138,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -143,6 +153,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -158,6 +169,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -172,6 +184,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -192,6 +205,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -213,6 +227,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -228,6 +243,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -243,6 +259,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -258,6 +275,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -275,6 +293,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -295,6 +314,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -308,6 +328,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -322,6 +343,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }

@@ -53,3 +53,57 @@
   
 
  } 
+
+
+ .sendReplacementModal {
+  width: 80vw !important;
+  height: 20vw !important;
+  }
+
+
+  .sendReplacementHeaderFont{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1vw;
+    color: crimson;
+    position: 'relative';
+    margin-bottom: 0.2vw;
+   } 
+   .sendReplacementTitleFont{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.3vw;
+    color: black;
+    position: 'relative';
+    margin-bottom: 0.2vw;
+   } 
+
+
+   .sendReplacementInput{
+    height: 3vw !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1vw !important;
+    color:black;
+   } 
+
+   .sendReplacementTextInput{
+    height: 6vw !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1vw !important;
+    color:black;
+   } 
+   
+   .sendReplacementButton{
+     height:3vw;
+     font-weight: 500;
+    font-size: 1vw !important;
+    color:white;
+    display: 'flex';
+     justify-Content: 'right';
+     align-Items:'right';
+     align-Self:'right';
+     float: right;
+
+   }

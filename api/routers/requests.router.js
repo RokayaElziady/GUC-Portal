@@ -36,22 +36,48 @@ const {
 =require('../../middleware/requests.validation')
 
 
+
+router.get('/viewNotifications',
+async (req, res) => {
+    try {
+       const notifications = await notificationModel.find({academicMember:req.user.id})
+     
+            return res.json({
+              msg:"success",
+                notifications
+            })
+         
+        
+
+    } catch (exception) {
+      return res.json({
+        error: 'Something went wrong',
+        exception
+      })
+    }
+  }
+   
+  )
+
 router.post('/sendReplacementRequest',validateSendReplacementRequest,
   async (req, res) => {
     try {
 
       const reciever = req.body.to;
       const slot = req.body.slot;
+      const date=req.body.dateOfRequest
      
 
       if(!reciever ||reciever.length===0){
         return res.json({
+          statusCode:1,
           error:'please enter the replacement member you want to replace with',
          })  
       }
 
       if(!slot ||slot.length===0){
         return res.json({
+          statusCode:1,
           error:'please enter the slot id',
          })  
       }
@@ -69,12 +95,14 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 
       if(slot1.length===0){
         return res.json({
+          statusCode:1,
           error:'this is not a valid slot id',
          })  
       }
 
       if(reciever1.length===0|| !reciever1){
         return res.json({
+          statusCode:1,
           error:'you are not sending request to a valid member',
          })  
       }
@@ -88,6 +116,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 
      if(slot1[0].academicMember!=req.user.id){
       return res.json({
+        statusCode:1,
         error: 'you are not teaching this slot ',
       })
      }
@@ -100,6 +129,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 
             if (recieverCourses.length === 0) {
             return res.json({
+              statusCode:1,
               error: 'You should send request to someone teaching this course ',
             })
           }
@@ -114,6 +144,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
              
       if(recieverSlots.length!=0){
         return res.json({
+          statusCode:1,
           error: 'the member you are sending to have teaching in this slot,try another free member',
         })
       }
@@ -124,7 +155,8 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
               type: requestType.REPLACEMENT,
               reason: req.body.reason,
               status: requestStatus.PENDING,
-              slot: slot
+              slot: slot,
+              dateOfRequest:date
             })
             request.save();
 
@@ -136,6 +168,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
             })
             notification.save()
             return res.json({
+              statusCode:0,
               msg: 'request created successfully',
               request
             })
@@ -198,6 +231,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
         const sender1= await academicMemberModel.find({id:req.user.id})
       if (slot1.length === 0) {
         return res.json({
+          statusCode:1,
           error: 'this slot does not exist',
         })
       }
@@ -212,6 +246,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
        
         if (senderCourses.length === 0) {
           return res.json({
+            statusCode:1,
             error: 'you donot teach this course',
           })
 
@@ -219,6 +254,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
         }
         if(slot1[0].academicMember!='undefined'){
           return res.json({
+            statusCode:1,
             error: 'this slot is already linked to another member',
           })       
         }
@@ -232,6 +268,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
 
       if(mySlots.length!=0){
         return res.json({
+          statusCode:1,
           error: 'you already have teaching in this time,you canot have two slots at the same time',
         })
       }
@@ -250,6 +287,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
           })
           request.save();
           return res.json({
+            statusCode:0,
             msg: 'request created successfully',
             request
           })
