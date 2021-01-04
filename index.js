@@ -62,7 +62,7 @@ const s=new requestsModel({
 })
 s.save()
 
-const port = 3001
+const port = 3001;
 if (process.env.PORT) {
   app.listen(process.env.PORT, () =>
     console.log(`Server up and running on ${process.env.PORT}`)

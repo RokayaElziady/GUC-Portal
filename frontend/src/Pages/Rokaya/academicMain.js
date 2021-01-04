@@ -22,6 +22,9 @@ export default function MainAcademicPage(props) {
   const viewRecievedReplacmentsClick=()=>{
     history.push("/viewRecievedReplacements")
   }
+  const HODClick=()=>{
+    history.push("/HOD")
+  }
 
 
   return (
@@ -82,6 +85,9 @@ export default function MainAcademicPage(props) {
         </tr>
         <tr>
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>Cancel Request </p>
+            </tr>
+            <tr>
+          <p className="MainAcademicListFont" onClick={HODClick}>HOD Main </p>
         </tr>
         </tr>
        
