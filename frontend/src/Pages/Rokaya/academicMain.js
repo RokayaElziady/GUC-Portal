@@ -25,6 +25,9 @@ export default function MainAcademicPage(props) {
   const HODClick=()=>{
     history.push("/HOD")
   }
+  const InstructorClick=()=>{
+    history.push("/courseInstructor")
+  }
 
 
   return (
@@ -88,6 +91,9 @@ export default function MainAcademicPage(props) {
             </tr>
             <tr>
           <p className="MainAcademicListFont" onClick={HODClick}>HOD Main </p>
+            </tr>
+            <tr>
+          <p className="MainAcademicListFont" onClick={InstructorClick}>Instructor Main </p>
         </tr>
         </tr>
        

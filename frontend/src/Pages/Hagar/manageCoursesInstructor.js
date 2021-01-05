@@ -1,0 +1,116 @@
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import '../../Stylesheets/Hagar/HOD.css';
+import { Button, Form } from 'react-bootstrap';
+import { Alert } from 'reactstrap';
+import axios from 'axios'
+import { backendLink } from '../../keys_dev'
+import { useState } from 'react';
+export default function ManageCoursesInstructor(props) {
+    const [instructorID, setInstructorID] = useState('');
+    const [courseName, setCourseName] = useState('');
+    const [show, setShow] = useState(true);
+    const [alertResponse, setAlertResponse] = useState('');
+    async function addAcademicToCourse() {
+        await axios({
+          url: `${backendLink}/courseInstructor/assignAcademicToCourse`,
+          method: 'post',
+          headers: {
+           
+              token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiVEEiLCJpYXQiOjE2MDk4Mjk3NjR9.WAu45Jn6ar0YkZjD53CkkL9rim4rOWUjXwJQpimzLoA",
+          },
+          data: {
+            academicID: instructorID,
+            courseName:courseName
+              },
+         
+        }).then((res) => {
+        
+          setAlertResponse(JSON.stringify(res.data));
+          console.log(alertResponse);
+          setShow(true);
+        }).catch((err) => {
+          
+            console.log(err.response)
+          })
+      }
+      async function removeAcademicFromCourse() {
+        await axios({
+          url: `${backendLink}/courseInstructor/removeAcademicFromCourse`,
+          method: 'post',
+          headers: {
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiVEEiLCJpYXQiOjE2MDk4Mjk3NjR9.WAu45Jn6ar0YkZjD53CkkL9rim4rOWUjXwJQpimzLoA",
+          },
+          data: {
+            academicID: instructorID,
+            courseName:courseName
+              },
+         
+        }).then((res) => {
+        
+          setAlertResponse(JSON.stringify(res.data));
+          console.log(alertResponse);
+          setShow(true);
+        }).catch((err) => {
+          
+            console.log(err.response)
+          })
+      }
+    async function makeCoordinator() {
+        await axios({
+            url: `${backendLink}/courseInstructor/makeCoordinator`,
+            method: 'post',
+            headers: {
+              token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiVEEiLCJpYXQiOjE2MDk4Mjk3NjR9.WAu45Jn6ar0YkZjD53CkkL9rim4rOWUjXwJQpimzLoA",
+            },
+            data: {
+              academicID: instructorID,
+              courseName:courseName
+                },
+           
+          }).then((res) => {
+          
+            setAlertResponse(JSON.stringify(res.data));
+            console.log(alertResponse);
+            setShow(true);
+          }).catch((err) => {
+            
+              console.log(err.response)
+            })
+    }
+    return (
+        <div className="main-container">
+        <Form>
+        
+  <Form.Group >
+    <Form.Label>Course name</Form.Label>
+    <Form.Control onChange={(event)=>setCourseName(event.target.value)} placeholder="Enter course name" />
+  </Form.Group>
+  <Form.Group >
+    <Form.Label>Academic ID</Form.Label>
+    <Form.Control onChange={(event)=>setInstructorID(event.target.value)} placeholder="Enter academic id" />
+          </Form.Group>
+        
+        </Form>
+        <Button variant="primary" onClick={addAcademicToCourse}>
+        Assign Academic to Course
+  </Button>
+  <Button variant="primary" onClick={removeAcademicFromCourse} >
+                Remove Academic from Course
+  </Button>
+  <Button variant="primary" onClick={makeCoordinator} >
+         Make Academic Coordinator for Course
+  </Button>
+  <Alert color="info" fade={false}>
+      <h4 className="alert-heading">Response</h4>
+      <p>
+        {alertResponse}
+      </p>
+      <hr />
+      {/* <p className="mb-0">
+        Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+      </p> */}
+    </Alert>
+        </div>
+    );
+}

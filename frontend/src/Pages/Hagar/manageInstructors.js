@@ -9,6 +9,7 @@ import { useState } from 'react';
 export default function ManageInstructors(props) {
   const [instructorID, setInstructorID] = useState('');
   const [courseName, setCourseName] = useState('');
+  const [courseName2, setCourseName2] = useState('');
   const [newCourseName, setNewCourseName] = useState('');
   const [show, setShow] = useState(true);
   const [alertResponse, setAlertResponse] = useState('');
@@ -66,7 +67,7 @@ export default function ManageInstructors(props) {
       },
       data: {
         academicID: instructorID,
-        courseOld: courseName,
+        courseOld: courseName2,
         courseNew:newCourseName
           },
      
@@ -117,7 +118,7 @@ export default function ManageInstructors(props) {
           
           <Form.Group >
             <Form.Label> Old Course name</Form.Label>
-            <Form.Control onChange={(event)=>setCourseName(event.target.value)} placeholder="Enter old course name" />
+            <Form.Control onChange={(event)=>setCourseName2(event.target.value)} placeholder="Enter old course name" />
         </Form.Group>
         <Form.Group >
             <Form.Label>New Course name</Form.Label>
