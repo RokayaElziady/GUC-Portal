@@ -116,17 +116,17 @@ const  handleAcceptRequest= async(x)=>{
                           <p>Date Of Request: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                            {r.dateOfRequest}
+                   {JSON.stringify(r.dateOfRequest).substring(1,11)}
                    </td>
                    <td className="viewSentReplacementRequestTextTitle">
                                <p>Date Submitted: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                             {r.dateSubmitted}
+                   {JSON.stringify(r.dateSubmitted).substring(1,11)}
                    </td>
                    <td>
-                   <i className="fa fa-close" onClick={()=>handleRejectRequest(r._id)}></i>
-                   <i className="fa fa-check" onClick={()=>handleAcceptRequest(r._id)}></i>
+                   <i className="fa fa-close closeIcon" onClick={()=>handleRejectRequest(r._id)}></i>
+                   <i className="fa fa-check checkIcon" onClick={()=>handleAcceptRequest(r._id)}></i>
 
                    </td>
 
@@ -136,7 +136,8 @@ const  handleAcceptRequest= async(x)=>{
        <Modal isOpen={modal} toggle={toggle}>
     <ModalHeader toggle={toggle}>NOTE</ModalHeader>
     <ModalBody>
-    {JSON.stringify(error).substring(1,error.length-1)}
+    {/* {JSON.stringify(error).substring(1,error.length-1)} */}
+    {error}
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={toggle}>Ok</Button>

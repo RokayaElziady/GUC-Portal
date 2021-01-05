@@ -366,17 +366,17 @@ export default function ViewSchedule(props) {
     <Table striped bordered hover className=" viewScheduleTable ">
   <thead>
     <tr>
-      <th>Day</th>
-      <th>1st Slot</th>
-      <th>2nd Slot</th>
-      <th>3rd Slot</th>
-      <th>4th Slot</th>
-      <th>5th Slot</th>
+      <th className="viewScheduleTableHeader">Day</th>
+      <th  className="viewScheduleTableHeader">1st Slot</th>
+      <th  className="viewScheduleTableHeader">2nd Slot</th>
+      <th  className="viewScheduleTableHeader">3rd Slot</th>
+      <th  className="viewScheduleTableHeader">4th Slot</th>
+      <th  className="viewScheduleTableHeader">5th Slot</th>
     </tr>
   </thead>
   <tbody>
   <tr>
-      <th>Sauturday</th>
+      <th  className="viewScheduleTableHeader">Sauturday</th>
       <td className="viewScheduleCell">{(sat1.length>0)?renderSlot(sat1[0].course,sat1[0].location):"Free"}</td>
       <td className="viewScheduleCell">{(sat2.length>0)?renderSlot(sat2[0].course,sat2[0].location):"Free"}</td>
       <td className="viewScheduleCell">{(sat3.length>0)?renderSlot(sat3[0].course,sat3[0].location):"Free"}</td>
@@ -384,7 +384,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{(sat5.length>0)?renderSlot(sat5[0].course,sat5[0].location):"Free"}</td>
     </tr>
     <tr>
-      <th>Sunday</th>
+      <th  className="viewScheduleTableHeader">Sunday</th>
       <td className="viewScheduleCell">{sun1.length>0?renderSlot(sun1[0].course,sun1[0].location):"Free"}</td>
       <td className="viewScheduleCell">{sun2.length>0?renderSlot(sun2[0].course,sun2[0].location):"Free"}</td>
       <td className="viewScheduleCell">{sun3.length>0?renderSlot(sun3[0].course,sun3[0].location):"Free"}</td>
@@ -392,7 +392,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{sun5.length>0?renderSlot(sun5[0].course,sun5[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Monday</th>
+    <th  className="viewScheduleTableHeader">Monday</th>
     <td className="viewScheduleCell">{mon1.length>0?renderSlot(mon1[0].course,mon1[0].location):"Free"}</td>
       <td className="viewScheduleCell">{mon2.length>0?renderSlot(mon2[0].course,mon2[0].location):"Free"}</td>
       <td className="viewScheduleCell">{mon3.length>0?renderSlot(mon3[0].course,mon3[0].location):"Free"}</td>
@@ -400,7 +400,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{mon5.length>0?renderSlot(mon5[0].course,mon5[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Tuesday</th>
+    <th  className="viewScheduleTableHeader">Tuesday</th>
     <td className="viewScheduleCell">{tue1.length>0?renderSlot(tue1[0].course,tue1[0].location):"Free"}</td>
       <td className="viewScheduleCell">{tue2.length>0?renderSlot(tue2[0].course,tue2[0].location):"Free"}</td>
       <td className="viewScheduleCell">{tue3.length>0?renderSlot(tue3[0].course,tue3[0].location):"Free"}</td>
@@ -408,7 +408,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{tue5.length>0?renderSlot(tue5[0].course,tue5[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Wednesday</th>
+    <th  className="viewScheduleTableHeader">Wednesday</th>
     <td className="viewScheduleCell">{wed1.length>0?renderSlot(wed1[0].course,wed1[0].location):"Free"}</td>
       <td className="viewScheduleCell">{wed2.length>0?renderSlot(wed2[0].course,wed2[0].location):"Free"}</td>
       <td className="viewScheduleCell">{wed3.length>0?renderSlot(wed3[0].course,wed3[0].location):"Free"}</td>
@@ -416,7 +416,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{wed5.length>0?renderSlot(wed5[0].course,wed5[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Thursday</th>
+    <th  className="viewScheduleTableHeader">Thursday</th>
     <td className="viewScheduleCell">{thu1.length>0?renderSlot(thu1[0].course,thu1[0].location):"Free"}</td>
       <td className="viewScheduleCell">{thu2.length>0?renderSlot(thu2[0].course,thu2[0].location):"Free"}</td>
       <td className="viewScheduleCell">{thu3.length>0?renderSlot(thu3[0].course,thu3[0].location):"Free"}</td>
@@ -424,7 +424,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{thu5.length>0?renderSlot(thu5[0].course,thu5[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Friday</th>
+    <th  className="viewScheduleTableHeader">Friday</th>
   <td className="viewScheduleCell">{"Free"}</td>
       <td className="viewScheduleCell">{"Free"}</td>
       <td className="viewScheduleCell">{"Free"}</td>
@@ -439,17 +439,17 @@ export default function ViewSchedule(props) {
 <Table striped bordered hover className=" viewScheduleTable ">
   <thead>
     <tr>
-      <th>Day</th>
-      <th>1st Slot</th>
-      <th>2nd Slot</th>
-      <th>3rd Slot</th>
-      <th>4th Slot</th>
-      <th>5th Slot</th>
+      <th  className="viewScheduleTableHeader">Day</th>
+      <th className="viewScheduleTableHeader">1st Slot</th>
+      <th className="viewScheduleTableHeader">2nd Slot</th>
+      <th className="viewScheduleTableHeader">3rd Slot</th>
+      <th  className="viewScheduleTableHeader">4th Slot</th>
+      <th  className="viewScheduleTableHeader">5th Slot</th>
     </tr>
   </thead>
   <tbody>
   <tr>
-      <th>Sauturday</th>
+      <th  className="viewScheduleTableHeader">Sauturday</th>
       <td className="viewScheduleCell">{(sat11.length>0)?renderSlot(sat11[0].course,sat11[0].location):"Free"}</td>
       <td className="viewScheduleCell">{(sat21.length>0)?renderSlot(sat21[0].course,sat21[0].location):"Free"}</td>
       <td className="viewScheduleCell">{(sat31.length>0)?renderSlot(sat31[0].course,sat31[0].location):"Free"}</td>
@@ -457,7 +457,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{(sat51.length>0)?renderSlot(sat51[0].course,sat51[0].location):"Free"}</td>
     </tr>
     <tr>
-      <th>Sunday</th>
+      <th className="viewScheduleTableHeader">Sunday</th>
       <td className="viewScheduleCell">{sun11.length>0?renderSlot(sun11[0].course,sun11[0].location):"Free"}</td>
       <td className="viewScheduleCell">{sun21.length>0?renderSlot(sun21[0].course,sun21[0].location):"Free"}</td>
       <td className="viewScheduleCell">{sun31.length>0?renderSlot(sun31[0].course,sun31[0].location):"Free"}</td>
@@ -465,7 +465,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{sun51.length>0?renderSlot(sun51[0].course,sun51[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Monday</th>
+    <th  className="viewScheduleTableHeader">Monday</th>
     <td className="viewScheduleCell">{mon11.length>0?renderSlot(mon11[0].course,mon11[0].location):"Free"}</td>
       <td className="viewScheduleCell">{mon21.length>0?renderSlot(mon21[0].course,mon21[0].location):"Free"}</td>
       <td className="viewScheduleCell">{mon31.length>0?renderSlot(mon31[0].course,mon31[0].location):"Free"}</td>
@@ -473,7 +473,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{mon51.length>0?renderSlot(mon51[0].course,mon51[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Tuesday</th>
+    <th  className="viewScheduleTableHeader">Tuesday</th>
     <td className="viewScheduleCell">{tue11.length>0?renderSlot(tue11[0].course,tue11[0].location):"Free"}</td>
       <td className="viewScheduleCell">{tue21.length>0?renderSlot(tue21[0].course,tue21[0].location):"Free"}</td>
       <td className="viewScheduleCell">{tue31.length>0?renderSlot(tue31[0].course,tue31[0].location):"Free"}</td>
@@ -481,7 +481,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{tue51.length>0?renderSlot(tue51[0].course,tue51[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Wednesday</th>
+    <th  className="viewScheduleTableHeader">Wednesday</th>
     <td className="viewScheduleCell">{wed11.length>0?renderSlot(wed11[0].course,wed11[0].location):"Free"}</td>
       <td className="viewScheduleCell">{wed21.length>0?renderSlot(wed21[0].course,wed21[0].location):"Free"}</td>
       <td className="viewScheduleCell">{wed31.length>0?renderSlot(wed31[0].course,wed31[0].location):"Free"}</td>
@@ -489,7 +489,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{wed51.length>0?renderSlot(wed51[0].course,wed51[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Thursday</th>
+    <th  className="viewScheduleTableHeader">Thursday</th>
     <td className="viewScheduleCell">{thu11.length>0?renderSlot(thu11[0].course,thu11[0].location):"Free"}</td>
       <td className="viewScheduleCell">{thu21.length>0?renderSlot(thu21[0].course,thu21[0].location):"Free"}</td>
       <td className="viewScheduleCell">{thu31.length>0?renderSlot(thu31[0].course,thu31[0].location):"Free"}</td>
@@ -497,7 +497,7 @@ export default function ViewSchedule(props) {
       <td className="viewScheduleCell">{thu51.length>0?renderSlot(thu51[0].course,thu51[0].location):"Free"}</td>
     </tr>
     <tr>
-    <th>Friday</th>
+    <th  className="viewScheduleTableHeader">Friday</th>
   <td className="viewScheduleCell">{"Free"}</td>
       <td className="viewScheduleCell">{"Free"}</td>
       <td className="viewScheduleCell">{"Free"}</td>

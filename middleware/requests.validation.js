@@ -40,7 +40,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
 
   const validateSendChangeDayOffRequest = (req, res, next) => {
     const schema = Joi.object({
-      day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
+      day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).required(),
       reason:Joi.string().allow(null, '')
     })
   
@@ -196,7 +196,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
         startTime:Joi.number().required(),
         endTime:Joi.number().required(),
-        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
+        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).required(),
         location:Joi.string().required(),
         order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).required(),
         course:Joi.string().required(),
@@ -217,7 +217,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
         startTime:Joi.number(),
         endTime:Joi.number(),
-        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).allow(null, ''),
+        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).allow(null, ''),
         location:Joi.string().allow(null, ''),
         order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).allow(null, ''),
         academicMember:Joi.string().allow(null, ''),

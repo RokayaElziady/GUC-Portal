@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import logo from '../../Images/GUC.png'
 import '../../Stylesheets/Rokaya/MainAcademic.css'
 import Table from 'react-bootstrap/Table'
@@ -11,8 +11,13 @@ import SendSickLeave from '../../Components/Rokaya/sendSickLeave'
 import SendCompensationLeave from '../../Components/Rokaya/sendCompensationLeaveModal'
 import SendAccidentalLeave from '../../Components/Rokaya/sendAccidentalLeaveModal'
 import SendAnnualLeave from '../../Components/Rokaya/sendAnnualLeaveModal'
+import AddSlot from '../../Components/Rokaya/addSlotModal'
+import UpdateSlot from '../../Components/Rokaya/updateSlotModal'
+import DeleteSlot from '../../Components/Rokaya/deleteSlotModal'
+import {backendLink} from '../../keys_dev'
+import socketIOClient from "socket.io-client";
 
-
+const socket = socketIOClient(backendLink);
 
 
 
@@ -25,6 +30,9 @@ export default function MainAcademicPage(props) {
   const [sendSick,setSendSick]=useState(false)
   const [sendAnnual,setSendAnnual]=useState(false)
   const [sendCompensation,setSendCompensation]=useState(false)
+  const [addSlot,setAddSlot]=useState(false)
+  const [updateSlot,setUpdateSlot]=useState(false)
+  const [deleteSlot,setDeleteSlot]=useState(false)
   const history = useHistory()
   const viewScheduleClick=()=>{
     history.push("/viewSchedule")
@@ -45,6 +53,12 @@ export default function MainAcademicPage(props) {
   const viewSlotLinkingClick =()=>{
     history.push("/viewSlotLinking")
   }
+  const viewNotificationsClick =()=>{
+    history.push("/viewNotifications")
+  }
+
+
+
 
 
 
@@ -58,7 +72,7 @@ export default function MainAcademicPage(props) {
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>View Schedule</p>
         </tr>
         <tr>
-          <p className="MainAcademicListFont" onClick={viewScheduleClick}>View Notifications </p>
+          <p className="MainAcademicListFont" onClick={viewNotificationsClick}>View Notifications </p>
         </tr>
         <tr>
           <p className="MainAcademicListFont" onClick={viewAllRequestsClick}>View All Submited Requests</p>
@@ -99,13 +113,13 @@ export default function MainAcademicPage(props) {
           <p className="MainAcademicListFont" onClick={viewSlotLinkingClick}>View SlotLinking Requests</p>
         </tr>
         <tr>
-          <p className="MainAcademicListFont" onClick={viewScheduleClick}>Add Slot</p>
+          <p className="MainAcademicListFont" onClick={()=>{setAddSlot(true)}}>Add Slot</p>
         </tr>
         <tr>
-          <p className="MainAcademicListFont" onClick={viewScheduleClick}>Update Slot</p>
+          <p className="MainAcademicListFont" onClick={()=>{setUpdateSlot(true)}}>Update Slot</p>
         </tr>
         <tr>
-          <p className="MainAcademicListFont" onClick={viewScheduleClick}>Delete Slot</p>
+          <p className="MainAcademicListFont" onClick={()=>{setDeleteSlot(true)}}>Delete Slot</p>
         </tr>
         
         </tr>
@@ -128,6 +142,9 @@ export default function MainAcademicPage(props) {
     <SendCompensationLeave  show={sendCompensation}  setShow={setSendCompensation}></SendCompensationLeave>
     <SendAccidentalLeave show={sendAccidental}  setShow={setSendAccidental}></SendAccidentalLeave>
     <SendAnnualLeave show ={sendAnnual} setShow={setSendAnnual}></SendAnnualLeave>
+    <AddSlot show={addSlot} setShow={setAddSlot}></AddSlot>
+    <UpdateSlot show={updateSlot} setShow={setUpdateSlot}></UpdateSlot>
+    <DeleteSlot show={deleteSlot} setShow={setDeleteSlot}></DeleteSlot>
     </div>
 
     

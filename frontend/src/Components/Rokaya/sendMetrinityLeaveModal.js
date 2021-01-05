@@ -16,7 +16,7 @@ import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
 export default function SendMetrinityLeave(props) {
-  
+  const success=0;
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
@@ -42,6 +42,9 @@ export default function SendMetrinityLeave(props) {
 
     const toggle2 = () => {
        setModal(!modal)
+       if(success===1){
+        props.setShow(!props.show)
+        }
         };
 
     const handleSubmit= async ()=>{
@@ -66,14 +69,13 @@ export default function SendMetrinityLeave(props) {
 
               }
               else{
+                  success=1;
                   setError(res.data.msg)
               }
               
           }).catch((err) => {
               console.log(err.response)
             })
-        props.setShow(!props.show)
-
     }
 
   return (
@@ -81,7 +83,8 @@ export default function SendMetrinityLeave(props) {
   <Modal isOpen={modal} toggle={toggle2}>
     <ModalHeader toggle={toggle2}>Take Care</ModalHeader>
     <ModalBody>
-    {JSON.stringify(error).substring(1,error.length-1)}
+    {/* {JSON.stringify(error).substring(1,error.length-1)} */}
+    {error}
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={toggle2}  className="sendReplacementButton">Ok</Button>

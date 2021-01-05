@@ -116,7 +116,7 @@ export default function ViewAllRequests(props) {
     
    return(
        <div>
-               <tr>
+               <tr >
                    <td>
                        #
                    </td>
@@ -133,19 +133,25 @@ export default function ViewAllRequests(props) {
                            {r.status} 
                    </td>
                    <td className="viewSentReplacementRequestTextTitle">
+                            <p>Type: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                           {r.type} 
+                   </td>
+                   <td className="viewSentReplacementRequestTextTitle">
                           <p>Date Of Request: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                            {r.dateOfRequest}
+                   {JSON.stringify(r.dateOfRequest).substring(1,11)}
                    </td>
                    <td className="viewSentReplacementRequestTextTitle">
                                <p>Date Submitted: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                             {r.dateSubmitted}
+                   {JSON.stringify(r.dateSubmitted).substring(1,11)}
                    </td>
                    <td>
-                   <i className="fa fa-close" onClick={()=>handleCancelRequest(r._id)}></i>
+                   <i className="fa fa-close closeIcon" onClick={()=>handleCancelRequest(r._id)}></i>
                    </td>
 
        </tr>
@@ -154,7 +160,8 @@ export default function ViewAllRequests(props) {
        <Modal isOpen={modal} toggle={toggle}>
     <ModalHeader toggle={toggle}>Take Care</ModalHeader>
     <ModalBody>
-    {JSON.stringify(error).substring(1,error.length-1)}
+    {/* {JSON.stringify(error).substring(1,error.length-1)} */}
+    {error}
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={toggle}>Ok</Button>
@@ -200,18 +207,17 @@ if(filter=='rej'){
 
 
   return (
-      <div>
+      <div style={{width:"100vw"}}>
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
           <p className="viewScheduleHeaders">Requests</p>
           <div>
-      <Button color="success"  onClick={()=>filterAccepted()}>Filter Accepted</Button>
-      <Button color="warning"   onClick={()=>filterPending()}>Filter Pending</Button>
-      <Button color="danger"    onClick={()=>filterRejected()}>Filter Rejected</Button>
-    
+      <Button  className="filterButton"   onClick={()=>filterAccepted()}>Filter Accepted</Button>
+      <Button   className="filterButton"  onClick={()=>filterPending()}>Filter Pending</Button>
+      <Button  className="filterButton"   onClick={()=>filterRejected()}>Filter Rejected</Button>
     </div>
 
-          <Table  striped>
+          <Table  striped className="viewAllRequestsTable">
            <tbody>
                
                

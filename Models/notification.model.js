@@ -6,6 +6,7 @@ var Schema = mongoose.Schema
 var notification = new Schema({
   academicMember:{type:String},
   request:{type:String},
+  message:{type:String}
 })
 
 var notificationModel = mongoose.model('notification', notification)

@@ -1,7 +1,8 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import MainAcademic from './Pages/Rokaya/academicMain'
 import ViewSchedule from './Pages/Rokaya/viewSchedule'
 import ViewSlotLinkingRequests from './Pages/Rokaya/viewSlotLinkingRequests'
+import ViewNotifications from './Pages/Rokaya/viewNotifications'
 import ViewRecievedReplacements from './Pages/Rokaya/viewRecievedReplacemetRequest'
 import ViewSentReplacements from './Pages/Rokaya/viewSentReplacementRequests'
 import ViewAllRequests from './Pages/Rokaya/viewAllRequests'
@@ -12,6 +13,7 @@ import 'font-awesome/css/font-awesome.min.css';
 
 
 function App() {
+  //console.log(Path)
   return (
     <Router>
     <React.Fragment>
@@ -21,6 +23,9 @@ function App() {
     <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>
     <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>
     <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>
+    <Route exact path='/viewNotifications' render={()=><ViewNotifications/>}/>
+    
+    
     
      </React.Fragment>
      </Router>

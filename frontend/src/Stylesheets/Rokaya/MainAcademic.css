@@ -21,7 +21,7 @@
   font-style: normal;
   font-weight: 500;
   font-size: 1vw;
-  color: #060067;
+  color: black;
   position: 'relative';
   margin-bottom: 0.2vw;
  } 
@@ -106,4 +106,29 @@
      align-Self:'right';
      float: right;
 
+
    }
+
+   .modalButton{
+     width:4vw;
+    height:3vw;
+    font-weight: 500;
+   font-size: 1vw !important;
+   color:white;
+   display: 'flex';
+    justify-Content: 'center';
+    align-Items:'center';
+    /* align-Self:'center'; */
+    float: left;
+    
+
+  }
+
+  .closeIcon{
+    /* background-color: red; */
+    color: crimson;
+  }
+
+  .checkIcon{
+    color:green
+  }

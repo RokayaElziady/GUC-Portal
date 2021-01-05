@@ -6,7 +6,7 @@ const  slotsModel = require('../../Models/slots.model')
 const courseModel=require('../../Models/course.model')
 const departementModel=require('../../Models/department.model')
 const locationModel=require('../../Models/location.model')
-const { requestStatus,requestType } = require('../enums')
+const { requestStatus,requestType, days } = require('../enums')
 const notificationModel = require('../../Models/notification.model')
 const scheduleModel=require("../../Models/schedule.model")
 const leavesModel=require("../../Models/leaves.model")
@@ -63,7 +63,7 @@ async (req, res) => {
 router.post('/sendReplacementRequest',validateSendReplacementRequest,
   async (req, res) => {
     try {
-
+     // res.header('Access-Control-Allow-Credentials', 'true');
       const reciever = req.body.to;
       const slot = req.body.slot;
       const date=req.body.dateOfRequest
@@ -187,7 +187,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 router.get('/viewSentReplacementRequest',
   async (req, res) => {
     try {
-      const requests =await requestsModel.find({to: req.user.id})
+      const requests =await requestsModel.find({to: req.user.id,type:requestType.REPLACEMENT})
       return res.json({
         statusCode:0,
         msg: ' success',
@@ -207,7 +207,7 @@ router.get('/viewSentReplacementRequest',
 router.get('/viewRecievedReplacementRequest',
   async (req, res) => {
     try {
-      const requests=await requestsModel.find({from: req.user.id })
+      const requests=await requestsModel.find({from: req.user.id ,type:requestType.REPLACEMENT})
 
       return res.json({
         statusCode:0,
@@ -1060,6 +1060,13 @@ router.get('/viewAllSlotLinkingRequests',
           error:'you could not add a slot in a course you are not coordinating',
          })  
       }
+             console.log("tatatat")
+      if(day==='friday'){
+        return res.json({
+          statusCode:1,
+          error:'you could not add a slot on friday it should be vacation',
+         })  
+      }
       const courseN=course1[0].name
 
       const slot=await  slotsModel.find({day:day,location:location,order:order})
@@ -1070,9 +1077,6 @@ router.get('/viewAllSlotLinkingRequests',
          })  
       }
 
-
-
-
       var slot1=new slotsModel({
         startTime:startTime,
         endTime:endTime,
@@ -1080,7 +1084,6 @@ router.get('/viewAllSlotLinkingRequests',
         course:courseN,
         location:location,
         order:order,
-        academicMember:academicMember
       })
       slot1.save();
   
@@ -1149,6 +1152,13 @@ router.get('/viewAllSlotLinkingRequests',
          })  
       }
 
+
+      if(day==='friday'){
+        return res.json({
+          statusCode:1,
+          error:'you could not add a slot on friday it should be vacation',
+         })  
+      }
 
       const courseN=course[0].name
      // console.log("nannananna")

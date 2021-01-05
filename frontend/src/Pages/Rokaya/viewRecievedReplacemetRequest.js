@@ -106,8 +106,8 @@ const  handleAcceptRequest= async(x)=>{
                              {r.dateSubmitted}
                    </td>
                    <td>
-                   <i className="fa fa-close" onClick={()=>handleRejectRequest(r._id)}></i>
-                   <i className="fa fa-check" onClick={()=>handleAcceptRequest(r._id)}></i>
+                   <i className="fa fa-close closeIcon" onClick={()=>handleRejectRequest(r._id)}></i>
+                   <i className="fa fa-check checkIcon" onClick={()=>handleAcceptRequest(r._id)}></i>
 
                    </td>
 
@@ -117,7 +117,8 @@ const  handleAcceptRequest= async(x)=>{
        <Modal isOpen={modal} toggle={toggle}>
     <ModalHeader toggle={toggle}>NOTE</ModalHeader>
     <ModalBody>
-    {JSON.stringify(error).substring(1,error.length-1)}
+    {/* {JSON.stringify(error).substring(1,error.length-1)} */}
+    {error}
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={toggle}>Ok</Button>

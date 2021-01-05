@@ -47,16 +47,16 @@ export default function ViewSentReplacements(props) {
                           <p>Date Of Request: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                            {r.dateOfRequest}
+                            {JSON.stringify(r.dateOfRequest).substring(1,11)}
                    </td>
                    <td className="viewSentReplacementRequestTextTitle">
                                <p>Date Submitted: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                             {r.dateSubmitted}
+                   {JSON.stringify(r.dateSubmitted).substring(1,11)} 
                    </td>
                    <td>
-                   <i className="fa fa-close" onClick={()=>handleCancelRequest(r._id)}></i>
+                   <i className="fa fa-close closeIcon"  onClick={()=>handleCancelRequest(r._id)}></i>
                    </td>
 
        </tr>
@@ -65,7 +65,8 @@ export default function ViewSentReplacements(props) {
        <Modal isOpen={modal} toggle={toggle}>
     <ModalHeader toggle={toggle}>Take Care</ModalHeader>
     <ModalBody>
-    {JSON.stringify(error).substring(1,error.length-1)}
+    {/* {JSON.stringify(error).substring(1,error.length-1)} */}
+    {error}
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={toggle}>Ok</Button>
