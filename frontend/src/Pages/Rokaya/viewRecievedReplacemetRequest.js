@@ -117,7 +117,7 @@ const  handleAcceptRequest= async(x)=>{
        <Modal isOpen={modal} toggle={toggle}>
     <ModalHeader toggle={toggle}>NOTE</ModalHeader>
     <ModalBody>
-    {JSON.stringify(error)}
+    {JSON.stringify(error).substring(1,error.length-1)}
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={toggle}>Ok</Button>

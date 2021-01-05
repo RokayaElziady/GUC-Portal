@@ -14,7 +14,7 @@ import {backendLink} from '../../keys_dev'
 
 
 
-export default function ViewSentReplacements(props) {
+export default function ViewSlotLinkingRequests(props) {
   const [requests, setRequests] = useState([])
   const [modal, setModal] = useState(false);
   const [error,setError]=useState('')
@@ -23,8 +23,71 @@ export default function ViewSentReplacements(props) {
       window.location.reload();
     };
 
+
+    
+const  handleAcceptRequest= async(x)=>{
+   
+    setModal(!modal)
+  await axios({
+      url: `${backendLink}/request/acceptSlotLinkingRequest`,
+      method: 'post',
+      headers: {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+      },
+      data: {
+           request:x,
+          },
+     
+    }).then((res) => {
+        console.log("hey")
+        console.log(res)
+        if(res.data.statusCode==2 || res.data.statusCode==1){
+            setError(res.data.error)
+
+        }
+        else{
+            setError(res.data.msg)
+        }
+    }).catch((err) => {
+        console.log(err.response)
+      })
+
+
+     
+  }
+
+
+  const  handleRejectRequest= async(x)=>{
+   
+    setModal(!modal)
+  await axios({
+      url: `${backendLink}/request/rejectSlotLinkingRequest`,
+      method: 'post',
+      headers: {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+      },
+      data: {
+           request:x,
+          },
+     
+    }).then((res) => {
+        if(res.data.statusCode==2 || res.data.statusCode==1){
+            setError(res.data.error)
+
+        }
+        else{
+            setError(res.data.msg)
+        }
+    }).catch((err) => {
+        console.log(err.response)
+      })
+
+
+     
+  }
+
+
   const  viewRequest=(r)=>{
-    if(r.status!="canceled"){
    return(
        <div>
                <tr>
@@ -32,16 +95,22 @@ export default function ViewSentReplacements(props) {
                        #
                    </td>
                    <td className="viewSentReplacementRequestTextTitle">
-                          <p>To: </p>
+                          <p>From: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                            {r.to}
+                            {r.from}
                    </td>
                    <td className="viewSentReplacementRequestTextTitle">
                             <p>Status: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
                            {r.status} 
+                   </td>
+                   <td className="viewSentReplacementRequestTextTitle">
+                            <p>Slot: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                           {r.slot} 
                    </td>
                    <td className="viewSentReplacementRequestTextTitle">
                           <p>Date Of Request: </p>
@@ -56,14 +125,16 @@ export default function ViewSentReplacements(props) {
                              {r.dateSubmitted}
                    </td>
                    <td>
-                   <i className="fa fa-close" onClick={()=>handleCancelRequest(r._id)}></i>
+                   <i className="fa fa-close" onClick={()=>handleRejectRequest(r._id)}></i>
+                   <i className="fa fa-check" onClick={()=>handleAcceptRequest(r._id)}></i>
+
                    </td>
 
        </tr>
 
 
        <Modal isOpen={modal} toggle={toggle}>
-    <ModalHeader toggle={toggle}>Take Care</ModalHeader>
+    <ModalHeader toggle={toggle}>NOTE</ModalHeader>
     <ModalBody>
     {JSON.stringify(error).substring(1,error.length-1)}
     </ModalBody>
@@ -79,68 +150,35 @@ export default function ViewSentReplacements(props) {
 
    }
  
-}
-
-
-const  handleCancelRequest= async(x)=>{
-   
-    setModal(!modal)
-  await axios({
-      url: `${backendLink}/request/cancelRequest`,
-      method: 'put',
-      headers: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-      },
-      data: {
-           request:x,
-          },
-     
-    }).then((res) => {
-        console.log(res)
-        if(res.data.statusCode===1){
-            setError(res.data.error)
-        }
-        else{
-            setError(res.data.msg)
-        }
-    }).catch((err) => {
-        console.log(err.response)
-      })
-
-
-     
-  }
-
-
-
-
-
 
   useEffect( async () => {
        await axios({
-                url: `${backendLink}/request/viewSentReplacementRequest`,
+                url: `${backendLink}/request/viewAllSlotLinkingRequests`,
                 method: 'get',
                 headers: {
                   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
                 },
                
               }).then((res) => {
-                  if(res.status===200){
-               setRequests(res.data.requests)
-               console.log(res.data.requests)
-                  }
+                  setRequests(res.data.requests)
+                if(res.data.statusCode==2 || res.data.statusCode==1){
+                    setError(res.data.error)
+  
+                }
+                else{
+                    setError(res.data.msg)
+                }
               }).catch((err) => {
                   console.log(err.response)
                 })
               }
               ,[])
 
-
   return (
       <div>
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
-          <p className="viewScheduleHeaders">Requests</p>
+          <p className="viewScheduleHeaders"> Slot-Linking Requests</p>
           <Table  striped>
            <tbody>
             {

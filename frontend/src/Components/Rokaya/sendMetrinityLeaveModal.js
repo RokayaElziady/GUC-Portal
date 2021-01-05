@@ -15,13 +15,14 @@ import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
 
-export default function SendSlotLinking(props) {
+export default function SendMetrinityLeave(props) {
   
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
-    slot: '',
-    reason: '',
+    documents:'',
+    reason:'',
+    date:'',
   })
 
   const handleChange = (event) => {
@@ -46,13 +47,14 @@ export default function SendSlotLinking(props) {
     const handleSubmit= async ()=>{
         setModal(!modal)
         await axios({
-            url: `${backendLink}/request/sendSlotLinkingRequest`,
+            url: `${backendLink}/request/sendMaternityLeaveRequest`,
             method: 'post',
             headers: {
               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
             data:{
-                   slot:state.slot,
+                   date:state.date,
+                   documents:state.documents,
                    reason:state.reason,
             },
 
@@ -82,20 +84,25 @@ export default function SendSlotLinking(props) {
     {JSON.stringify(error).substring(1,error.length-1)}
     </ModalBody>
     <ModalFooter>
-      <Button color="primary" onClick={toggle2}>Ok</Button>
+      <Button color="primary" onClick={toggle2}  className="sendReplacementButton">Ok</Button>
     </ModalFooter>
   </Modal>
 
 <Modal  isOpen={props.show} toggle={toggle} className="sendReplacementModal">
-<ModalHeader toggle={toggle} className="sendReplacementHeaderFont">Send Slot Linking Request</ModalHeader>
+<ModalHeader toggle={toggle} className="sendReplacementHeaderFont">Send Metrinity Leave Request</ModalHeader>
 <ModalBody>
 <Form>
+ 
   <FormGroup>
-    <Label for="examplePassword" className="sendReplacementTitleFont">Slot Id *</Label>
-    <Input  className="sendReplacementInput"  onChange={handleChange} name='slot' />
+    <Label for="exampleEmail" className="sendReplacementTitleFont">Date Of Request * </Label>
+    <Input  className="sendReplacementInput"  name='date'  onChange={handleChange} placeholder="date of the request " />
   </FormGroup>
   <FormGroup>
-    <Label for="exampleText" className="sendReplacementTitleFont">Reason For Replacement</Label>
+    <Label for="examplePassword" className="sendReplacementTitleFont">Documents Drive Link*</Label>
+    <Input  className="sendReplacementInput"  onChange={handleChange} name='documents' />
+  </FormGroup>
+  <FormGroup>
+    <Label for="exampleText" className="sendReplacementTitleFont">Reason For Leave</Label>
     <Input className="sendReplacementTextInput" type="textarea" placeholder="Optional Reason" name='reason'  onChange={handleChange}/>
   </FormGroup>
   

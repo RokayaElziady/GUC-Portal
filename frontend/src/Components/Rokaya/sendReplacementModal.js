@@ -84,7 +84,7 @@ export default function SendReplacementRequest(props) {
   <Modal isOpen={modal} toggle={toggle2}>
     <ModalHeader toggle={toggle2}>Take Care</ModalHeader>
     <ModalBody>
-    {JSON.stringify(error)}
+    {JSON.stringify(error).substring(1,error.length-1)}
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={toggle2}>Ok</Button>

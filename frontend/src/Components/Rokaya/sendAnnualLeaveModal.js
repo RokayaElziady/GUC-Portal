@@ -15,13 +15,15 @@ import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
 
-export default function SendSlotLinking(props) {
+export default function SendAnnualLeave(props) {
   
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
-    slot: '',
-    reason: '',
+    reason:'',
+    date:'',
+    replacements:[],
+    requests:[]
   })
 
   const handleChange = (event) => {
@@ -46,14 +48,16 @@ export default function SendSlotLinking(props) {
     const handleSubmit= async ()=>{
         setModal(!modal)
         await axios({
-            url: `${backendLink}/request/sendSlotLinkingRequest`,
+            url: `${backendLink}/request/sendAnnualLeaveRequest`,
             method: 'post',
             headers: {
               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
             data:{
-                   slot:state.slot,
+                   date:state.date,
                    reason:state.reason,
+                   replacements:state.replacements,
+                   requests:state.requests
             },
 
            
@@ -82,20 +86,38 @@ export default function SendSlotLinking(props) {
     {JSON.stringify(error).substring(1,error.length-1)}
     </ModalBody>
     <ModalFooter>
-      <Button color="primary" onClick={toggle2}>Ok</Button>
+      <Button color="primary" onClick={toggle2}  className="sendReplacementButton">Ok</Button>
     </ModalFooter>
   </Modal>
 
 <Modal  isOpen={props.show} toggle={toggle} className="sendReplacementModal">
-<ModalHeader toggle={toggle} className="sendReplacementHeaderFont">Send Slot Linking Request</ModalHeader>
+<ModalHeader toggle={toggle} className="sendReplacementHeaderFont">Send Annual Leave Request</ModalHeader>
 <ModalBody>
 <Form>
+ 
   <FormGroup>
-    <Label for="examplePassword" className="sendReplacementTitleFont">Slot Id *</Label>
-    <Input  className="sendReplacementInput"  onChange={handleChange} name='slot' />
+    <Label for="exampleEmail" className="sendReplacementTitleFont">Date Of Request * </Label>
+    <Input  className="sendReplacementInput"  name='date'  onChange={handleChange} placeholder="date of the request " />
   </FormGroup>
   <FormGroup>
-    <Label for="exampleText" className="sendReplacementTitleFont">Reason For Replacement</Label>
+    <Label for="exampleEmail" className="sendReplacementTitleFont">Replacement Memmbers  </Label>
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Member 1 ID" />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Member 2 ID" />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Member 3 ID " />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Member 4 ID " />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Member 5 ID " />
+  </FormGroup>
+  <FormGroup>
+    <Label for="exampleEmail" className="sendReplacementTitleFont">Request ID's  </Label>
+    <Input  className="sendReplacementInput"  name='requests'  onChange={handleChange} placeholder="Request 1 ID " />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Request 2 ID " />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Request 3 ID " />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Request 4 ID " />
+    <Input  className="sendReplacementInput"  name='replacements'  onChange={handleChange} placeholder="Request 5 ID " />
+  </FormGroup>
+
+  <FormGroup>
+    <Label for="exampleText" className="sendReplacementTitleFont">Reason For Leave</Label>
     <Input className="sendReplacementTextInput" type="textarea" placeholder="Optional Reason" name='reason'  onChange={handleChange}/>
   </FormGroup>
   

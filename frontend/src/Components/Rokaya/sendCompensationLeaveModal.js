@@ -15,13 +15,14 @@ import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
 
-export default function SendSlotLinking(props) {
+export default function SendReplacementRequest(props) {
   
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
-    slot: '',
+    compensationDay:'',
     reason: '',
+    date:'',
   })
 
   const handleChange = (event) => {
@@ -46,20 +47,22 @@ export default function SendSlotLinking(props) {
     const handleSubmit= async ()=>{
         setModal(!modal)
         await axios({
-            url: `${backendLink}/request/sendSlotLinkingRequest`,
+            url: `${backendLink}/request/sendCompensationLeaveRequest`,
             method: 'post',
             headers: {
               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
             data:{
-                   slot:state.slot,
+                  compensationDay:state.compensationDay,
                    reason:state.reason,
+                   dateOfRequest:state.date
             },
 
            
           }).then((res) => {
               console.log(res)
               if(res.data.statusCode==2 || res.data.statusCode==1){
+                  console.log("gwa iff")
                   setError(res.data.error)
 
               }
@@ -87,16 +90,20 @@ export default function SendSlotLinking(props) {
   </Modal>
 
 <Modal  isOpen={props.show} toggle={toggle} className="sendReplacementModal">
-<ModalHeader toggle={toggle} className="sendReplacementHeaderFont">Send Slot Linking Request</ModalHeader>
+<ModalHeader toggle={toggle} className="sendReplacementHeaderFont">Send Compensation Leave Request</ModalHeader>
 <ModalBody>
 <Form>
   <FormGroup>
-    <Label for="examplePassword" className="sendReplacementTitleFont">Slot Id *</Label>
-    <Input  className="sendReplacementInput"  onChange={handleChange} name='slot' />
+    <Label for="exampleEmail" className="sendReplacementTitleFont">Date Of Request * </Label>
+    <Input  className="sendReplacementInput"  name='date'  onChange={handleChange} placeholder="date of the request " />
   </FormGroup>
   <FormGroup>
-    <Label for="exampleText" className="sendReplacementTitleFont">Reason For Replacement</Label>
-    <Input className="sendReplacementTextInput" type="textarea" placeholder="Optional Reason" name='reason'  onChange={handleChange}/>
+    <Label for="exampleEmail" className="sendReplacementTitleFont">Date Of Compensation * </Label>
+    <Input  className="sendReplacementInput"  name='date'  onChange={handleChange} placeholder="date you will compensate on " />
+  </FormGroup>
+  <FormGroup>
+    <Label for="exampleText" className="sendReplacementTitleFont">Reason For Leave *</Label>
+    <Input className="sendReplacementTextInput" type="textarea" placeholder="Write strong reason for request to be accepted" name='reason'  onChange={handleChange}/>
   </FormGroup>
   
    
