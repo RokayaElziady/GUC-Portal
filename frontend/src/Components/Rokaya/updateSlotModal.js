@@ -42,6 +42,15 @@ export default function UpdateSlot(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      start: '',
+      end: '',
+      day: '',
+      location:'',
+      order:'',
+      slot:'',
+      academic:''
+    })
     console.log("main toggle")
     props.setShow(!props.show)
     };

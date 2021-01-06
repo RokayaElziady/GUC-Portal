@@ -37,6 +37,10 @@ export default function SendSlotLinking(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      slot: '',
+     reason: '',
+    })
     props.setShow(!props.show)
     };
 

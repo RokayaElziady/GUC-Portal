@@ -41,6 +41,12 @@ export default function SendReplacementRequest(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      slot: '',
+      member: '',
+      reason: '',
+      date:'',
+     })
     props.setShow(!props.show)
     };
 

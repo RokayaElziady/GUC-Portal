@@ -36,6 +36,9 @@ export default function DeleteSlot(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      slot:'',
+    })
     props.setShow(!props.show)
     };
 

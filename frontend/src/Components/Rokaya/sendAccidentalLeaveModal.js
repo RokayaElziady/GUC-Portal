@@ -37,6 +37,10 @@ export default function SendAccidentalLeave(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      reason:'',
+      date:'',
+    })
     props.setShow(!props.show)
     };
 

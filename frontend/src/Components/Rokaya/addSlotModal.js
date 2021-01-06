@@ -41,6 +41,14 @@ export default function AddSlot(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      start: '',
+      end: '',
+      day: '',
+      location:'',
+      order:'',
+      course:''
+    })
     props.setShow(!props.show)
     };
 

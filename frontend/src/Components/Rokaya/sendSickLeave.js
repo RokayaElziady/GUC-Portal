@@ -38,6 +38,12 @@ export default function SendSickLeave(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      documents:'',
+      reason:'',
+      date:'',
+
+    })
     props.setShow(!props.show)
     };
 

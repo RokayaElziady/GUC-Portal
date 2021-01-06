@@ -329,7 +329,7 @@ router.post('/sendChangeDayOffRequest',validateSendChangeDayOffRequest,
         }
       })
      
-
+        console.log(mySlots)
       if(mySlots.length!=0){
         return res.json({
           statusCode:1,

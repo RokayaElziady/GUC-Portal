@@ -37,12 +37,19 @@ export default function SendChangeDayOffRequest(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      reason: '',
+      day:'',
+
+    })
     props.setShow(!props.show)
     };
 
     const toggle2 = () => {
        setModal(!modal)
        if(success===1){
+         console.log("toggle 2 success 1")
+         console.log(success)
         props.setShow(!props.show)
         setState({
           reason: '',

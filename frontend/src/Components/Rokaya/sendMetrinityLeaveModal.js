@@ -38,6 +38,11 @@ export default function SendMetrinityLeave(props) {
   }
   const toggle = () => {
     setError('')
+    setState({
+      documents:'',
+      reason:'',
+      date:'',
+    })
     props.setShow(!props.show)
     };
 
