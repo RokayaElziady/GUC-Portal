@@ -15,9 +15,6 @@ import AddSlot from '../../Components/Rokaya/addSlotModal'
 import UpdateSlot from '../../Components/Rokaya/updateSlotModal'
 import DeleteSlot from '../../Components/Rokaya/deleteSlotModal'
 import {backendLink} from '../../keys_dev'
-import socketIOClient from "socket.io-client";
-
-const socket = socketIOClient(backendLink);
 
 
 

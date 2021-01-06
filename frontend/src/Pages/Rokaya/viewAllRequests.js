@@ -30,14 +30,14 @@ export default function ViewAllRequests(props) {
 
     const filterAccepted=()=>{
        // console.log("heyyyyyyyyyy")
-       if(filter=='acc'){
+       if(filter==='acc'){
                 setFilter('')
        }
        else{
         setFilter('acc')
        }
         var x=requests.filter((r)=>{
-            if(r.status=="accepted"){
+            if(r.status==="accepted"){
                 return r
             }
         })
@@ -48,14 +48,14 @@ export default function ViewAllRequests(props) {
     }
 
     const filterPending=()=>{
-        if(filter=='pend'){
+        if(filter==='pend'){
             setFilter('')
    }
    else{
     setFilter('pend')
    }
         var x=requests.filter((r)=>{
-            if(r.status=="pending"){
+            if(r.status==="pending"){
                 return r
             }
         })
@@ -64,14 +64,14 @@ export default function ViewAllRequests(props) {
     }
 
     const filterRejected=()=>{
-        if(filter=='rej'){
+        if(filter==='rej'){
             setFilter('')
    }
    else{
     setFilter('rej')
    }
         var x=requests.filter((r)=>{
-            if(r.status=="rejected"){
+            if(r.status==="rejected"){
                 return r
             }
         })
@@ -113,6 +113,9 @@ export default function ViewAllRequests(props) {
     
 
   const  viewRequest=(r)=>{
+    console.log("reqqqqqqq")
+    console.log(r)
+    //console.log(r.dateOfRequest)
     
    return(
        <div>
@@ -138,12 +141,13 @@ export default function ViewAllRequests(props) {
                    <td className="viewSentReplacementRequestTextData">
                            {r.type} 
                    </td>
-                   <td className="viewSentReplacementRequestTextTitle">
+                   {(r.dateOfRequest && r.dateOfRequest!=null)?<div><td className="viewSentReplacementRequestTextTitle">
                           <p>Date Of Request: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
                    {JSON.stringify(r.dateOfRequest).substring(1,11)}
-                   </td>
+                   </td></div>:(<div></div>)}
+                   
                    <td className="viewSentReplacementRequestTextTitle">
                                <p>Date Submitted: </p>
                    </td>

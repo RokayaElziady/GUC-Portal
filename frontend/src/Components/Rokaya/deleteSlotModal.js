@@ -11,12 +11,12 @@ import {backendLink} from '../../keys_dev'
 import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
-
+var success=0
 
 
 
 export default function DeleteSlot(props) {
-  const success=0
+  
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
@@ -26,7 +26,7 @@ export default function DeleteSlot(props) {
   const handleChange = (event) => {
     let newValue = event.target.value
     let name = event.target.name
-    setError({})
+    setError('')
     setState((prevState) => {
       return {
         ...prevState,
@@ -35,6 +35,7 @@ export default function DeleteSlot(props) {
     })
   }
   const toggle = () => {
+    setError('')
     props.setShow(!props.show)
     };
 
@@ -42,6 +43,9 @@ export default function DeleteSlot(props) {
        setModal(!modal)
        if(success===1){
         props.setShow(!props.show)
+        setState({
+          slot:'',
+        })
         }
         };
 

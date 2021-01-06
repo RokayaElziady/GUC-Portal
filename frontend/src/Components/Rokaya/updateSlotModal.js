@@ -13,10 +13,10 @@ import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
 
-
+var success=0
 
 export default function UpdateSlot(props) {
-  const success=0
+  
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
@@ -32,7 +32,7 @@ export default function UpdateSlot(props) {
   const handleChange = (event) => {
     let newValue = event.target.value
     let name = event.target.name
-    setError({})
+    setError('')
     setState((prevState) => {
       return {
         ...prevState,
@@ -41,13 +41,27 @@ export default function UpdateSlot(props) {
     })
   }
   const toggle = () => {
+    setError('')
+    console.log("main toggle")
     props.setShow(!props.show)
     };
 
     const toggle2 = () => {
-       setModal(!modal)
-       if(success===1){
-        props.setShow(!props.show)
+      console.log("toggle2")
+      console.log(success)
+      // setModal(!modal)
+       if(success==1){
+         console.log("heeeh")
+        props.setShow(false)
+        setState({
+          start: '',
+          end: '',
+          day: '',
+          location:'',
+          order:'',
+          slot:'',
+          academic:''
+        })
         }
         };
 

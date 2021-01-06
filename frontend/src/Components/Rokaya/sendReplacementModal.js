@@ -10,13 +10,13 @@ import axios from 'axios'
 import {backendLink} from '../../keys_dev'
 import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
-
+var success=0;
 
 
 
 export default function SendReplacementRequest(props) {
 
-  const success=0;
+ 
 
   
   const [error,setError]=useState('')
@@ -31,7 +31,7 @@ export default function SendReplacementRequest(props) {
   const handleChange = (event) => {
     let newValue = event.target.value
     let name = event.target.name
-    setError({})
+    // setError('')
     setState((prevState) => {
       return {
         ...prevState,
@@ -40,13 +40,23 @@ export default function SendReplacementRequest(props) {
     })
   }
   const toggle = () => {
+    setError('')
     props.setShow(!props.show)
     };
 
     const toggle2 = () => {
+      console.log("toggle2")
+      console.log(success)
        setModal(!modal)
        if(success===1){
+         console.log("yaay")
        props.setShow(!props.show)
+       setState({
+        slot: '',
+        member: '',
+        reason: '',
+        date:'',
+       })
        }
         };
 
@@ -68,7 +78,7 @@ export default function SendReplacementRequest(props) {
 
            
           }).then((res) => {
-             
+             console.log("tatata")
               if(res.data.statusCode===2 || res.data.statusCode===1){
                   console.log("gwa iff")
                   console.log(res)
@@ -76,13 +86,15 @@ export default function SendReplacementRequest(props) {
 
               }
               else{
+                console.log("successsssssss")
                 success=1
                   setError(res.data.msg)
-                  success=1;
                   
               }
               
           }).catch((err) => {
+            console.log("errrrrrooooooor")
+            console.log(err)
               console.log(err.response)
             })
 

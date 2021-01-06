@@ -12,11 +12,11 @@ import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
 
-
+var success=0;
 
 
 export default function SendSlotLinking(props) {
-  const success=0;
+
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
@@ -27,7 +27,7 @@ export default function SendSlotLinking(props) {
   const handleChange = (event) => {
     let newValue = event.target.value
     let name = event.target.name
-    setError({})
+    setError('')
     setState((prevState) => {
       return {
         ...prevState,
@@ -36,6 +36,7 @@ export default function SendSlotLinking(props) {
     })
   }
   const toggle = () => {
+    setError('')
     props.setShow(!props.show)
     };
 
@@ -43,6 +44,11 @@ export default function SendSlotLinking(props) {
        setModal(!modal)
        if(success===1){
         props.setShow(!props.show)
+        setState({
+          slot: '',
+         reason: '',
+        })
+
         }
         };
 
@@ -62,7 +68,7 @@ export default function SendSlotLinking(props) {
            
           }).then((res) => {
               console.log(res)
-              if(res.data.statusCode==2 || res.data.statusCode==1){
+              if(res.data.statusCode===2 || res.data.statusCode===1){
                   setError(res.data.error)
 
               }

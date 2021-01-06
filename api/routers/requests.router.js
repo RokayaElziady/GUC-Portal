@@ -63,7 +63,6 @@ async (req, res) => {
 router.post('/sendReplacementRequest',validateSendReplacementRequest,
   async (req, res) => {
     try {
-     // res.header('Access-Control-Allow-Credentials', 'true');
       const reciever = req.body.to;
       const slot = req.body.slot;
       const date=req.body.dateOfRequest
@@ -73,6 +72,13 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
         return res.json({
           statusCode:1,
           error:'please enter the replacement member you want to replace with',
+         })  
+      }
+
+      if(reciever===req.user.id){
+        return res.json({
+          statusCode:1,
+          error:'you canot sent request to yourself',
          })  
       }
 
@@ -142,6 +148,8 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
           return s
         }
       })
+
+      console.log(recieverSlots)
              
       if(recieverSlots.length!=0){
         return res.json({
