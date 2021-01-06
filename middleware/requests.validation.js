@@ -194,8 +194,8 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
 
   const validateAddSlot = (req, res, next) => {
     const schema = Joi.object({
-        startTime:Joi.number().required(),
-        endTime:Joi.number().required(),
+      startTime:Joi.string().required(),
+      endTime:Joi.string().required(),
         day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).required(),
         location:Joi.string().required(),
         order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).required(),
@@ -215,8 +215,8 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
 
   const validateUpdateSlot = (req, res, next) => {
     const schema = Joi.object({
-        startTime:Joi.number(),
-        endTime:Joi.number(),
+        startTime:Joi.string().allow(null, ''),
+        endTime:Joi.string().allow(null, ''),
         day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).allow(null, ''),
         location:Joi.string().allow(null, ''),
         order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).allow(null, ''),

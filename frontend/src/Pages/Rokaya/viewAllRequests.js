@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table'
 import {Modal,ModalBody,ModalFooter,ModalHeader,Button} from 'reactstrap'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
+import { useHistory } from 'react-router';
 
 
 
@@ -23,10 +24,16 @@ export default function ViewAllRequests(props) {
   const [filter, setFilter] = useState('')
   const [modal, setModal] = useState(false);
   const [error,setError]=useState('')
+  const history=useHistory()
   const toggle = () => {
       setModal(!modal)
       window.location.reload();
     };
+
+    const logoutClick=()=>{
+      history.push("/")
+    }
+  
 
     const filterAccepted=()=>{
        // console.log("heyyyyyyyyyy")
@@ -141,12 +148,40 @@ export default function ViewAllRequests(props) {
                    <td className="viewSentReplacementRequestTextData">
                            {r.type} 
                    </td>
-                   {(r.dateOfRequest && r.dateOfRequest!=null)?<div><td className="viewSentReplacementRequestTextTitle">
+                   {(r.reason && r.reason!=null)?<><td className="viewSentReplacementRequestTextTitle">
+                          <p>Reason: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                   {JSON.stringify(r.reason).substring(1,11)}
+                   </td></>:(<></>)}
+
+                   {(r.dayOff && r.dayOff!=null)?<><td className="viewSentReplacementRequestTextTitle">
+                          <p>Day Off: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                   {JSON.stringify(r.dayOff).substring(1,11)}
+                   </td></>:(<></>)}
+
+                   {(r.replacementMembers && r.replacementMembers!=null && r.replacementMembers.length>0)?<><td className="viewSentReplacementRequestTextTitle">
+                          <p>Replacement Members: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                   {JSON.stringify(r.replacementMembers).substring(1,11)}
+                   </td></>:(<></>)}
+
+                   {(r.compensationDay && r.compensationDay!=null)?<><td className="viewSentReplacementRequestTextTitle">
+                          <p>Compensation Day: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                   {JSON.stringify(r.compensationDay).substring(1,11)}
+                   </td></>:(<></>)}
+
+                   {(r.dateOfRequest && r.dateOfRequest!=null)?<><td className="viewSentReplacementRequestTextTitle">
                           <p>Date Of Request: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
                    {JSON.stringify(r.dateOfRequest).substring(1,11)}
-                   </td></div>:(<div></div>)}
+                   </td></>:(<></>)}
                    
                    <td className="viewSentReplacementRequestTextTitle">
                                <p>Date Submitted: </p>
@@ -214,6 +249,7 @@ if(filter=='rej'){
       <div style={{width:"100vw"}}>
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
+        <i className="fa fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}></i>
           <p className="viewScheduleHeaders">Requests</p>
           <div>
       <Button  className="filterButton"   onClick={()=>filterAccepted()}>Filter Accepted</Button>

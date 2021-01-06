@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table'
 import {Modal,ModalBody,ModalFooter,ModalHeader,Button} from 'reactstrap'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
+import { useHistory } from 'react-router';
 
 
 
@@ -18,12 +19,16 @@ export default function ViewRecievedReplacements(props) {
   const [requests, setRequests] = useState([])
   const [modal, setModal] = useState(false);
   const [error,setError]=useState('')
+  const history=useHistory()
   const toggle = () => {
       setModal(!modal)
       window.location.reload();
     };
 
-
+    const logoutClick=()=>{
+      history.push("/")
+    }
+  
     
 const  handleAcceptRequest= async(x)=>{
    
@@ -93,6 +98,19 @@ const  handleAcceptRequest= async(x)=>{
                    <td className="viewSentReplacementRequestTextData">
                            {r.status} 
                    </td>
+
+                   <td className="viewSentReplacementRequestTextTitle">
+                            <p>Slot: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                           {r.slot} 
+                   </td>
+                   {(r.reason && r.reason!=null)?<><td className="viewSentReplacementRequestTextTitle">
+                          <p>Reason: </p>
+                   </td>
+                   <td className="viewSentReplacementRequestTextData">
+                   {JSON.stringify(r.reason).substring(1,11)}
+                   </td></>:(<></>)}
                    <td className="viewSentReplacementRequestTextTitle">
                           <p>Date Of Request: </p>
                    </td>
@@ -105,6 +123,7 @@ const  handleAcceptRequest= async(x)=>{
                    <td className="viewSentReplacementRequestTextData">
                              {r.dateSubmitted}
                    </td>
+
                    <td>
                    <i className="fa fa-close closeIcon" onClick={()=>handleRejectRequest(r._id)}></i>
                    <i className="fa fa-check checkIcon" onClick={()=>handleAcceptRequest(r._id)}></i>
@@ -156,6 +175,7 @@ const  handleAcceptRequest= async(x)=>{
       <div>
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
+        <i className="fa fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}></i>
           <p className="viewScheduleHeaders">Requests</p>
           <Table  striped>
            <tbody>

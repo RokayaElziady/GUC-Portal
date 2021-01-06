@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table'
 import {Modal,ModalBody,ModalFooter,ModalHeader,Button} from 'reactstrap'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
+import { useHistory } from 'react-router';
 
 
 
@@ -23,8 +24,13 @@ export default function ViewNotifications(props) {
       window.location.reload();
     };
 
+    const history=useHistory()
 
-    
+
+    const logoutClick=()=>{
+      history.push("/")
+    }
+  
 
   const  viewRequest=(r)=>{
    return(
@@ -79,6 +85,7 @@ export default function ViewNotifications(props) {
       <div>
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
+        <i className="fa fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}></i>
           <p className="viewScheduleHeaders">Notifications</p>
           <Table  striped>
            <tbody>

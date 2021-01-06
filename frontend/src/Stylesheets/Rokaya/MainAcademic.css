@@ -132,3 +132,56 @@
   .checkIcon{
     color:green
   }
+
+  .loginCard{
+    margin-left: 20vw;
+    margin-top: 10vw;
+    width:50vw !important;
+    align-self: center;
+    border-radius: 1vw;
+    border:1vw grey solid;
+  }
+
+
+  .loginInput{
+    width:40vw !important;
+    align-self: center;
+    border-radius: 1vw;
+    border:1vw grey solid;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1vw !important;
+    color:black;
+    margin-left: 3vw;
+  }
+
+  .loginButton{
+    height:3vw;
+     font-weight: 500;
+    font-size: 1vw !important;
+    color:white;
+    display: 'flex';
+     justify-Content: 'right';
+     align-Items:'right';
+     align-Self:'right';
+     margin-left: 22vw;
+  }
+
+
+  .sign-out-logo{
+    margin-top: 0.5vw !important;
+    float: right;
+    margin-left: 1vw;
+    height: 3vw;
+    font-size: large;
+  }
+
+  .sign-out-All{
+    margin-top: 1vw !important;
+    margin-left: 1vw;
+    height: 3vw;
+  }
+
+  
+  
+

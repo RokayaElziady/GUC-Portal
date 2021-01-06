@@ -11,13 +11,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css'; 
 import 'font-awesome/css/font-awesome.min.css';
 
+import Login from './Pages/Rokaya/login'
+
 
 function App() {
   //console.log(Path)
   return (
     <Router>
     <React.Fragment>
-    <Route exact path='/' render={()=><MainAcademic/>}/>
+    <Route exact path='/' render={()=><Login/>}/>
+    <Route exact path='/home' render={()=><MainAcademic/>}/>
     <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>
     <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>
     <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>

@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table'
 import {Modal,ModalBody,ModalFooter,ModalHeader,Button} from 'reactstrap'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
+import { useHistory } from 'react-router';
 
 
 
@@ -22,8 +23,11 @@ export default function ViewSlotLinkingRequests(props) {
       setModal(!modal)
       window.location.reload();
     };
-
-
+    const history=useHistory()
+    const logoutClick=()=>{
+      history.push("/")
+    }
+  
     
 const  handleAcceptRequest= async(x)=>{
    
@@ -179,6 +183,7 @@ const  handleAcceptRequest= async(x)=>{
       <div>
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
+        <i className="fa fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}></i>
           <p className="viewScheduleHeaders"> Slot-Linking Requests</p>
           <Table  striped>
            <tbody>

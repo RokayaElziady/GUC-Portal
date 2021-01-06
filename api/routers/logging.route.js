@@ -10,6 +10,7 @@ const attendenceModel= require('../../Models/attendence.model');
 const hrmodel = require('../../Models/hr.model');
 const requestsModel= require('../../Models/requests.model');
 const logoutModel=require('../../Models/logout.model')
+
 const {
   validateLogin 
   }
@@ -27,7 +28,10 @@ router.post('/logout',validateLogin,
             token:req.headers.token
         })
         x.save()
-         res.send("logged out successfully!")
+        return res.json({
+          statusCode:0,
+          error: 'logged out successfully',
+        })
       }
     catch(err){
         console.log(err);
@@ -47,12 +51,18 @@ router.post('/logout',validateLogin,
       var newpassword=req.body.newpassword
       if(!email){
         console.log("You must log in using email")
-          return res.status(401).send('You must log in using email')
+        return res.json({
+          statusCode:1,
+          error: 'You must log in using email',
+        })
          
       }
       if(!password){
         console.log("You must log in using password")
-        return res.status(401).send('You must log in using password')
+        return res.json({
+          statusCode:1,
+          error: 'You must log in using password',
+        })
        
     }
     const userAcdemicMember= await academicMemberModel.findOne({email:email})
@@ -61,7 +71,10 @@ router.post('/logout',validateLogin,
    
     if (!userAcdemicMember && ! userHrStaff){
         console.log("you must sign up first or you must be added by hr first")
-        return res.send('you must sign up first or you must be added by hr first')  
+        return res.json({
+          statusCode:1,
+          error: 'you must sign up first or you must be added by hr first',
+        })
     }
     if (userAcdemicMember){ 
         console.log("entered useracdemic member")
@@ -69,7 +82,10 @@ router.post('/logout',validateLogin,
         const correctPassword=await bcrypt.compare(password,userAcdemicMember.password)
 console.log("pass"+correctPassword);
         if(!correctPassword){
-            return res.status(400).send('Invalid Password')
+            return res.json({
+              statusCode:1,
+              error: 'Invalid Password',
+            })
         }
  if(userAcdemicMember.changePassword){
                 if(newpassword){                               //error here when entering newpassword 
@@ -80,7 +96,10 @@ console.log("pass"+correctPassword);
                     await academicMemberModel.updateOne({ email:email}, { changePassword: false,password:newpassword})
                     }
                 else{
-                    return  res.send("enter new password");
+                  return res.json({
+                    statusCode:1,
+                    error: 'enter new Password',
+                  })
             }
                 }   
                 const payload = {
@@ -93,11 +112,14 @@ console.log("pass"+correctPassword);
                 console.log("hhea")
              const token =await jwt.sign(payload,"HS256")
              await logoutModel.findOneAndDelete({token:token})
-            res.header('token',token).send(token)
+            res.header('token',token)
            
             var decoded =await jwt.verify(token, 'HS256');
-      
-            console.log(decoded.id) 
+            return res.json({
+              statusCode:0,
+              msg: 'logged in Suucessfully',
+            })
+            
             
         }
     
@@ -106,7 +128,10 @@ console.log("pass"+correctPassword);
         console.log("comparing password with bcrypted password")
         const correctPassword=bcrypt.compare(password,userHrStaff.password)
         if(!correctPassword){
-            return res.status(400).send('Invalid Password')
+          return res.json({
+            statusCode:1,
+            error: 'Invalid Password',
+          })
         }
  if(userHrStaff.changePassword){
                 if(newpassword){                               //error here when entering newpassword 
@@ -115,24 +140,26 @@ console.log("pass"+correctPassword);
                     await hrmodel.updateOne({ email:email}, { changePassword: false,password:newpassword})
                     }
                 else{
-                    return  res.send("enter new password");
+                  return res.json({
+                    statusCode:1,
+                    error: 'enter new Password',
+                  })
             }
                 }   
                 const payload = {
                     id:userHrStaff.id,role:userHrStaff.role
                 };
-                //const key = 'ueihudchnjfrhiu8u2309w-d0-civj njbvhj';
-                // const token = jwt.sign(payload, key);
-                // res.header('auth-token', token); 
        
                 console.log("hhea")
                 const token =await jwt.sign(payload,"HS256")
              await logoutModel.findOneAndDelete({token:token})
-               res.header('token',token).send(token)
+               res.header('token',token)
+
+               return res.json({
+                statusCode:0,
+                msg: 'logged in Suucessfully',
+              })
               
-               var decoded =await jwt.verify(token, 'HS256');
-         
-               console.log(decoded.id) 
                
             
 

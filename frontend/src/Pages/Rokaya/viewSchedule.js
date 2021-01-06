@@ -24,6 +24,11 @@ export default function ViewSchedule(props) {
 //  const history = useHistory()
   const [slots, setSlots] = useState([])
   const [replacements, setReplacements] = useState([])
+  const history=useHistory()
+  const logoutClick=()=>{
+    history.push("/")
+  }
+
 
   useEffect( async () => {
     console.log("useeffect")
@@ -362,6 +367,7 @@ export default function ViewSchedule(props) {
   return (
       <div>
           <img className="viewScheduleLogo" src={logo} alt="Logo" />
+          <i className="fa fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}></i>
           <p className="viewScheduleHeaders">Schedule</p>
     <Table striped bordered hover className=" viewScheduleTable ">
   <thead>

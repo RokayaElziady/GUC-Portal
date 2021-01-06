@@ -43,10 +43,8 @@ export default function UpdateSlot(props) {
         [name]: newValue,
       }
     })
-
-   
-
   }
+   
   const toggle = () => {
     setError('')
     setState({
@@ -82,32 +80,6 @@ export default function UpdateSlot(props) {
         };
         
     const handleSubmit= async ()=>{
-      if(state.start!=''){
-        data.startTime=state.start
-      }
-      if(state.end!=''){
-        data.startTime=state.end
-      }
-      if(state.day!=''){
-        data.day=state.day
-      }
-      if(state.location!=''){
-        data.location=state.location
-      }
-  
-      if(state.order!=''){
-        data.order=state.order
-      }
-      if(state.slot!=''){
-        data.slot=state.slot
-      }
-      if(state.academic!=''){
-        data.academicMember=state.academic
-      }
-      console.log(data)
-
-
-
         console.log("state")
         console.log(state.start)
         setModal(!modal)
@@ -117,7 +89,17 @@ export default function UpdateSlot(props) {
             headers: {
               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
-            data:queryString.stringify(data)
+            data:{
+                   startTime:state.start,
+                   endTime:state.end,
+                   slot:state.slot,
+                   day:state.day,
+                   order:state.order,
+                   location:state.location,
+                   academicMember:state.academic
+
+            },
+
            
           }).then((res) => {
              // console.log(res)

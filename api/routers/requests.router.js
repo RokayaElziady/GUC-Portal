@@ -377,6 +377,7 @@ async (req, res) => {
         const replacements=req.body.replacements
         const requestIds=req.body.requests
         const date=req.body.date;
+
         const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({name:sender1[0].department})
         var replacements2=0;
@@ -393,10 +394,16 @@ async (req, res) => {
 
        var d1 = datetoday.getDate();
        var m1 = datetoday.getMonth()+1;
-       var y1=datereq.getFullYear()
+       var y1=datetoday.getFullYear()
 
-      
-
+      // console.log("date of request" )
+      // console.log(d)
+      // console.log(m)
+      // console.log(y)
+      // console.log("date now" )
+      // console.log(d1)
+      // console.log(m1)
+      // console.log(y1)
 
 
         if(y1>y||(y1===y && m<m1) || (y1===y && m===m1 &&d<d1)){
@@ -434,47 +441,55 @@ async (req, res) => {
                 })
                }
 
+               if((replacements!=null && replacements.length>0)){
+                for(const x of replacements){
+                  const rep=await academicMemberModel.find({id:x})
+                  if(rep && rep.length>0){
+                               replacements2++;
+                  }
+                }
+               }
+               if( replacements && replacements2!=replacements.length){
+                 return res.json({
+                   statusCode:1,
+                   error: ' some Member IDs are  not a valid IDs',
+                 })
+               }
 
-          if((requestIds!=null && requestIds.length>0)){
-           for(var i=0;i<requestIds.length;i++)
-           var t= await requestIds[i-1]
-          var requ=await requestsModel.find({_id:t})
-          console.log(requ)
+
+          if(requestIds!=null && requestIds.length>0){
+           for(const x of requestIds)
+          var requ=await requestsModel.find({_id:x})
+             console.log(requ)
           if(!requ || requ.length===0){
             return res.json({
               statusCode:1,
-              error:"request ID "+(i)+' is not a vaid request id ',
+              error:' some request IDs  are not valid request ID make sure then reSend Request ',
             })
           }
           else{
+            if(await requ[0].from!=req.user.id){
+              return res.json({
+                statusCode:1,
+                error: ' some request IDs does not belong to you (not sent by you)  ',
+              })
+            }
+              if(await requ[0].type!=requestType.replacementRequests){
+                return res.json({
+                  statusCode:1,
+                  error: ' some request IDs are not Ids of replacement requests ',
+                })
+              }
             if(await requ[0].status!=requestStatus.ACCEPTED){
               return res.json({
                 statusCode:1,
-                error: "request ID "+(i)+' is not a accepted yet ',
+                error: ' some requests  not a accepted yet ',
               })
             }
           }
       }
            
-
-      console.log("hello4")
-      if((replacements!=null && replacements.length>0)){
-       for(var i=0;i<replacements.length;i++){
-         const rep=await academicMemberModel.find({id:replacements[i]})
-         console.log(rep)
-         if(rep && rep.length>0){
-                      replacements2++;
-         }
-       }
-      }
-      console.log("replacements 2")
-      console.log(replacements2)
-      if(replacements2!=replacements.length){
-        return res.json({
-          statusCode:1,
-          error: 'Member ID '+(i)+' is not a valid Id',
-        })
-      }
+     
 
             const request=new requestsModel({
               from:req.user.id,
@@ -580,7 +595,7 @@ async (req, res) => {
 
        var d1 = datetoday.getDate();
        var m1 = datetoday.getMonth()+1;
-       var y1=datereq.getFullYear()
+       var y1=datetoday.getFullYear()
 
         if(y1>y||(y1===y && m<m1) || (y1===y && m===m1 &&d<d1 )){
           return res.json({
@@ -1170,15 +1185,36 @@ router.get('/viewAllSlotLinkingRequests',
   router.put('/updateSlot',validateUpdateSlot,
   async (req, res) => {
     try {
-      const startTime=req.body.startTime
-      const endTime=req.body.endTime
-      const day=req.body.day
-      const location=req.body.location
-      const order=req.body.order
-      const slotId=req.body.slot
-      const academicMember=req.body.academicMember
+      var startTime=req.body.startTime
+      var endTime=req.body.endTime
+      var day=req.body.day
+      var location=req.body.location
+      var order=req.body.order
+      var slotId=req.body.slot
+      var academicMember=req.body.academicMember
 
       const slot=await slotsModel.find({_id:slotId})
+
+      if(!startTime||startTime=='undefined'){
+        startTime=slot[0].startTime
+      }
+      if( !endTime|| endTime===''){
+        endTime=slot[0].endTime
+      }
+      if(!day ||day===''){
+        day=slot[0].day
+      }
+      if( !location ||location===''){
+        location=slot[0].location
+      }
+      console.log("yaya")
+      if(!order ||order===''){
+        order=slot[0].order
+      }
+      if(!academicMember|| academicMember===''){
+        academicMember=slot[0].academicMember
+      }
+      console.log("beeeeb")
 
       const loc=await  locationModel.find({name:location})
       if(!loc || loc.length===0){
@@ -1189,6 +1225,8 @@ router.get('/viewAllSlotLinkingRequests',
       }
 
       const sender1=await  academicMemberModel.find({id:req.user.id,role:"coordinator"})
+      console.log(sender1)
+      console.log(sender1.length===0)
 
       if(sender1.length===0||sender1[0].role!='coordinator'){
         return res.json({
@@ -1231,6 +1269,7 @@ router.get('/viewAllSlotLinkingRequests',
           error:'there is a slot in this time in this location please choose valid location or different day ',
          })  
       }
+      
      
      await slotsModel.findByIdAndUpdate(slotId, {startTime:startTime,endTime:endTime,day:day,location:location,order:order,academicMember:academicMember})
       //console.log(slot1[0])

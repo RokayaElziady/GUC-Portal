@@ -54,6 +54,10 @@ export default function MainAcademicPage(props) {
     history.push("/viewNotifications")
   }
 
+  const logoutClick=()=>{
+    history.push("/")
+  }
+
 
 
 
@@ -125,7 +129,9 @@ export default function MainAcademicPage(props) {
 
       <td className="MainAcademicTableColumn2">
         <tr>
+          
         <img className="MainAcademicLogo" src={logo} alt="Logo" />
+        <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
         </tr>
      </td>
 
