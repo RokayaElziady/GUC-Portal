@@ -379,6 +379,7 @@ async (req, res) => {
         const date=req.body.date;
         const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({name:sender1[0].department})
+        var replacements2=0;
 
         var datereq = new Date(date);  // dateStr you get from mongodb
             
@@ -404,24 +405,74 @@ async (req, res) => {
             error: 'annual leave should be submitted before targeted day',
           })
         }
-          if((requestIds!=null && requestIds.length>0 && replacements!=null && replacements.length!=0)){
-        requestIds.filter(async(r)=>{
-          var requ=await requestsModel.find({_id:r})
-          if(!requ){
+               if( replacements && requestIds && replacements.length>requestIds.length){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should enter request Ids for all the members fro your request to be valid',
+                })
+               }
+
+               if(  replacements && requestIds && replacements.length<requestIds.length){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should specify the member Id for every request you enter',
+                })
+               }
+
+
+               if( replacements && !requestIds){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should enter request Ids for all the members fro your request to be valid',
+                })
+               }
+
+               if(  !replacements && requestIds){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should specify the member Id for every request you enter',
+                })
+               }
+
+
+          if((requestIds!=null && requestIds.length>0)){
+           for(var i=0;i<requestIds.length;i++)
+           var t= await requestIds[i-1]
+          var requ=await requestsModel.find({_id:t})
+          console.log(requ)
+          if(!requ || requ.length===0){
             return res.json({
               statusCode:1,
-              error: 'one of the requests is not a vaid request id ',
+              error:"request ID "+(i)+' is not a vaid request id ',
             })
           }
           else{
-            if(requ[0].status!=requestStatus.ACCEPTED){
+            if(await requ[0].status!=requestStatus.ACCEPTED){
               return res.json({
                 statusCode:1,
-                error: 'some of the academic members you sent the request to doesnot accept your request yet ',
+                error: "request ID "+(i)+' is not a accepted yet ',
               })
             }
           }
+      }
+           
 
+      console.log("hello4")
+      if((replacements!=null && replacements.length>0)){
+       for(var i=0;i<replacements.length;i++){
+         const rep=await academicMemberModel.find({id:replacements[i]})
+         console.log(rep)
+         if(rep && rep.length>0){
+                      replacements2++;
+         }
+       }
+      }
+      console.log("replacements 2")
+      console.log(replacements2)
+      if(replacements2!=replacements.length){
+        return res.json({
+          statusCode:1,
+          error: 'Member ID '+(i)+' is not a valid Id',
         })
       }
 
@@ -432,6 +483,7 @@ async (req, res) => {
               reason:reason,
               status:requestStatus.PENDING,
               replacementMembers:replacements,
+              replacementRequests:requestIds,
               dateOfRequest:date,
             })
               request.save();

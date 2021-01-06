@@ -31,6 +31,8 @@ var requests = new Schema({
   dateOfRequest:{type:Date},
   replacementMembers:[{type:String,
                    default: 'undefined'}] ,
+   replacementRequets:[{type:String,
+                   default: 'undefined'}] ,                 
 
   documentsDriveLink:{type:String},   
   compensationDay:{type:Date}              

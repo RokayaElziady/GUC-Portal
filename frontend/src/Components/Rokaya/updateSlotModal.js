@@ -9,6 +9,10 @@ import {Modal,ModalBody,ModalFooter,ModalHeader,Button} from 'reactstrap'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
 import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
+import { stat } from 'fs';
+import { date } from 'joi';
+const queryString=require('querystring')
+let data={} 
 
 
 
@@ -39,6 +43,9 @@ export default function UpdateSlot(props) {
         [name]: newValue,
       }
     })
+
+   
+
   }
   const toggle = () => {
     setError('')
@@ -58,7 +65,7 @@ export default function UpdateSlot(props) {
     const toggle2 = () => {
       console.log("toggle2")
       console.log(success)
-      // setModal(!modal)
+      setModal(!modal)
        if(success==1){
          console.log("heeeh")
         props.setShow(false)
@@ -73,32 +80,49 @@ export default function UpdateSlot(props) {
         })
         }
         };
-
+        
     const handleSubmit= async ()=>{
+      if(state.start!=''){
+        data.startTime=state.start
+      }
+      if(state.end!=''){
+        data.startTime=state.end
+      }
+      if(state.day!=''){
+        data.day=state.day
+      }
+      if(state.location!=''){
+        data.location=state.location
+      }
+  
+      if(state.order!=''){
+        data.order=state.order
+      }
+      if(state.slot!=''){
+        data.slot=state.slot
+      }
+      if(state.academic!=''){
+        data.academicMember=state.academic
+      }
+      console.log(data)
+
+
+
         console.log("state")
         console.log(state.start)
         setModal(!modal)
         await axios({
             url: `${backendLink}/request/updateSlot`,
-            method: 'post',
+            method: 'put',
             headers: {
               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
-            data:{
-                   startTime:state.start,
-                   endTime:state.end,
-                   slot:state.slot,
-                   day:state.day,
-                   order:state.order,
-                   location:state.location,
-                   academicMember:state.academic
-
-            },
-
+            data:queryString.stringify(data)
            
           }).then((res) => {
              // console.log(res)
               if(res.data.statusCode==2 || res.data.statusCode==1){
+                success=0
                   setError(res.data.error)
 
               }

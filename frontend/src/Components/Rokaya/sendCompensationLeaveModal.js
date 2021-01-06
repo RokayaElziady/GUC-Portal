@@ -60,6 +60,8 @@ export default function SendReplacementRequest(props) {
 
     const handleSubmit= async ()=>{
         setModal(!modal)
+        console.log("compensations")
+        console.log(state.compensationDay)
         await axios({
             url: `${backendLink}/request/sendCompensationLeaveRequest`,
             method: 'post',
@@ -69,13 +71,14 @@ export default function SendReplacementRequest(props) {
             data:{
                   compensationDay:state.compensationDay,
                    reason:state.reason,
-                   dateOfRequest:state.date
+                   date:state.date
             },
 
            
           }).then((res) => {
               console.log(res)
               if(res.data.statusCode==2 || res.data.statusCode==1){
+                success=0
                   console.log("gwa iff")
                   setError(res.data.error)
 
@@ -113,7 +116,7 @@ export default function SendReplacementRequest(props) {
   </FormGroup>
   <FormGroup>
     <Label for="exampleEmail" className="sendReplacementTitleFont">Date Of Compensation * </Label>
-    <Input  className="sendReplacementInput"  name='date'  onChange={handleChange} placeholder="date you will compensate on " />
+    <Input  className="sendReplacementInput"  name='compensationDay'  onChange={handleChange} placeholder="date you will compensate on " />
   </FormGroup>
   <FormGroup>
     <Label for="exampleText" className="sendReplacementTitleFont">Reason For Leave *</Label>

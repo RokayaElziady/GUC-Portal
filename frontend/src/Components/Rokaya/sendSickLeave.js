@@ -49,7 +49,10 @@ export default function SendSickLeave(props) {
 
     const toggle2 = () => {
        setModal(!modal)
+       console.log("toggle 2 success")
+       console.log(success)
        if(success===1){
+         console.log("dih elet adaab")
         props.setShow(!props.show)
         setState({
           documents:'',
@@ -78,6 +81,7 @@ export default function SendSickLeave(props) {
           }).then((res) => {
               console.log(res)
               if(res.data.statusCode==2 || res.data.statusCode==1){
+                success=0
                   setError(res.data.error)
 
               }

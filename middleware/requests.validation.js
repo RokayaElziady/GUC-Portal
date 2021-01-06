@@ -60,7 +60,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
       date:Joi.date().iso().required(),
       reason:Joi.string().allow(null, ''),
       replacements:Joi.array().items(Joi.string().allow(null, '')),
-      requests:Joi.array().items(Joi.string().length(24).allow(null, '')),
+      requests:Joi.array().items(Joi.string().length(24)),
     })
   
     const isValid = Joi.validate(req.body, schema)

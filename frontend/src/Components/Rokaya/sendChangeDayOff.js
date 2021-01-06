@@ -76,6 +76,7 @@ export default function SendChangeDayOffRequest(props) {
           }).then((res) => {
               console.log(res)
               if(res.data.statusCode==2 || res.data.statusCode==1){
+                success=0
                   console.log("gwa iff")
                   setError(res.data.error)
 

@@ -12,53 +12,53 @@ import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
 
 
 
-var mem1=''
- var mem2=''
-  var mem3=''
-  var mem4=''
-  var mem5=''
-  var req1=''
- var req2=''
-  var req3=''
-  var req4=''
-  var req5=''
+var mem1=""
+ var mem2=""
+  var mem3=""
+  var mem4=""
+  var mem5=""
+  var req1=""
+ var req2=""
+  var req3=""
+  var req4=""
+  var req5=""
 
-  var globalReplacements=[5]
-  var globalRequests=[5]
-  function setReplacements(){
-    if(mem1!=''){
+  var globalReplacements=[]
+  var globalRequests=[]
+  function setReplacementsg(){
+    if(mem1!=""){
       globalReplacements[0]=mem1
     }
-    if(mem2!=''){
+    if(mem2!=""){
       globalReplacements[1]=mem2
     }
-    if(mem3!=''){
+    if(mem3!=""){
       globalReplacements[2]=mem3
     }
-    if(mem4!=''){
+    if(mem4!=""){
       globalReplacements[3]=mem4
     }
-    if(mem5!=''){
+    if(mem5!=""){
       globalReplacements[4]=mem5
     }
   
   }
 
 
-  function setRequests(){
-    if(req1!=''){
+  function setRequestsg(){
+    if(req1!=""){
       globalRequests[0]=req1
     }
-    if(req2!=''){
+    if(req2!=""){
       globalRequests[1]=req2
     }
-    if(req3!=''){
+    if(req3!=""){
       globalRequests[2]=req3
     }
-    if(req4!=''){
+    if(req4!=""){
       globalRequests[3]=req4
     }
-    if(req5!=''){
+    if(req5!=""){
       globalRequests[4]=req5
     }
   
@@ -71,8 +71,8 @@ export default function SendAnnualLeave(props){
     reason:'',
     date:''
   })
-  const [requests,setRequests]=useState([''])
-  const [replacements,setReplacements]=useState([''])
+  const [requests,setRequests]=useState([])
+  const [replacements,setReplacements]=useState([])
 
 
   const handleChange = (event) => {
@@ -110,8 +110,10 @@ export default function SendAnnualLeave(props){
       if(name==='requests5'){
         req5=newValue
       }
-      setReplacements()
-      setRequests()
+      setReplacementsg()
+      setRequestsg()
+      setReplacements(globalReplacements)
+      setRequests(globalRequests)
       return {
         ...prevState,
         [name]: newValue,
@@ -125,6 +127,21 @@ export default function SendAnnualLeave(props){
       reason:'',
       date:'',
     })
+    setReplacements([])
+    setRequests([])
+    var mem1=""
+  mem2=""
+   mem3=""
+   mem4=""
+   mem5=""
+   req1=""
+  req2=""
+ req3=""
+   req4=""
+ req5=""
+
+   globalReplacements=[5]
+   globalRequests=[5]
     props.setShow(!props.show)
     }
 
@@ -136,11 +153,29 @@ export default function SendAnnualLeave(props){
           reason:'',
           date:'',
         })
+        setReplacements([])
+    setRequests([])
+    var mem1=""
+  mem2=""
+   mem3=""
+   mem4=""
+   mem5=""
+   req1=""
+  req2=""
+ req3=""
+   req4=""
+ req5=""
+
+   globalReplacements=[5]
+   globalRequests=[5]
       
         }
         }
 
     const handleSubmit= async ()=>{
+     
+      
+     
       setModal(!modal)
         await axios({
             url: `${backendLink}/request/sendAnnualLeaveRequest`,
@@ -158,7 +193,8 @@ export default function SendAnnualLeave(props){
            
           }).then((res) => {
               console.log(res)
-              if(res.data.statusCode==2 || res.data.statusCode==1){
+              if(res.data.statusCode===2 || res.data.statusCode===1){
+                success=0
                   setError(res.data.error)
 
               }
@@ -204,11 +240,11 @@ export default function SendAnnualLeave(props){
   </FormGroup>
   <FormGroup>
     <Label for="exampleEmail" className="sendReplacementTitleFont">Request ID's  </Label>
-    <Input  className="sendReplacementInput"  name='requests'  onChange={handleChange} placeholder="Request 1 ID " />
-    <Input  className="sendReplacementInput"  name='requests'  onChange={handleChange} placeholder="Request 2 ID " />
-    <Input  className="sendReplacementInput"  name='requests'  onChange={handleChange} placeholder="Request 3 ID " />
-    <Input  className="sendReplacementInput"  name='requests'  onChange={handleChange} placeholder="Request 4 ID " />
-    <Input  className="sendReplacementInput"  name='requests'  onChange={handleChange} placeholder="Request 5 ID " />
+    <Input  className="sendReplacementInput"  name='requests1'  onChange={handleChange} placeholder="Request 1 ID " />
+    <Input  className="sendReplacementInput"  name='requests2'  onChange={handleChange} placeholder="Request 2 ID " />
+    <Input  className="sendReplacementInput"  name='requests3'  onChange={handleChange} placeholder="Request 3 ID " />
+    <Input  className="sendReplacementInput"  name='requests4'  onChange={handleChange} placeholder="Request 4 ID " />
+    <Input  className="sendReplacementInput"  name='requests5'  onChange={handleChange} placeholder="Request 5 ID " />
   </FormGroup>
 
   <FormGroup>

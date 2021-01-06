@@ -76,6 +76,7 @@ export default function SendMetrinityLeave(props) {
           }).then((res) => {
               console.log(res)
               if(res.data.statusCode==2 || res.data.statusCode==1){
+                success=0
                   setError(res.data.error)
 
               }

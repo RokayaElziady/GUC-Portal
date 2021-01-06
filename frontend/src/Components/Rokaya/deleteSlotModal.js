@@ -58,7 +58,7 @@ export default function DeleteSlot(props) {
         setModal(!modal)
         await axios({
             url: `${backendLink}/request/deleteSlot`,
-            method: 'post',
+            method: 'delete',
             headers: {
               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
@@ -71,6 +71,7 @@ export default function DeleteSlot(props) {
           }).then((res) => {
              // console.log(res)
               if(res.data.statusCode==2 || res.data.statusCode==1){
+                success=0
                   setError(res.data.error)
 
               }

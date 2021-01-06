@@ -86,6 +86,7 @@ export default function SendReplacementRequest(props) {
           }).then((res) => {
              console.log("tatata")
               if(res.data.statusCode===2 || res.data.statusCode===1){
+                success=0
                   console.log("gwa iff")
                   console.log(res)
                   setError(res.data.error)
