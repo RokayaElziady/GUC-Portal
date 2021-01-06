@@ -32,7 +32,6 @@ const days={
   TUESDAY:'tuesday',
   WEDNESDAY:'wednesday',
   THURSDAY:'thursday',
-  FRIDAY:'friday',
   SAUTURDAY:'saturday'
 }
 

@@ -15,7 +15,7 @@ const verify=async (req, res,next)=>{
     }
     if(!token)  
     {
-        return res.status(401).send('Access not deined')
+        return res.status(401).send('Access deined')
     }
    try{
    // console.log(token)

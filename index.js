@@ -2,6 +2,31 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const {verify}= require('./api/auth/verifyToken')
 const app = express();
+//const http = require("http");
+
+//const socketIO = require("socket.io");
+//const server = http.createServer(app);
+//const io = socketIO(server);
+// io.on("connection", socket => {
+//   cors: {
+//     origin: "http://localhost:3001";
+//     methods: ["GET", "POST","PUT","DELETE"]
+//   }
+//   console.log("io soket connected")
+//   socket.on("notification", () => {
+//     notificationModel.find({}).then(not=> {
+//       io.sockets.emit("notification", not);
+//     });
+//   });
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected");
+//   });
+// });
+
+var corsO={
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST","PUT","DELETE"]
+    }
 const location=require('./api/routers/location.router');
 const facultyRoute=require('./api/routers/faculty.router');
 const { connectDB } = require('./config/dbConfig');
@@ -29,9 +54,17 @@ const hrmodel = require('./Models/hr.model');
 var cors = require('cors');
 const slotsModel = require('./Models/slots.model');
 const replacementModel = require('./Models/replacements.model');
+const notificationModel = require('./Models/notification.model');
 
-app.use(cors())
+
+
 connectDB()
+app.use('/',(req,res,next)=>{
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next()
+})
+
+app.use(cors(corsO))
 app.use('/logging',log)
 app.use(verify)
 app.use('/hrStaff',hrRoute);
@@ -50,17 +83,6 @@ app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
 
-// const s=new replacementModel({
-//   academicMember:"ac-1",
-//   slot:"5fe5bdd648f1f75a545457ff"
-// })
-// s.save()
-
-
-const s=new requestsModel({
-  from:"sha3ban"
-})
-s.save()
 
 const port = 3001
 if (process.env.PORT) {
@@ -70,6 +92,8 @@ if (process.env.PORT) {
 } else {
   app.listen(port, () => console.log(`Server up and running on ${port}`))
 }
+
+
 
 
 

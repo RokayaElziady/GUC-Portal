@@ -6,7 +6,7 @@ const  slotsModel = require('../../Models/slots.model')
 const courseModel=require('../../Models/course.model')
 const departementModel=require('../../Models/department.model')
 const locationModel=require('../../Models/location.model')
-const { requestStatus,requestType } = require('../enums')
+const { requestStatus,requestType, days } = require('../enums')
 const notificationModel = require('../../Models/notification.model')
 const scheduleModel=require("../../Models/schedule.model")
 const leavesModel=require("../../Models/leaves.model")
@@ -36,22 +36,55 @@ const {
 =require('../../middleware/requests.validation')
 
 
+
+router.get('/viewNotifications',
+async (req, res) => {
+    try {
+       const notifications = await notificationModel.find({academicMember:req.user.id})
+     
+            return res.json({
+              statusCode:0,
+              msg:"success",
+                notifications
+            })
+         
+        
+
+    } catch (exception) {
+      return res.json({
+        error: 'Something went wrong',
+        exception
+      })
+    }
+  }
+   
+  )
+
 router.post('/sendReplacementRequest',validateSendReplacementRequest,
   async (req, res) => {
     try {
-
       const reciever = req.body.to;
       const slot = req.body.slot;
+      const date=req.body.dateOfRequest
      
 
       if(!reciever ||reciever.length===0){
         return res.json({
+          statusCode:1,
           error:'please enter the replacement member you want to replace with',
+         })  
+      }
+
+      if(reciever===req.user.id){
+        return res.json({
+          statusCode:1,
+          error:'you canot sent request to yourself',
          })  
       }
 
       if(!slot ||slot.length===0){
         return res.json({
+          statusCode:1,
           error:'please enter the slot id',
          })  
       }
@@ -69,12 +102,14 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 
       if(slot1.length===0){
         return res.json({
+          statusCode:1,
           error:'this is not a valid slot id',
          })  
       }
 
       if(reciever1.length===0|| !reciever1){
         return res.json({
+          statusCode:1,
           error:'you are not sending request to a valid member',
          })  
       }
@@ -88,6 +123,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 
      if(slot1[0].academicMember!=req.user.id){
       return res.json({
+        statusCode:1,
         error: 'you are not teaching this slot ',
       })
      }
@@ -100,6 +136,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 
             if (recieverCourses.length === 0) {
             return res.json({
+              statusCode:1,
               error: 'You should send request to someone teaching this course ',
             })
           }
@@ -111,9 +148,12 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
           return s
         }
       })
+
+      console.log(recieverSlots)
              
       if(recieverSlots.length!=0){
         return res.json({
+          statusCode:1,
           error: 'the member you are sending to have teaching in this slot,try another free member',
         })
       }
@@ -124,7 +164,8 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
               type: requestType.REPLACEMENT,
               reason: req.body.reason,
               status: requestStatus.PENDING,
-              slot: slot
+              slot: slot,
+              dateOfRequest:date
             })
             request.save();
 
@@ -136,6 +177,7 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
             })
             notification.save()
             return res.json({
+              statusCode:0,
               msg: 'request created successfully',
               request
             })
@@ -153,8 +195,9 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 router.get('/viewSentReplacementRequest',
   async (req, res) => {
     try {
-      const requests =await requestsModel.find({to: req.user.id})
+      const requests =await requestsModel.find({to: req.user.id,type:requestType.REPLACEMENT})
       return res.json({
+        statusCode:0,
         msg: ' success',
         requests
       })
@@ -172,9 +215,10 @@ router.get('/viewSentReplacementRequest',
 router.get('/viewRecievedReplacementRequest',
   async (req, res) => {
     try {
-      const requests=await requestsModel.find({from: req.user.id })
+      const requests=await requestsModel.find({from: req.user.id ,type:requestType.REPLACEMENT})
 
       return res.json({
+        statusCode:0,
         msg: ' success',
         requests
       })
@@ -198,6 +242,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
         const sender1= await academicMemberModel.find({id:req.user.id})
       if (slot1.length === 0) {
         return res.json({
+          statusCode:1,
           error: 'this slot does not exist',
         })
       }
@@ -212,6 +257,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
        
         if (senderCourses.length === 0) {
           return res.json({
+            statusCode:1,
             error: 'you donot teach this course',
           })
 
@@ -219,6 +265,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
         }
         if(slot1[0].academicMember!='undefined'){
           return res.json({
+            statusCode:1,
             error: 'this slot is already linked to another member',
           })       
         }
@@ -232,6 +279,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
 
       if(mySlots.length!=0){
         return res.json({
+          statusCode:1,
           error: 'you already have teaching in this time,you canot have two slots at the same time',
         })
       }
@@ -250,6 +298,7 @@ router.post('/sendSlotLinkingRequest',validateSendSlotLinkingRequest,
           })
           request.save();
           return res.json({
+            statusCode:0,
             msg: 'request created successfully',
             request
           })
@@ -280,9 +329,10 @@ router.post('/sendChangeDayOffRequest',validateSendChangeDayOffRequest,
         }
       })
      
-
+        console.log(mySlots)
       if(mySlots.length!=0){
         return res.json({
+          statusCode:1,
           error: 'you already have teaching in this day you canot change day off to a day where you have teaching in',
         })
       }
@@ -303,6 +353,7 @@ router.post('/sendChangeDayOffRequest',validateSendChangeDayOffRequest,
       request.save()
 
       return res.json({
+        statusCode:0,
         msg: 'request created successfully',
         request
       })
@@ -328,6 +379,7 @@ async (req, res) => {
         const date=req.body.date;
         const sender1= await academicMemberModel.find({id:req.user.id})
         const dep=await departementModel.find({name:sender1[0].department})
+        var replacements2=0;
 
         var datereq = new Date(date);  // dateStr you get from mongodb
             
@@ -349,25 +401,78 @@ async (req, res) => {
 
         if(y1>y||(y1===y && m<m1) || (y1===y && m===m1 &&d<d1)){
           return res.json({
+            statusCode:1,
             error: 'annual leave should be submitted before targeted day',
           })
         }
-          if((requestIds!=null && requestIds.length>0 && replacements!=null && replacements.length!=0)){
-        requestIds.filter(async(r)=>{
-          var requ=await requestsModel.find({_id:r})
-          if(!requ){
+               if( replacements && requestIds && replacements.length>requestIds.length){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should enter request Ids for all the members fro your request to be valid',
+                })
+               }
+
+               if(  replacements && requestIds && replacements.length<requestIds.length){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should specify the member Id for every request you enter',
+                })
+               }
+
+
+               if( replacements && !requestIds){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should enter request Ids for all the members fro your request to be valid',
+                })
+               }
+
+               if(  !replacements && requestIds){
+                return res.json({
+                  statusCode:1,
+                  error: 'you should specify the member Id for every request you enter',
+                })
+               }
+
+
+          if((requestIds!=null && requestIds.length>0)){
+           for(var i=0;i<requestIds.length;i++)
+           var t= await requestIds[i-1]
+          var requ=await requestsModel.find({_id:t})
+          console.log(requ)
+          if(!requ || requ.length===0){
             return res.json({
-              error: 'one of the requests is not a vaid request id ',
+              statusCode:1,
+              error:"request ID "+(i)+' is not a vaid request id ',
             })
           }
           else{
-            if(requ[0].status!=requestStatus.ACCEPTED){
+            if(await requ[0].status!=requestStatus.ACCEPTED){
               return res.json({
-                error: 'some of the academic members you sent the request to doesnot accept your request yet ',
+                statusCode:1,
+                error: "request ID "+(i)+' is not a accepted yet ',
               })
             }
           }
+      }
+           
 
+      console.log("hello4")
+      if((replacements!=null && replacements.length>0)){
+       for(var i=0;i<replacements.length;i++){
+         const rep=await academicMemberModel.find({id:replacements[i]})
+         console.log(rep)
+         if(rep && rep.length>0){
+                      replacements2++;
+         }
+       }
+      }
+      console.log("replacements 2")
+      console.log(replacements2)
+      if(replacements2!=replacements.length){
+        return res.json({
+          statusCode:1,
+          error: 'Member ID '+(i)+' is not a valid Id',
         })
       }
 
@@ -378,10 +483,12 @@ async (req, res) => {
               reason:reason,
               status:requestStatus.PENDING,
               replacementMembers:replacements,
+              replacementRequests:requestIds,
               dateOfRequest:date,
             })
               request.save();
                   return res.json({
+                    statusCode:0,
                    msg:'request created successfully',
                          request
                   })  
@@ -408,6 +515,7 @@ async (req, res) => {
            
           if(sender1[0].accidentalLeaves>=6){
             return res.json({
+              statusCode:1,
               error:'you canot send accidental leaves any more you already consumed your annual accidental leave balance',
              })  
           }
@@ -422,6 +530,7 @@ async (req, res) => {
               })
                 request.save();
                     return res.json({
+                      statusCode:0,
                      msg:'request created successfully',
                            request
                     })  
@@ -475,12 +584,14 @@ async (req, res) => {
 
         if(y1>y||(y1===y && m<m1) || (y1===y && m===m1 &&d<d1 )){
           return res.json({
+            statusCode:1,
             error: 'sick leave should be sumbitted within 3 days  of the day you were sick',
           })
         }
 
         if(!documents || documents.length===0 ){
           return res.json({
+            statusCode:1,
             error: 'you should submit necessary documents',
           })
         }
@@ -496,6 +607,7 @@ async (req, res) => {
             })
               request.save();
                   return res.json({
+                    statusCode:0,
                    msg:'request created successfully',
                          request
                   })  
@@ -541,18 +653,21 @@ async (req, res) => {
 
         if(y1>y||(y1===y && m<m1)||(y===y1&& m1<=m && d1>d) ){
           return res.json({
+            statusCode:1,
             error: 'matrenity leave should be submitted within 3 month',
           })
         }
 
         if(!documents || documents.length===0 ){
           return res.json({
+            statusCode:1,
             error: 'you should submit necessary documents to proove metrinity condition',
           })
         }
 
         if(sender1[0].gender!='female'){
           return res.json({
+            statusCode:1,
             error: 'maternity leaves should only be submitted by female staff members',
           })
         }
@@ -568,6 +683,7 @@ async (req, res) => {
             })
               request.save();
                   return res.json({
+                    statusCode:0,
                    msg:'request created successfully',
                          request
                   })  
@@ -593,6 +709,7 @@ async (req, res) => {
 
         if(!reason ||reason===''|| reason.length===0){
           return res.json({
+            statusCode:1,
             error: 'you should submit a reason for you compensation leave',
           })
         }
@@ -608,6 +725,7 @@ async (req, res) => {
             })
               request.save();
                   return res.json({
+                    statusCode:0,
                    msg:'request created successfully',
                          request
                   })  
@@ -630,11 +748,13 @@ router.get('/viewAllSubmittedRequests',
       })
       if (requests.length === 0) {
         return res.json({
+          statusCode:1,
           error: 'you havenot submitted any requests',
         })
 
       } else {
         return res.json({
+          statusCode:0,
           msg: 'success',
           requests
         })
@@ -668,11 +788,13 @@ router.get('/viewAllAcceptedRequests',
 
       if (requests.length === 0) {
         return res.json({
+          statusCode:1,
           error: 'you donot have accepted requests',
         })
 
       } else {
         return res.json({
+          statusCode:0,
           msg: 'success',
           requests
         })
@@ -703,11 +825,13 @@ router.get('/viewAllRejectedRequests',
 
       if (requests.length === 0) {
         return res.json({
+          statusCode:1,
           error: 'you donot have rejected requests',
         })
 
       } else {
         return res.json({
+          statusCode:0,
           msg: 'success',
           requests
         })
@@ -739,11 +863,13 @@ router.get('/viewAllPendingRequests',
 
       if (requests.length === 0) {
         return res.json({
+          statusCode:1,
           error: 'you donot have pending requests',
         })
 
       } else {
         return res.json({
+          statusCode:0,
           msg: 'success',
           requests
         })
@@ -834,12 +960,14 @@ router.get('/viewAllPendingRequests',
 
         if(!request1 || request1.length===0){
           return res.json({
+            statusCode:1,
             error:'this is not a valid request id',
            })  
         }
 
         if( request1[0].to!=req.user.id){
           return res.json({
+            statusCode:1,
             error:'you canot reject a request not sent to you',
            })  
         }
@@ -852,6 +980,7 @@ router.get('/viewAllPendingRequests',
         notification.save()
         
                   return res.json({
+                    statusCode:0,
                    msg:'succefully rejected request',
                   })  
 
@@ -877,12 +1006,14 @@ router.get('/viewAllPendingRequests',
   
           if(!request1 || request1.length===0){
             return res.json({
+              statusCode:1,
               error:'this is not a valid request id',
              })  
           }
   
           if( request1[0].to!=req.user.id){
             return res.json({
+              statusCode:1,
               error:'you canot accept a request not sent to you',
              })  
           }
@@ -900,6 +1031,7 @@ router.get('/viewAllPendingRequests',
           notification.save()
           
                     return res.json({
+                      statusCode:0,
                      msg:'succefully accepted request',
                     })  
   
@@ -924,14 +1056,17 @@ router.get('/viewAllPendingRequests',
 router.get('/viewAllSlotLinkingRequests',
   async (req, res) => {
     try {
-      const sender1=await  academicMemberModel.find({id:req.user.id})
+      const sender1=await academicMemberModel.find({id:req.user.id})
       if( sender1.length===0||req.user.role!='coordinator'){
         return res.json({
+          statusCode:1,
           error:'you cannot view slot linking request as you are not a coordinator',
          })  
       }
+      console.log("taraarara")
       var requests= await requestsModel.find({to:req.user.id,type:requestType.SLOT_LINKING})
                 return res.json({
+                  statusCode:0,
                  msg:'success',
                        requests
                 })  
@@ -962,6 +1097,7 @@ router.get('/viewAllSlotLinkingRequests',
       const loc=await  locationModel.find({name:location})
       if(!loc || loc.length===0){
         return res.json({
+          statusCode:1,
           error:'this is not a valid location in the university',
          })  
       }
@@ -974,12 +1110,21 @@ router.get('/viewAllSlotLinkingRequests',
       const course1=await courseModel.find({coordinator:req.user.id})
       if(course1.length===0){
         return res.json({
+          statusCode:1,
           error:'there is no courses that you are currently coordinating ',
          })  
       }
       if(course1[0].name!=course){
         return res.json({
+          statusCode:1,
           error:'you could not add a slot in a course you are not coordinating',
+         })  
+      }
+             console.log("tatatat")
+      if(day==='friday'){
+        return res.json({
+          statusCode:1,
+          error:'you could not add a slot on friday it should be vacation',
          })  
       }
       const courseN=course1[0].name
@@ -987,12 +1132,10 @@ router.get('/viewAllSlotLinkingRequests',
       const slot=await  slotsModel.find({day:day,location:location,order:order})
       if(slot.length!=0){
         return res.json({
+          statusCode:1,
           error:'there is a slot in this time in this location please choose valid location or different time ',
          })  
       }
-
-
-
 
       var slot1=new slotsModel({
         startTime:startTime,
@@ -1001,11 +1144,11 @@ router.get('/viewAllSlotLinkingRequests',
         course:courseN,
         location:location,
         order:order,
-        academicMember:academicMember
       })
       slot1.save();
   
                 return res.json({
+                  statusCode:0,
                  msg:'slot added successfully',
                        slot1
                 })  
@@ -1040,6 +1183,7 @@ router.get('/viewAllSlotLinkingRequests',
       const loc=await  locationModel.find({name:location})
       if(!loc || loc.length===0){
         return res.json({
+          statusCode:1,
           error:'this is not a valid location in the university',
          })  
       }
@@ -1048,6 +1192,7 @@ router.get('/viewAllSlotLinkingRequests',
 
       if(sender1.length===0||sender1[0].role!='coordinator'){
         return res.json({
+          statusCode:1,
           error:'you cannot update slots as you are not a coordinator',
          })  
       }
@@ -1055,16 +1200,25 @@ router.get('/viewAllSlotLinkingRequests',
       const course=await  courseModel.find({coordinator:req.user.id})
       if(course.length===0){
         return res.json({
+          statusCode:1,
           error:'there is no courses that you are currently coordinating ',
          })  
       }
 
       if(course[0].name!=slot[0].course){
         return res.json({
+          statusCode:1,
           error:'you could not update a slot in a course you are not coordinating',
          })  
       }
 
+
+      if(day==='friday'){
+        return res.json({
+          statusCode:1,
+          error:'you could not add a slot on friday it should be vacation',
+         })  
+      }
 
       const courseN=course[0].name
      // console.log("nannananna")
@@ -1073,6 +1227,7 @@ router.get('/viewAllSlotLinkingRequests',
      // console.log(slot)
       if(slot1.length!=0){
         return res.json({
+          statusCode:1,
           error:'there is a slot in this time in this location please choose valid location or different day ',
          })  
       }
@@ -1100,6 +1255,7 @@ router.get('/viewAllSlotLinkingRequests',
  
      
                 return res.json({
+                  statusCode:0,
                  msg:'slot updated successfully',
                 }) 
                 
@@ -1124,6 +1280,7 @@ router.get('/viewAllSlotLinkingRequests',
 
       if(sender1.length===0||sender1[0].role!='coordinator'){
         return res.json({
+          statusCode:1,
           error:'you cannot delete slots as you are not a coordinator',
          })  
       }
@@ -1131,6 +1288,7 @@ router.get('/viewAllSlotLinkingRequests',
       const course=await  courseModel.find({coordinator:req.user.id})
       if(course.length===0){
         return res.json({
+          statusCode:1,
           error:'there is no courses that you are currently coordinating ',
          })  
       }
@@ -1138,6 +1296,7 @@ router.get('/viewAllSlotLinkingRequests',
 
       if(course[0].name!=slot[0].course){
         return res.json({
+          statusCode:1,
           error:'you could not delete a slot in a course you are not coordinating',
          })  
       }
@@ -1158,6 +1317,7 @@ router.get('/viewAllSlotLinkingRequests',
 
       await slotsModel.findByIdAndDelete(slotId)
                 return res.json({
+                  statusCode:0,
                  msg:'slot deleted successfully',
                 })  
 
@@ -1181,12 +1341,14 @@ router.get('/viewAllSlotLinkingRequests',
 
         if(!request1 || request1.length===0){
           return res.json({
+            statusCode:1,
             error:'this is not a valid request id',
            })  
         }
 
         if( request1[0].type!=requestType.SLOT_LINKING){
           return res.json({
+            statusCode:1,
             error:'this is not a slotLinking request',
            })  
         }
@@ -1194,6 +1356,7 @@ router.get('/viewAllSlotLinkingRequests',
   
         if(sender1.length===0||sender1[0].role!='coordinator'){
           return res.json({
+            statusCode:1,
             error:'you cannot accept slotlinking requests as you are not a coordinator',
            })  
         }
@@ -1201,6 +1364,7 @@ router.get('/viewAllSlotLinkingRequests',
         const course=await  courseModel.find({coordinator:req.user.id})
         if(course.length===0){
           return res.json({
+            statusCode:1,
             error:'there is no courses that you are currently coordinating ',
            })  
         }
@@ -1211,6 +1375,7 @@ router.get('/viewAllSlotLinkingRequests',
         //console.log(slot)
         if(slot[0].course!=course[0].name){
           return res.json({
+            statusCode:1,
             error:'you canot accept this request because it is related to a course that you are not coordinating ',
            })  
         }
@@ -1229,6 +1394,7 @@ router.get('/viewAllSlotLinkingRequests',
         notification.save()
         
                   return res.json({
+                    statusCode:0,
                    msg:'succefully accepted request',
                   })  
 
@@ -1255,12 +1421,14 @@ router.get('/viewAllSlotLinkingRequests',
 
         if(!request1 || request1.length===0){
           return res.json({
+            statusCode:1,
             error:'this is not a valid request id',
            })  
         }
 
         if( request1[0].type!=requestType.SLOT_LINKING){
           return res.json({
+            statusCode:1,
             error:'this is not a slotLinking request',
            })  
         }
@@ -1268,6 +1436,7 @@ router.get('/viewAllSlotLinkingRequests',
   
         if(sender1.length===0||sender1[0].role!='coordinator'){
           return res.json({
+            statusCode:1,
             error:'you cannot reject slotlinking requests as you are not a coordinator',
            })  
         }
@@ -1275,6 +1444,7 @@ router.get('/viewAllSlotLinkingRequests',
         const course=await  courseModel.find({coordinator:req.user.id})
         if(course.length===0){
           return res.json({
+            statusCode:1,
             error:'there is no courses that you are currently coordinating ',
            })  
         }
@@ -1285,6 +1455,7 @@ router.get('/viewAllSlotLinkingRequests',
         console.log(slot)
         if(slot[0].course!=course[0].name){
           return res.json({
+            statusCode:1,
             error:'you canot reject this request because it is related to a course that you are not coordinating ',
            })  
         }
@@ -1298,6 +1469,7 @@ router.get('/viewAllSlotLinkingRequests',
         notification.save()
         
                   return res.json({
+                    statusCode:0,
                    msg:'succefully rejected request',
                   })  
 

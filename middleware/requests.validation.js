@@ -5,12 +5,14 @@ const validateSendReplacementRequest = (req, res, next) => {
   const schema = Joi.object({
     to: Joi.string().required(),
     slot:Joi.string().length(24).required(),
-    reason:Joi.string()
+    reason:Joi.string().allow(null, ''),
+    dateOfRequest:Joi.date().iso().required(),
   })
 
   const isValid = Joi.validate(req.body, schema)
   if (isValid.error) {
     return res.json({
+      statusCode:2,
       error: isValid.error.details[0].message,
     })
   }
@@ -22,12 +24,13 @@ const validateSendReplacementRequest = (req, res, next) => {
 const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
       slot:Joi.string().length(24).required(),
-      reason:Joi.string()
+      reason:Joi.string().allow(null, '')
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -37,13 +40,14 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
 
   const validateSendChangeDayOffRequest = (req, res, next) => {
     const schema = Joi.object({
-      day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
-      reason:Joi.string()
+      day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).required(),
+      reason:Joi.string().allow(null, '')
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -54,14 +58,15 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
   const validateSendAnnualLeaveRequest = (req, res, next) => {
     const schema = Joi.object({
       date:Joi.date().iso().required(),
-      reason:Joi.string(),
-      replacements:Joi.array().items(Joi.string()),
-      requests:Joi.array().items(Joi.string()),
+      reason:Joi.string().allow(null, ''),
+      replacements:Joi.array().items(Joi.string().allow(null, '')),
+      requests:Joi.array().items(Joi.string().length(24)),
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -72,12 +77,13 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
   const validateSendAccidentalLeaveRequest = (req, res, next) => {
     const schema = Joi.object({
         date:Joi.date().iso().required(),
-      reason:Joi.string()
+      reason:Joi.string().allow(null, '')
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -88,14 +94,16 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
   const validateSendSickLeaveRequest = (req, res, next) => {
     const schema = Joi.object({
       date:Joi.date().iso().required(),
-      reason:Joi.string(),
+      reason:Joi.string().allow(null, ''),
       documents:Joi.string().required(),
+
 
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -105,7 +113,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
   const validateSendMaternityLeaveRequest = (req, res, next) => {
     const schema = Joi.object({
       date:Joi.date().iso().required(),
-      reason:Joi.string(),
+      reason:Joi.string().allow(null, ''),
       documents:Joi.string().required(),
 
     })
@@ -113,6 +121,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -129,6 +138,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -143,6 +153,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -158,6 +169,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -172,6 +184,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -183,7 +196,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
         startTime:Joi.number().required(),
         endTime:Joi.number().required(),
-        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY).required(),
+        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).required(),
         location:Joi.string().required(),
         order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).required(),
         course:Joi.string().required(),
@@ -192,6 +205,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -203,16 +217,17 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const schema = Joi.object({
         startTime:Joi.number(),
         endTime:Joi.number(),
-        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.FRIDAY,days.SAUTURDAY),
-        location:Joi.string(),
-        order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH),
-        academicMember:Joi.string(),
+        day:Joi.string().valid(days.SUNDAY,days.MONDAY,days.TUESDAY,days.WEDNESDAY,days.THURSDAY,days.SAUTURDAY).allow(null, ''),
+        location:Joi.string().allow(null, ''),
+        order:Joi.string().valid(slotOrder.FIRST,slotOrder.SECOND,slotOrder.THIRD,slotOrder.FOURTH,slotOrder.FIFTH).allow(null, ''),
+        academicMember:Joi.string().allow(null, ''),
         slot:Joi.string().length(24).required()
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -228,6 +243,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -243,6 +259,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -258,6 +275,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -275,6 +293,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -284,17 +303,18 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
   const validateUpdateProfile = (req, res, next) => {
     const schema = Joi.object({
       
-      email:Joi.string(),
-      gender:Joi.string(),
-      officeLocation:Joi.string(),
-      extraInformation:Joi.string(),
-      password:Joi.string()
+      email:Joi.string().allow(null, ''),
+      gender:Joi.string().allow(null, ''),
+      officeLocation:Joi.string().allow(null, ''),
+      extraInformation:Joi.string().allow(null, ''),
+      password:Joi.string().allow(null, '')
         
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -302,12 +322,13 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
   }
   const validateResetPassword = (req, res, next) => {
     const schema = Joi.object({
-      password:Joi.string()
+      password:Joi.string().allow(null, '')
     })
   
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }
@@ -322,6 +343,7 @@ const validateSendSlotLinkingRequest = (req, res, next) => {
     const isValid = Joi.validate(req.body, schema)
     if (isValid.error) {
       return res.json({
+        statusCode:2,
         error: isValid.error.details[0].message,
       })
     }

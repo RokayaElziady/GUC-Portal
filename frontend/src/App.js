@@ -9,6 +9,12 @@ import Location from './Pages/Nadine/location'
 import Staff from './Pages/Nadine/staff'
 import Attendance from './Pages/Nadine/attendance'
 import Sign from './Pages/Nadine/components/Attendance/sign'
+
+import ViewSlotLinkingRequests from './Pages/Rokaya/viewSlotLinkingRequests'
+import ViewNotifications from './Pages/Rokaya/viewNotifications'
+import ViewRecievedReplacements from './Pages/Rokaya/viewRecievedReplacemetRequest'
+import ViewSentReplacements from './Pages/Rokaya/viewSentReplacementRequests'
+import ViewAllRequests from './Pages/Rokaya/viewAllRequests'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 function App() {
@@ -45,7 +51,13 @@ function App() {
     <Route exact path='/' render={()=><MainAcademic/>}/>
     <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>
  
-   
+    <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>
+    <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>
+    <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>
+    <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>
+    <Route exact path='/viewNotifications' render={()=><ViewNotifications/>}/>
+    
+    
     
      </React.Fragment>
      </Router>
