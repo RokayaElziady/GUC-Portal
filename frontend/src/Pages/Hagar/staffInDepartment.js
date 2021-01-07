@@ -5,10 +5,25 @@ import { Button, Form,Table } from 'react-bootstrap';
 import axios from 'axios'
 import { backendLink } from '../../keys_dev'
 import { useState, useEffect } from 'react';
+import logo from '../../Images/GUC.png'
+import { useHistory } from 'react-router'
 export default function StaffInDepartment(props) {
     const [courseName, setCourseName] = useState('');
     const [academicsDep, setAcademicsDep] = useState([]);
     const [academicsCourse, setAcademicsCourse] = useState([]);
+    const history = useHistory()
+    const logoutClick= async ()=>{
+        await axios({
+          url: `${backendLink}/logging/logout`,
+          method: 'post',
+        }).then((res) => {
+            console.log(res)
+            
+        }).catch((err) => {
+            console.log(err.response)
+          })
+        history.push("/")
+      }
     useEffect(() => {
         async function fetchMyData() {
             await getAcademicsInDep();
@@ -54,6 +69,7 @@ export default function StaffInDepartment(props) {
     }
     return (
         <div className="main-container">
+             <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
             <h2>Staff In Department</h2>
             <Table striped bordered hover>
             <thead>

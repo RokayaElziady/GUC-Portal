@@ -1,6 +1,11 @@
 import React from 'react'
 import logo from '../../Images/GUC.png'
+import axios from 'axios'
+import { backendLink } from '../../keys_dev'
 import '../../Stylesheets/Rokaya/MainAcademic.css'
+import '../../Stylesheets/Rokaya/ViewSchedule.css'
+import '../../Stylesheets/Rokaya/MainAcademic.css'
+import '../../Stylesheets/Rokaya/viewSentReplacementRequests.css'
 import Table from 'react-bootstrap/Table'
 import { useHistory } from 'react-router'
 
@@ -10,7 +15,18 @@ import { useHistory } from 'react-router'
 export default function HODMain(props) {
   const history = useHistory()
   //const name = useSelector((state) => state.name)
-
+  const logoutClick= async ()=>{
+    await axios({
+      url: `${backendLink}/logging/logout`,
+      method: 'post',
+    }).then((res) => {
+        console.log(res)
+        
+    }).catch((err) => {
+        console.log(err.response)
+      })
+    history.push("/")
+  }
   const manageInstructors=()=>{
     history.push("/HOD/manageInstructors")
   }
@@ -52,6 +68,7 @@ export default function HODMain(props) {
       <td className="MainAcademicTableColumn2">
         <tr>
         <img className="MainAcademicLogo" src={logo} alt="Logo" />
+            <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
         </tr>
      </td>
 
