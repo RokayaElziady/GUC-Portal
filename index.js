@@ -83,8 +83,15 @@ app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
 
+// const s=new replacementModel({
+//   academicMember:"ac-1",
+//   slot:"5fe5bdd648f1f75a545457ff"
+// })
+// s.save()
 
-const port = 3001
+
+
+const port = 3001;
 if (process.env.PORT) {
   app.listen(process.env.PORT, () =>
     console.log(`Server up and running on ${process.env.PORT}`)

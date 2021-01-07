@@ -43,6 +43,12 @@ export default function MainAcademicPage(props) {
   const viewRecievedReplacmentsClick=()=>{
     history.push("/viewRecievedReplacements")
   }
+  const HODClick=()=>{
+    history.push("/HOD")
+  }
+  const InstructorClick=()=>{
+    history.push("/courseInstructor")
+  }
 
   const viewAllRequestsClick=()=>{
     history.push("/viewAllRequests")
@@ -131,6 +137,12 @@ export default function MainAcademicPage(props) {
         </tr>
         <tr>
           <p className="MainAcademicListFont" onClick={()=>{setDeleteSlot(true)}}>Delete Slot</p>
+            </tr>
+            <tr>
+          <p className="MainAcademicListFont" onClick={HODClick}>HOD Main </p>
+            </tr>
+            <tr>
+          <p className="MainAcademicListFont" onClick={InstructorClick}>Instructor Main </p>
         </tr>
         
         </tr>
