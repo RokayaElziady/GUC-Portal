@@ -6,10 +6,25 @@ import { Alert } from 'reactstrap';
 import axios from 'axios'
 import { backendLink } from '../../keys_dev'
 import { useState, useEffect } from 'react';
+import logo from '../../Images/GUC.png'
+import { useHistory } from 'react-router'
 export default function RequestsInDepartment(props) {
     const [daysOff, setDaysOff] = useState([]);
     const [requests, setRequests] = useState([]);
     const [alertResponse, setAlertResponse] = useState([]);
+    const history = useHistory()
+    const logoutClick= async ()=>{
+        await axios({
+          url: `${backendLink}/logging/logout`,
+          method: 'post',
+        }).then((res) => {
+            console.log(res)
+            
+        }).catch((err) => {
+            console.log(err.response)
+          })
+        history.push("/")
+      }
     let r = [];
     useEffect(() => {
         getDaysOff();
@@ -25,7 +40,9 @@ export default function RequestsInDepartment(props) {
             },
             data: {}
         }).then((res) => {
-            setDaysOff(res.data);
+            if (!res.data.error) {
+                setDaysOff(res.data);
+            }
             
            
         }).catch((err) => {
@@ -42,7 +59,9 @@ export default function RequestsInDepartment(props) {
             },
             data: {}
         }).then((res) => {
-            r = res.data;
+            if (!res.data.error) {
+                r = res.data;
+            }
             
            
         }).catch((err) => {
@@ -57,8 +76,10 @@ export default function RequestsInDepartment(props) {
             },
             data: {}
         }).then((res) => {
-            r=[...r,...res.data];
-            setRequests(r);
+            if (!res.data.error) {
+                r = [...r, ...res.data];
+                setRequests(r);
+            }
            
         }).catch((err) => {
      
@@ -76,8 +97,9 @@ export default function RequestsInDepartment(props) {
                 _id:requests[key]._id
             }
         }).then((res) => {
-            setAlertResponse(JSON.stringify(res.data));
-            
+            if (!res.data.error) {
+                setAlertResponse(JSON.stringify(res.data));
+            }
            
         }).catch((err) => {
      
@@ -95,8 +117,9 @@ export default function RequestsInDepartment(props) {
                 _id:requests[key]._id
             }
         }).then((res) => {
-            setAlertResponse(JSON.stringify(res.data));
-            
+            if (!res.data.error) {
+                setAlertResponse(JSON.stringify(res.data));
+            }
            
         }).catch((err) => {
      
@@ -105,6 +128,7 @@ export default function RequestsInDepartment(props) {
     }
     return (
         <div className='main-container'>
+             <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
             <h2>Days OFF In Department</h2>
             <Table striped bordered hover>
             <thead>

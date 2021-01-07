@@ -5,10 +5,29 @@ import { Button, Form,Table } from 'react-bootstrap';
 import axios from 'axios'
 import { backendLink } from '../../keys_dev'
 import { useState, useEffect } from 'react';
+import logo from '../../Images/GUC.png'
+import { useHistory } from 'react-router'
+import '../../Stylesheets/Rokaya/ViewSchedule.css'
+import '../../Stylesheets/Rokaya/MainAcademic.css'
+import '../../Stylesheets/Rokaya/viewSentReplacementRequests.css'
+import '../../Stylesheets/Rokaya/MainAcademic.css'
 export default function Staff(props) {
     const [courseName, setCourseName] = useState('');
     const [academicsDep, setAcademicsDep] = useState([]);
     const [academicsCourse, setAcademicsCourse] = useState([]);
+    const history = useHistory()
+    const logoutClick= async ()=>{
+        await axios({
+          url: `${backendLink}/logging/logout`,
+          method: 'post',
+        }).then((res) => {
+            console.log(res)
+            
+        }).catch((err) => {
+            console.log(err.response)
+          })
+        history.push("/")
+      }
     useEffect(() => {
         async function fetchMyData() {
             await getAcademicsInDep();
@@ -26,8 +45,9 @@ export default function Staff(props) {
             },
             data: {}
         }).then((res) => {
-            setAcademicsDep(res.data);
-            
+            if (!res.data.error) {
+                setAcademicsDep(res.data);
+            }
            
         }).catch((err) => {
      
@@ -43,9 +63,10 @@ export default function Staff(props) {
             },
             data: {}
         }).then((res) => {
-            setAcademicsCourse(res.data);
+            if (!res.data.error) {
+                setAcademicsCourse(res.data);
             
-           
+            }
         }).catch((err) => {
      
             console.log(err.response)
@@ -53,6 +74,8 @@ export default function Staff(props) {
     }
     return (
         <div className="main-container">
+              {/* <img className="MainAcademicLogo" src={logo} alt="Logo" /> */}
+            <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
             <h2>Staff In Department</h2>
             <Table striped bordered hover>
             <thead>

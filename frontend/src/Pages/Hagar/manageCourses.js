@@ -4,12 +4,26 @@ import '../../Stylesheets/Hagar/HOD.css';
 import { Button, Form,Table } from 'react-bootstrap';
 import axios from 'axios'
 import { backendLink } from '../../keys_dev'
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import logo from '../../Images/GUC.png'
+import { useHistory } from 'react-router'
 export default function ManageCourses(props) {
     const [courseCoverage, setCourseCoverage] = useState([]);
     const [slots, setSlots] = useState([]);
     const [courseName, setCourseName] = useState('');
-
+    const history = useHistory()
+    const logoutClick= async ()=>{
+        await axios({
+          url: `${backendLink}/logging/logout`,
+          method: 'post',
+        }).then((res) => {
+            console.log(res)
+            
+        }).catch((err) => {
+            console.log(err.response)
+          })
+        history.push("/")
+      }
     useEffect(() => {
         async function fetchMyData() {
             await getCoverage();
@@ -22,16 +36,18 @@ export default function ManageCourses(props) {
             url: `${backendLink}/HOD/courseCoverage`,
             method: 'get',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
+                token: "eyJhbGciOiJIUI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
             },
             data: {}
         }).then((res) => {
-            setCourseCoverage(res.data);
+            if (!res.data.error) {
+                setCourseCoverage(res.data);
+            }
             
            
         }).catch((err) => {
      
-            console.log(err.response)
+            console.log(err.response);
         })
     }
 
@@ -58,6 +74,7 @@ export default function ManageCourses(props) {
     
     return (
         <div className="main-container">
+             <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
             <h2>Courses Coverage</h2>
         <Table striped bordered hover>
         <thead>

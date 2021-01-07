@@ -5,7 +5,9 @@ import { Button, Form, Table } from 'react-bootstrap';
 import { Alert } from 'reactstrap';
 import axios from 'axios'
 import { backendLink } from '../../keys_dev'
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import logo from '../../Images/GUC.png'
+import { useHistory } from 'react-router'
 export default function ManageSlots(props) {
     const [courseCoverage, setCourseCoverage] = useState([]);
     const [slots, setSlots] = useState([]);
@@ -16,6 +18,19 @@ export default function ManageSlots(props) {
     const [academic2, setAcademic2] = useState('');
     const [alertResponse, setAlertResponse] = useState('');
     const [alertResponse2, setAlertResponse2] = useState('');
+    const history = useHistory()
+    const logoutClick= async ()=>{
+        await axios({
+          url: `${backendLink}/logging/logout`,
+          method: 'post',
+        }).then((res) => {
+            console.log(res)
+            
+        }).catch((err) => {
+            console.log(err.response)
+          })
+        history.push("/")
+      }
     useEffect(() => {
         async function fetchMyData() {
             await getCoverage();
@@ -33,8 +48,9 @@ export default function ManageSlots(props) {
             },
             data: {}
         }).then((res) => {
-            setCourseCoverage(res.data);
-            
+            if (!res.data.error) {
+                setCourseCoverage(res.data);
+            }
            
         }).catch((err) => {
      
@@ -136,6 +152,7 @@ export default function ManageSlots(props) {
     
     return (
         <div className="main-container">
+              <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
             <h2>Courses Coverage</h2>
         <Table striped bordered hover>
         <thead>

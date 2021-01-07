@@ -6,11 +6,26 @@ import { Alert } from 'reactstrap';
 import axios from 'axios'
 import { backendLink } from '../../keys_dev'
 import { useState } from 'react';
+import logo from '../../Images/GUC.png'
+import { useHistory } from 'react-router'
 export default function ManageCoursesInstructor(props) {
     const [instructorID, setInstructorID] = useState('');
     const [courseName, setCourseName] = useState('');
     const [show, setShow] = useState(true);
-    const [alertResponse, setAlertResponse] = useState('');
+  const [alertResponse, setAlertResponse] = useState('');
+  const history = useHistory()
+    const logoutClick= async ()=>{
+        await axios({
+          url: `${backendLink}/logging/logout`,
+          method: 'post',
+        }).then((res) => {
+            console.log(res)
+            
+        }).catch((err) => {
+            console.log(err.response)
+          })
+        history.push("/")
+      }
     async function addAcademicToCourse() {
         await axios({
           url: `${backendLink}/courseInstructor/assignAcademicToCourse`,
@@ -25,10 +40,12 @@ export default function ManageCoursesInstructor(props) {
               },
          
         }).then((res) => {
-        
-          setAlertResponse(JSON.stringify(res.data));
-          console.log(alertResponse);
-          setShow(true);
+          if (!res.data.error) {
+            setAlertResponse(JSON.stringify(res.data));
+            console.log(alertResponse);
+          }
+            setShow(true);
+            
         }).catch((err) => {
           
             console.log(err.response)
@@ -47,9 +64,10 @@ export default function ManageCoursesInstructor(props) {
               },
          
         }).then((res) => {
-        
-          setAlertResponse(JSON.stringify(res.data));
-          console.log(alertResponse);
+          if (!res.data.error) {
+            setAlertResponse(JSON.stringify(res.data));
+            console.log(alertResponse);
+          }
           setShow(true);
         }).catch((err) => {
           
@@ -69,9 +87,10 @@ export default function ManageCoursesInstructor(props) {
                 },
            
           }).then((res) => {
-          
-            setAlertResponse(JSON.stringify(res.data));
-            console.log(alertResponse);
+            if (!res.data.error) {
+              setAlertResponse(JSON.stringify(res.data));
+              console.log(alertResponse);
+            }
             setShow(true);
           }).catch((err) => {
             
@@ -79,7 +98,8 @@ export default function ManageCoursesInstructor(props) {
             })
     }
     return (
-        <div className="main-container">
+      <div className="main-container">
+           <i className="fa fa-sign-out fa-lg sign-out-logo" onClick={logoutClick}></i>
         <Form>
         
   <Form.Group >
