@@ -68,6 +68,7 @@ export default function Login(props) {
                   if(res.data.statusCode===5){
                       success=1;
                     history.push('/changePassword')
+                    sessionStorage.setItem("token",res.data.token)
                   }
                   else{
                   success=1;

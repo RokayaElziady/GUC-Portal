@@ -7,6 +7,8 @@ const logoutModel = require('../../Models/logout.model')
 const verify=async (req, res,next)=>{
  // console.log("lala")
     const token= req.headers.token
+    console.log("tookkkkkeeen")
+    console.log(token)
    
     const s=await logoutModel.find({token:token})
   //  console.log(s)

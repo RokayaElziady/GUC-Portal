@@ -1072,6 +1072,15 @@ router.get('/viewAllSlotLinkingRequests',
   async (req, res) => {
     try {
       const sender1=await academicMemberModel.find({id:req.user.id})
+
+      const member=await academicMemberModel.find({id:req.user.id})
+      if(member[0].role!='coordinator'){
+        return res.json({
+          statusCode:1,
+          error:'only coordinators are allowed to add slots',
+         }) 
+      }
+      
       if( sender1.length===0||req.user.role!='coordinator'){
         return res.json({
           statusCode:1,
@@ -1108,6 +1117,14 @@ router.get('/viewAllSlotLinkingRequests',
       const location=req.body.location
       const order=req.body.order
       const course=req.body.course
+
+      const member=await academicMemberModel.find({id:req.user.id})
+      if(member[0].role!='coordinator'){
+        return res.json({
+          statusCode:1,
+          error:'only coordinators are allowed to add slots',
+         }) 
+      }
 
       const loc=await  locationModel.find({name:location})
       if(!loc || loc.length===0){
@@ -1192,6 +1209,14 @@ router.get('/viewAllSlotLinkingRequests',
       var order=req.body.order
       var slotId=req.body.slot
       var academicMember=req.body.academicMember
+
+      const member=await academicMemberModel.find({id:req.user.id})
+      if(member[0].role!='coordinator'){
+        return res.json({
+          statusCode:1,
+          error:'only coordinators are allowed to update slots',
+         }) 
+      }
 
       const slot=await slotsModel.find({_id:slotId})
 
@@ -1317,6 +1342,14 @@ router.get('/viewAllSlotLinkingRequests',
       const slotId=req.body.slot
       const sender1=await  academicMemberModel.find({id:req.user.id,role:"coordinator"})
 
+      const member=await academicMemberModel.find({id:req.user.id})
+      if(member[0].role!='coordinator'){
+        return res.json({
+          statusCode:1,
+          error:'only coordinators are allowed to delete slots',
+         }) 
+      }
+
       if(sender1.length===0||sender1[0].role!='coordinator'){
         return res.json({
           statusCode:1,
@@ -1377,6 +1410,14 @@ router.get('/viewAllSlotLinkingRequests',
 
         const request1=await requestsModel.find({_id:request})
         const sender1=await academicMemberModel.find({id:req.user.id,role:"coordinator"})
+
+        const member=await academicMemberModel.find({id:req.user.id})
+        if(member[0].role!='coordinator'){
+          return res.json({
+            statusCode:1,
+            error:'only coordinators are allowed to accept slotlinking requests',
+           }) 
+        }
 
         if(!request1 || request1.length===0){
           return res.json({
@@ -1457,6 +1498,14 @@ router.get('/viewAllSlotLinkingRequests',
 
         const request1=await requestsModel.find({_id:request})
         const sender1=await academicMemberModel.find({id:req.user.id,role:"coordinator"})
+
+        const member=await academicMemberModel.find({id:req.user.id})
+        if(member[0].role!='coordinator'){
+          return res.json({
+            statusCode:1,
+            error:'only coordinators are allowed to reject slot linking requests',
+           }) 
+        }
 
         if(!request1 || request1.length===0){
           return res.json({

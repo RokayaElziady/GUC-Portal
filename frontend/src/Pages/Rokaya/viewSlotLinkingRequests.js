@@ -14,7 +14,7 @@ import { useHistory } from 'react-router';
 
 
 
-
+var success=0;
 export default function ViewSlotLinkingRequests(props) {
   const [requests, setRequests] = useState([])
   const [modal, setModal] = useState(false);
@@ -178,7 +178,13 @@ const  handleAcceptRequest= async(x)=>{
                  },
                
               }).then((res) => {
+                if(res.data.statusCode===0){
+                  success=1;
                   setRequests(res.data.requests)
+                }
+                else{
+                  
+                }
                 if(res.data.statusCode==2 || res.data.statusCode==1){
                     setError(res.data.error)
   
@@ -197,6 +203,7 @@ const  handleAcceptRequest= async(x)=>{
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
         <i className="fa fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}></i>
+        {success===1?<>
           <p className="viewScheduleHeaders"> Slot-Linking Requests</p>
           <Table  striped>
            <tbody>
@@ -210,6 +217,7 @@ const  handleAcceptRequest= async(x)=>{
             } 
               </tbody>
        </Table>        
+       </>:<div><p> Sorry only coordinators can view slot linking requests</p></div>}
 </div>
 
   )
