@@ -28,6 +28,7 @@ export default function ViewNotifications(props) {
 
 
     const logoutClick= async ()=>{
+      sessionStorage.removeItem("token")
       await axios({
         url: `${backendLink}/logging/logout`,
         method: 'post',
@@ -76,8 +77,9 @@ export default function ViewNotifications(props) {
                 url: `${backendLink}/request/viewNotifications`,
                 method: 'get',
                 headers: {
-                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-                },
+                  // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                  token:sessionStorage.getItem("token")
+                 },
                
               }).then((res) => {
                   if(res.status===200){

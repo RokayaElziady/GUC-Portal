@@ -127,7 +127,8 @@ console.log("pass"+correctPassword);
                     await logoutModel.findOneAndDelete({token:token})
                     res.header('token',token)
                     return res.json({
-                      statusCode:5
+                      statusCode:5,
+                      token
                     })
  
                  }   
@@ -143,6 +144,7 @@ console.log("pass"+correctPassword);
             return res.json({
               statusCode:0,
               msg: 'logged in Suucessfully',
+              token:token
             })
             
             
@@ -179,7 +181,8 @@ console.log("pass"+correctPassword);
                      await logoutModel.findOneAndDelete({token:token})
                      res.header('token',token)
                       return res.json({
-                      statusCode:5
+                      statusCode:5,
+                      token
                       })
                 }   
                 const payload = {
@@ -193,6 +196,7 @@ console.log("pass"+correctPassword);
                return res.json({
                 statusCode:0,
                 msg: 'logged in Suucessfully',
+                token
               })
               
                

@@ -14,6 +14,7 @@ export default function RequestsInDepartment(props) {
     const [alertResponse, setAlertResponse] = useState([]);
     const history = useHistory()
     const logoutClick= async ()=>{
+        sessionStorage.removeItem("token")
         await axios({
           url: `${backendLink}/logging/logout`,
           method: 'post',
@@ -36,8 +37,9 @@ export default function RequestsInDepartment(props) {
             url: `${backendLink}/HOD/viewDaysOffInDepartment`,
             method: 'get',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
-            },
+                // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                token:sessionStorage.getItem("token")
+               },
             data: {}
         }).then((res) => {
             if (!res.data.error) {
@@ -55,8 +57,9 @@ export default function RequestsInDepartment(props) {
             url: `${backendLink}/HOD/viewChangeDayOffRequests`,
             method: 'get',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
-            },
+                // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                token:sessionStorage.getItem("token")
+               },
             data: {}
         }).then((res) => {
             if (!res.data.error) {
@@ -72,8 +75,9 @@ export default function RequestsInDepartment(props) {
             url: `${backendLink}/HOD/viewLeaveRequests`,
             method: 'get',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
-            },
+                // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                token:sessionStorage.getItem("token")
+               },
             data: {}
         }).then((res) => {
             if (!res.data.error) {
@@ -91,8 +95,9 @@ export default function RequestsInDepartment(props) {
             url: `${backendLink}/HOD/acceptRequest`,
             method: 'post',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
-            },
+                // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                token:sessionStorage.getItem("token")
+               },
             data: {
                 _id:requests[key]._id
             }
@@ -111,8 +116,9 @@ export default function RequestsInDepartment(props) {
             url: `${backendLink}/HOD/rejectRequest`,
             method: 'post',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
-            },
+                // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                token:sessionStorage.getItem("token")
+               },
             data: {
                 _id:requests[key]._id
             }

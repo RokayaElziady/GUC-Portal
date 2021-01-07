@@ -16,6 +16,7 @@ export default function HODMain(props) {
   const history = useHistory()
   //const name = useSelector((state) => state.name)
   const logoutClick= async ()=>{
+    sessionStorage.removeItem("token")
     await axios({
       url: `${backendLink}/logging/logout`,
       method: 'post',

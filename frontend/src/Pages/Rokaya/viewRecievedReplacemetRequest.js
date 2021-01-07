@@ -26,6 +26,7 @@ export default function ViewRecievedReplacements(props) {
     };
 
     const logoutClick= async ()=>{
+      sessionStorage.removeItem("token")
       await axios({
         url: `${backendLink}/logging/logout`,
         method: 'post',
@@ -46,8 +47,9 @@ const  handleAcceptRequest= async(x)=>{
       url: `${backendLink}/request/acceptReplacementRequest`,
       method: 'post',
       headers: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-      },
+        // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+        token:sessionStorage.getItem("token")
+       },
       data: {
            request:x,
           },
@@ -70,8 +72,9 @@ const  handleAcceptRequest= async(x)=>{
       url: `${backendLink}/request/rejectReplacementRequest`,
       method: 'post',
       headers: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-      },
+        // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+        token:sessionStorage.getItem("token")
+       },
       data: {
            request:x,
           },
@@ -166,8 +169,9 @@ const  handleAcceptRequest= async(x)=>{
                 url: `${backendLink}/request/viewRecievedReplacementRequest`,
                 method: 'get',
                 headers: {
-                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-                },
+                  // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                  token:sessionStorage.getItem("token")
+                 },
                
               }).then((res) => {
                   if(res.status===200){

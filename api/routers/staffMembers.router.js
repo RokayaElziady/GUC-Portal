@@ -193,7 +193,10 @@ async (req, res) => {
           password=await bcrypt.hash(password,salt)
          console.log(password)
        await academicMemberModel.findOneAndUpdate( { id:req.user.id},{password:password,changePassword:false})
-        res.send("successfully updated")
+       return res.json({
+        statusCode:0,
+        msg: 'success',
+      })
     }
       
       if(userHrStaff){
@@ -201,10 +204,16 @@ async (req, res) => {
         const salt= await bcrypt.genSalt(10)
     password=await bcrypt.hash(password,salt)
        await hrmodel.findOneAndUpdate( { id:req.user.id},{password:password,changePassword:false})
-       res.send("successfully updated")
+       return res.json({
+        statusCode:0,
+        msg: 'success',
+      })
       }
       if(!userAcdemicMember && !userHrStaff){
-        res.send("you need to log in first")
+        return res.json({
+          statusCode:1,
+          msg: 'you need to login first',
+        })
     }
     } catch (exception) {
       return res.json({

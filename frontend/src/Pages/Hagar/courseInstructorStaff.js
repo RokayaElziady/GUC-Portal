@@ -17,6 +17,7 @@ export default function Staff(props) {
     const [academicsCourse, setAcademicsCourse] = useState([]);
     const history = useHistory()
     const logoutClick= async ()=>{
+        sessionStorage.removeItem("token")
         await axios({
           url: `${backendLink}/logging/logout`,
           method: 'post',
@@ -41,8 +42,9 @@ export default function Staff(props) {
             url: `${backendLink}/courseInstructor/viewStaffByDep`,
             method: 'get',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiVEEiLCJpYXQiOjE2MDk4Mjk3NjR9.WAu45Jn6ar0YkZjD53CkkL9rim4rOWUjXwJQpimzLoA"
-            },
+                // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                token:sessionStorage.getItem("token")
+               },
             data: {}
         }).then((res) => {
             if (!res.data.error) {

@@ -43,14 +43,13 @@ export default function Login(props) {
  
 
     const handleSubmit= async ()=>{
+        if(success!=1){
             setModal(!modal)
+        }
         
         await axios({
             url: `${backendLink}/logging/login`,
             method: 'post',
-            headers: {
-              token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-            },
             data:{
                    email:state.email,
                    password:state.pass,
@@ -67,10 +66,12 @@ export default function Login(props) {
               }
               else{
                   if(res.data.statusCode===5){
+                      success=1;
                     history.push('/changePassword')
                   }
                   else{
                   success=1;
+                  sessionStorage.setItem("token",res.data.token)
                   setError(res.data.msg)
                   history.push('/home')
                   }
@@ -119,7 +120,7 @@ export default function Login(props) {
   </FormGroup>
   <FormGroup>
     <Label for="exampleText" className="sendReplacementTitleFont">Password *</Label>
-    <Input className="loginInput"  name='pass'  onChange={handleChange}/>
+    <Input className="loginInput"  name='pass'  type="password" onChange={handleChange}/>
   </FormGroup>
   
   <Button color="primary" onClick={handleSubmit} className="loginButton" >Login</Button>

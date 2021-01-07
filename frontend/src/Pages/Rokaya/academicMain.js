@@ -62,6 +62,7 @@ export default function MainAcademicPage(props) {
   }
 
   const logoutClick= async ()=>{
+    sessionStorage.removeItem("token")
     await axios({
       url: `${backendLink}/logging/logout`,
       method: 'post',

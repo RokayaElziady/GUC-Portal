@@ -44,15 +44,16 @@ export default function ChangePassword(props) {
 
     const handleSubmit= async ()=>{
             setModal(!modal)
+            console.log(sessionStorage.getItem("token"))
         
         await axios({
             url: `${backendLink}/staff/resetPassword`,
-            method: 'post',
+            method: 'put',
             headers: {
-              token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                token:sessionStorage.getItem("token")
+                //  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
             data:{
-                   email:state.email,
                    password:state.pass,
             },
 
@@ -111,13 +112,13 @@ export default function ChangePassword(props) {
         Change Password
     </CardHeader>
 <Form>
-  <FormGroup>
+  {/* <FormGroup>
     <Label for="examplePassword" className="sendReplacementTitleFont">Old Password *</Label>
-    <Input  className="loginInput"  onChange={handleChange} name='old' />
-  </FormGroup>
+    <Input  className="loginInput"  type="password" onChange={handleChange} name='old' />
+  </FormGroup> */}
   <FormGroup>
     <Label for="exampleText" className="sendReplacementTitleFont">New Password *</Label>
-    <Input className="loginInput"  name='pass'  onChange={handleChange}/>
+    <Input className="loginInput"  name='pass'  type="password" onChange={handleChange}/>
   </FormGroup>
   
   <Button color="primary" onClick={handleSubmit} className="loginButton" >Change</Button>
