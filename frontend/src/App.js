@@ -12,6 +12,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import Login from './Pages/Rokaya/login'
+import ChangePassword  from './Pages/Rokaya/changePassword'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     <React.Fragment>
     <Route exact path='/' render={()=><Login/>}/>
     <Route exact path='/home' render={()=><MainAcademic/>}/>
+    <Route exact path='/changePassword' render={()=><ChangePassword/>}/>
     <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>
     <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>
     <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>

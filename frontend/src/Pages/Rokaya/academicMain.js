@@ -15,6 +15,7 @@ import AddSlot from '../../Components/Rokaya/addSlotModal'
 import UpdateSlot from '../../Components/Rokaya/updateSlotModal'
 import DeleteSlot from '../../Components/Rokaya/deleteSlotModal'
 import {backendLink} from '../../keys_dev'
+import axios from 'axios'
 
 
 
@@ -54,7 +55,16 @@ export default function MainAcademicPage(props) {
     history.push("/viewNotifications")
   }
 
-  const logoutClick=()=>{
+  const logoutClick= async ()=>{
+    await axios({
+      url: `${backendLink}/logging/logout`,
+      method: 'post',
+    }).then((res) => {
+        console.log(res)
+        
+    }).catch((err) => {
+        console.log(err.response)
+      })
     history.push("/")
   }
 

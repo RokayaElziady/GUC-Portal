@@ -5,7 +5,7 @@ import '../../Stylesheets/Rokaya/ViewSchedule.css'
 import '../../Stylesheets/Rokaya/MainAcademic.css'
 import '../../Stylesheets/Rokaya/viewSentReplacementRequests.css'
 import Table from 'react-bootstrap/Table'
-import {Modal,ModalBody,ModalFooter,ModalHeader,Button, Card} from 'reactstrap'
+import {Modal,ModalBody,ModalFooter,ModalHeader,Button, Card, CardHeader} from 'reactstrap'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
 import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
@@ -16,12 +16,12 @@ import { useHistory } from 'react-router'
 var success=0;
 
 
-export default function Login(props) {
+export default function ChangePassword(props) {
 
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
-    email: '',
+    old: '',
     pass: '',
   })
   const history = useHistory()
@@ -46,7 +46,7 @@ export default function Login(props) {
             setModal(!modal)
         
         await axios({
-            url: `${backendLink}/logging/login`,
+            url: `${backendLink}/staff/resetPassword`,
             method: 'post',
             headers: {
               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
@@ -66,14 +66,9 @@ export default function Login(props) {
 
               }
               else{
-                  if(res.data.statusCode===5){
-                    history.push('/changePassword')
-                  }
-                  else{
                   success=1;
                   setError(res.data.msg)
                   history.push('/home')
-                  }
               }
               
           }).catch((err) => {
@@ -112,17 +107,20 @@ export default function Login(props) {
   </Modal>
 
 <Card className="loginCard">
+    <CardHeader className="viewScheduleHeaders">
+        Change Password
+    </CardHeader>
 <Form>
   <FormGroup>
-    <Label for="examplePassword" className="sendReplacementTitleFont">Email *</Label>
-    <Input  className="loginInput"  onChange={handleChange} name='email' />
+    <Label for="examplePassword" className="sendReplacementTitleFont">Old Password *</Label>
+    <Input  className="loginInput"  onChange={handleChange} name='old' />
   </FormGroup>
   <FormGroup>
-    <Label for="exampleText" className="sendReplacementTitleFont">Password *</Label>
+    <Label for="exampleText" className="sendReplacementTitleFont">New Password *</Label>
     <Input className="loginInput"  name='pass'  onChange={handleChange}/>
   </FormGroup>
   
-  <Button color="primary" onClick={handleSubmit} className="loginButton" >Login</Button>
+  <Button color="primary" onClick={handleSubmit} className="loginButton" >Change</Button>
 </Form>
 </Card>
 </div>

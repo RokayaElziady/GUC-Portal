@@ -27,7 +27,16 @@ export default function ViewNotifications(props) {
     const history=useHistory()
 
 
-    const logoutClick=()=>{
+    const logoutClick= async ()=>{
+      await axios({
+        url: `${backendLink}/logging/logout`,
+        method: 'post',
+      }).then((res) => {
+          console.log(res)
+          
+      }).catch((err) => {
+          console.log(err.response)
+        })
       history.push("/")
     }
   

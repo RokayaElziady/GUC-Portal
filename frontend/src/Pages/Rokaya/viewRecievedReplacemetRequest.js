@@ -25,7 +25,16 @@ export default function ViewRecievedReplacements(props) {
       window.location.reload();
     };
 
-    const logoutClick=()=>{
+    const logoutClick= async ()=>{
+      await axios({
+        url: `${backendLink}/logging/logout`,
+        method: 'post',
+      }).then((res) => {
+          console.log(res)
+          
+      }).catch((err) => {
+          console.log(err.response)
+        })
       history.push("/")
     }
   
