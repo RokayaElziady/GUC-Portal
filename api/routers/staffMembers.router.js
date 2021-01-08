@@ -417,8 +417,39 @@ if(req2){
 accepted=true;
 break;
 }
-if(new Date(req2[l]. compensationDay).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='compensation leave')){
-  accepted=true;
+if(new Date(req2[l].compensationDay).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='compensation leave')){
+  const attend=[]
+   for(var k=0;k<result.signIn.length;k++){
+    elementTime=new Date(result.signIn[k]);
+     elementTime.setTime( elementTime.getTime() +elementTime.getTimezoneOffset()*60*1000 );  
+ 
+   if( elementTime.getMonth()==req2[l].dateOfRequest.getMonth() && 
+     elementTime.getFullYear()==req2[l].dateOfRequest.getFullYear()&&
+     elementTime.getDate()==req2[l].dateOfRequest.getDate()&&
+     elementTime.getHours()>=7&&
+     elementTime.getHours()<=18 ){ 
+attend.push(elementTime)}
+      }
+  
+const attend2=[]
+for(var k=0;k<result.signIn.length;k++){
+ 
+  elementTime=new Date(result.signOut[k]);
+   elementTime.setTime( elementTime.getTime() +elementTime.getTimezoneOffset()*60*1000 );  
+   let timeExist=false;
+   for(let l=0;l<attend.length;l++){
+     if(((new Date(attend[l])).getTime()) < elementTime.getTime()){
+   timeExist=true;
+   }}
+ if( elementTime.getMonth()==req2[l].dateOfRequest.getMonth() && 
+   elementTime.getFullYear()==req2[l].dateOfRequest.getFullYear()&&
+   elementTime.getDate()==req2[l].dateOfRequest.getDate()&&
+   elementTime.getHours()>=7&&
+   elementTime.getHours()<=18&&timeExist ){ 
+attend2.push(result.signOut[k])}
+    }
+if(attend2.length>0){
+  accepted=true;}
 break;
 }}
  }}
@@ -699,8 +730,41 @@ break;
       const compensation=await requestsModel.find({ $and:[{from:req.user.id},{type:'compensation leave'},{status: 'accepted'}]});
       console.log(compensation+"comp")
       if(compensation){
-        remaining=remaining+8.4*compensation.length;
+        for(let i=0;i<compensation.length;i++){
+        const attend=[]
+   for(var k=0;k<result.signIn.length;k++){
+    elementTime=new Date(result.signIn[k]);
+     elementTime.setTime( elementTime.getTime() +elementTime.getTimezoneOffset()*60*1000 );  
+ 
+   if( elementTime.getMonth()==compensation[i].dateOfRequest.getMonth() && 
+     elementTime.getFullYear()==compensation[i].dateOfRequest.getFullYear()&&
+     elementTime.getDate()==compensation[i].dateOfRequest.getDate()&&
+     elementTime.getHours()>=7&&
+     elementTime.getHours()<=18 ){ 
+attend.push(elementTime)}
       }
+  
+const attend2=[]
+for(var k=0;k<result.signIn.length;k++){
+ 
+  elementTime=new Date(result.signOut[k]);
+   elementTime.setTime( elementTime.getTime() +elementTime.getTimezoneOffset()*60*1000 );  
+   let timeExist=false;
+   for(let l=0;l<attend.length;l++){
+     if(((new Date(attend[l])).getTime()) < elementTime.getTime()){
+   timeExist=true;
+   }}
+ if( elementTime.getMonth()==compensation[i].dateOfRequest.getMonth() && 
+   elementTime.getFullYear()==compensation[i].dateOfRequest.getFullYear()&&
+   elementTime.getDate()==compensation[i].dateOfRequest.getDate()&&
+   elementTime.getHours()>=7&&
+   elementTime.getHours()<=18&&timeExist ){ 
+attend2.push(result.signOut[k])}
+    }
+if(attend2.length>0){
+console.log(attend2)
+        remaining=remaining+8.4;}
+      }}
       let remainderHours=remaining+"hours"
   res.send(remainderHours);}
          catch(err){
