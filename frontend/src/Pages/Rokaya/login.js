@@ -74,8 +74,7 @@ export default function Login(props) {
                   success=1;
                   sessionStorage.setItem("token",res.data.token)
                   setError(res.data.msg)
-                  console.log(res.user.id+"r")
-                 
+               
                   history.push('/home')
                   }
               }
