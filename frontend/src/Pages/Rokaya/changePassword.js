@@ -5,7 +5,7 @@ import '../../Stylesheets/Rokaya/ViewSchedule.css'
 import '../../Stylesheets/Rokaya/MainAcademic.css'
 import '../../Stylesheets/Rokaya/viewSentReplacementRequests.css'
 import Table from 'react-bootstrap/Table'
-import {Modal,ModalBody,ModalFooter,ModalHeader,Button, Card} from 'reactstrap'
+import {Modal,ModalBody,ModalFooter,ModalHeader,Button, Card, CardHeader} from 'reactstrap'
 import axios from 'axios'
 import {backendLink} from '../../keys_dev'
 import {FormGroup,Input,Label,Form,FormText} from 'reactstrap'
@@ -16,12 +16,12 @@ import { useHistory } from 'react-router'
 var success=0;
 
 
-export default function Login(props) {
+export default function ChangePassword(props) {
 
   const [error,setError]=useState('')
   const [modal,setModal]=useState(false)
   const [state, setState] = useState({
-    email: '',
+    old: '',
     pass: '',
   })
   const history = useHistory()
@@ -43,15 +43,17 @@ export default function Login(props) {
  
 
     const handleSubmit= async ()=>{
-        if(success!=1){
             setModal(!modal)
-        }
+            console.log(sessionStorage.getItem("token"))
         
         await axios({
-            url: `${backendLink}/logging/login`,
-            method: 'post',
+            url: `${backendLink}/staff/resetPassword`,
+            method: 'put',
+            headers: {
+                token:sessionStorage.getItem("token")
+                //  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+            },
             data:{
-                   email:state.email,
                    password:state.pass,
             },
 
@@ -65,21 +67,9 @@ export default function Login(props) {
 
               }
               else{
-                  if(res.data.statusCode===5){
-                      success=1;
-                    history.push('/changePassword')
-                    sessionStorage.setItem("token",res.data.token)
-                  }
-                  else{
                   success=1;
-                  sessionStorage.setItem("token",res.data.token)
                   setError(res.data.msg)
-                  console.log(res.user.id+"r")
-                  if(res.user.id.include("hr")){
-                  history.push('/hr')
-                return;}
                   history.push('/home')
-                  }
               }
               
           }).catch((err) => {
@@ -118,17 +108,20 @@ export default function Login(props) {
   </Modal>
 
 <Card className="loginCard">
+    <CardHeader className="viewScheduleHeaders">
+        Change Password
+    </CardHeader>
 <Form>
+  {/* <FormGroup>
+    <Label for="examplePassword" className="sendReplacementTitleFont">Old Password *</Label>
+    <Input  className="loginInput"  type="password" onChange={handleChange} name='old' />
+  </FormGroup> */}
   <FormGroup>
-    <Label for="examplePassword" className="sendReplacementTitleFont">Email *</Label>
-    <Input  className="loginInput"  onChange={handleChange} name='email' />
-  </FormGroup>
-  <FormGroup>
-    <Label for="exampleText" className="sendReplacementTitleFont">Password *</Label>
+    <Label for="exampleText" className="sendReplacementTitleFont">New Password *</Label>
     <Input className="loginInput"  name='pass'  type="password" onChange={handleChange}/>
   </FormGroup>
   
-  <Button color="primary" onClick={handleSubmit} className="loginButton" >Login</Button>
+  <Button color="primary" onClick={handleSubmit} className="loginButton" >Change</Button>
 </Form>
 </Card>
 </div>

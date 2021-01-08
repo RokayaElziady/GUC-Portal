@@ -16,7 +16,7 @@ export default function Missing(props) {
                 url: `${backendLink}/attendance/${details}`,
                 method: 'get',
                 headers: {
-                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJpYXQiOjE2MDk2MDEwMTN9.b9C36kkrTjXlUaFxeur0INCh-zB3_Mm21l88_rnPi78",
+                  token:sessionStorage.getItem("token")
                 },
                
               }).then((res) => {

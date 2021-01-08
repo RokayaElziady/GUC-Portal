@@ -11,7 +11,7 @@
 .buttonblue{
     background-color: white;
     border:rgb(56, 104, 105) 2px solid;
-    margin-top: 50px;
+
     
 }
 .bluebutton{
@@ -99,7 +99,7 @@ cursor: pointer;}
             width:50%
         }
         .outer2 {
-            margin-top: 80px;
+            margin-top: 270px;
             display: flex;
             justify-content: center;
             flex-direction: column;
@@ -116,4 +116,10 @@ cursor: pointer;}
             padding: 40px 55px 45px 55px;
             border-radius: 15px;
             
+          }
+          @media only screen and (max-width: 850px) {
+            .buttonblue {
+                margin-right: 20px;
+                
+              }
           }

@@ -12,7 +12,7 @@ export default function UpdateFaculty(props) {
     method: "PUT",
     url: `${backendLink}/faculties/${details}`,
     headers: {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJpYXQiOjE2MDk2MDEwMTN9.b9C36kkrTjXlUaFxeur0INCh-zB3_Mm21l88_rnPi78"
+      token:sessionStorage.getItem("token")
     },
     data:{"name":newName}
   }).then(res => {

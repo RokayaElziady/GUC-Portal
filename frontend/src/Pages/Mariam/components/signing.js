@@ -15,7 +15,7 @@ console.log(e.target.value+"v")
                 url: `${backendLink}/staff/${e.target.value}`,
                 method: 'post',
                 headers: {
-                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJpYXQiOjE2MDk5OTc3Njd9.5rxaVDt6DLWj0qhJPiZ1ysJfH6y3LIcRBGfsn97DLGU",
+                  token:sessionStorage.getItem("token")
                 },
                
               }).then((res) => {

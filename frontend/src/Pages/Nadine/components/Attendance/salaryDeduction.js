@@ -17,7 +17,7 @@ export default function Salary(props) {
         method: 'get',
       
         headers: {
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTMiLCJpYXQiOjE2MDk5OTc3Njd9.5rxaVDt6DLWj0qhJPiZ1ysJfH6y3LIcRBGfsn97DLGU",
+          token:sessionStorage.getItem("token")
                   
         },
      

@@ -12,14 +12,17 @@
   
   .App, .outer {
     width: 100%;
-margin-top:250px ;
+margin-top:230px ;
   }
   
   .navbar-dark {
     background-color: rgb(114, 36, 79);
    color: white;
   }
-  
+  .small{
+    width: 40px;
+    height: 50px;
+  }
   .outer {
     display: flex;
     justify-content: center;
@@ -40,7 +43,7 @@ margin-top:250px ;
   }
   @media only screen and (max-width: 850px) {
     .inner {
-    width: 90%;}
+    width: 88%;}
   }
   .outer h3 {
     text-align: center;

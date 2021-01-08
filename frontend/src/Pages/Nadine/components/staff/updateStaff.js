@@ -60,7 +60,7 @@ if(salary!=""){
 
   const options = {
     method: 'PUT',
-    headers: {  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJpYXQiOjE2MDk2MDEwMTN9.b9C36kkrTjXlUaFxeur0INCh-zB3_Mm21l88_rnPi78" },
+    headers: {   token:sessionStorage.getItem("token") },
     data: querystring.stringify(data),
     url:  `${backendLink}/${work}/${id}`,
   };
@@ -97,7 +97,7 @@ if(salary!=""){
   return (
     <form onSubmit={Submit}>
 
-    <h3>Update a Staff</h3>
+    <h3>Update Profile</h3>
     <div className="form-group">
         <label>id</label>
         <input type="text" required onChange={e=>{setid(e.target.value)}}className="form-control" placeholder="Name" />

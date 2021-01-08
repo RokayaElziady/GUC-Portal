@@ -5,14 +5,30 @@ import Header from './components/Header/Header';
 import Side from './components/Sidebar/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useHistory } from 'react-router'
+import logo from '../../Images/GUC.png'
+import axios from 'axios'
 
+import {backendLink} from '../../keys_dev'
 
 
 
 export default function MainAcademicPage(props) {
   const history = useHistory()
   //const name = useSelector((state) => state.name)
-
+  
+  const logoutClick= async ()=>{
+    sessionStorage.removeItem("token")
+    await axios({
+      url: `${backendLink}/logging/logout`,
+      method: 'post',
+    }).then((res) => {
+        console.log(res)
+        
+    }).catch((err) => {
+        console.log(err.response)
+      })
+    history.push("/")
+  }
 
   return (
     <div class="main">
@@ -41,7 +57,9 @@ export default function MainAcademicPage(props) {
   </Button><Button onClick={()=> history.push("/deleteCourse")}variant="light" size="lg" block>
    Delete course
   </Button></div>}/>
-    <div class="col-sm-12  hideSmall">
+ 
+    <div class="col-sm-12  ">
+    <i className="fa offset-9 bottom pointer fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}>Logout</i>
             <div class="row">
       
             <button  class="col-sm-2 button "  onClick={()=> history.push("/home")} onClick={()=> history.push("/addStaff")}><span>Add a new staff</span></button>
@@ -51,6 +69,8 @@ export default function MainAcademicPage(props) {
             <button class=" col-sm-2 button" onClick={()=> history.push("/sign")}> <span>Add a missing sign in/sign out</span></button>
             <button  class=" col-sm-2 button " onClick={()=> history.push("/staffAttendance")}> <span>View attendance</span></button>
                   </div>  </div>
+                
+         
 </div>
  <div class="row center2">
     <div id="class">

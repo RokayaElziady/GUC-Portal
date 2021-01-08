@@ -30,7 +30,17 @@ export default function ViewAllRequests(props) {
       window.location.reload();
     };
 
-    const logoutClick=()=>{
+    const logoutClick= async ()=>{
+      sessionStorage.removeItem("token")
+      await axios({
+        url: `${backendLink}/logging/logout`,
+        method: 'post',
+      }).then((res) => {
+          console.log(res)
+          
+      }).catch((err) => {
+          console.log(err.response)
+        })
       history.push("/")
     }
   
@@ -96,8 +106,9 @@ export default function ViewAllRequests(props) {
           url: `${backendLink}/request/cancelRequest`,
           method: 'put',
           headers: {
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-          },
+            // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+            token:sessionStorage.getItem("token")
+           },
           data: {
                request:x,
               },
@@ -233,9 +244,9 @@ if(filter=='rej'){
                 url: `${backendLink}/request/viewAllSubmittedRequests`,
                 method: 'get',
                 headers: {
-                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-                },
-               
+                  // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                  token:sessionStorage.getItem("token")
+                 },
               }).then((res) => {
                 setRequests(res.data.requests)
               }).catch((err) => {

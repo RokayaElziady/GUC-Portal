@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useHistory } from 'react-router'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import Update from "../Mariam/components/update"
 import Sign from "../Mariam/components/signing"
 import Hours from "../Mariam/components/missinghours"
 import Days from "../Mariam/components/missingdays"
@@ -27,10 +28,11 @@ export default function MainAcademicPage(props) {
           <div class="col-sm-12  hideSmall">
             <div class="row">
       
-            <button  class="col-sm-3 buttonblue "  onClick={()=> history.push("/signing")} ><span>sign</span></button>
-            <button  class="col-sm-3 buttonblue " onClick={()=> history.push("/hours")}><span>Missing Hours</span></button>
-            <button  class="col-sm-3 buttonblue " onClick={()=> history.push("/days")}><span>Missing Days</span></button>
-            <button  class="col-sm-3 buttonblue " onClick={()=> history.push("/salary")}><span>Salary</span></button>
+            <button  class="offset-sm-1 col-sm-2 buttonblue "  onClick={()=> history.push("/signing")} ><span>sign</span></button>
+            <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/hours")}><span>Missing Hours</span></button>
+            <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/days")}><span>Missing Days</span></button>
+            <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/salary")}><span>Salary</span></button>
+            <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/updateme")}><span>Update Profile</span></button>
                   </div>  </div>
  
        
@@ -45,6 +47,7 @@ export default function MainAcademicPage(props) {
 <Route path="/hours" component={Hours} />
 <Route path="/days" component={Days} />
 <Route path="/salary" component={Salary} />
+<Route path="/updateme" component={Update} />
 </Switch>
 
         </div>

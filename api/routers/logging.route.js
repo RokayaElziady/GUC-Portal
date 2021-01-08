@@ -19,7 +19,7 @@ const {
 
 
 
-router.post('/logout',validateLogin,
+router.post('/logout',
   async (req, res) => {
       try{
          // console.log("lalal")
@@ -39,9 +39,26 @@ router.post('/logout',validateLogin,
     }
   })
 
+  router.get('/viewAcademic',
+  async (req, res) => {
+      try{
+         var emsil=req.body.email
+         const member=await academicMemberModel.find({email:email})
+        return res.json({
+          statusCode:0,
+          msg: 'success',
+          member
+        })
+      }
+    catch(err){
+        console.log(err);
+          res.status(500).json({error: err });
+    }
+  })
 
 
-  router.post('/login',
+
+  router.post('/login',validateLogin,
   async (req, res) => {
       try{
         
@@ -87,37 +104,47 @@ console.log("pass"+correctPassword);
               error: 'Invalid Password',
             })
         }
- if(userAcdemicMember.changePassword){
-                if(newpassword){                               //error here when entering newpassword 
-                    const salt= await bcrypt.genSalt(10)
-                    console.log("here")
-                    newpassword=await bcrypt.hash(newpassword,salt)
-                    console.log(newpassword)
-                    await academicMemberModel.updateOne({ email:email}, { changePassword: false,password:newpassword})
-                    }
-                else{
-                  return res.json({
-                    statusCode:1,
-                    error: 'enter new Password',
-                  })
-            }
-                }   
+  if(userAcdemicMember.changePassword){
+//                 if(newpassword){                               //error here when entering newpassword 
+//                     const salt= await bcrypt.genSalt(10)
+//                     console.log("here")
+//                     newpassword=await bcrypt.hash(newpassword,salt)
+//                     console.log(newpassword)
+//                     await academicMemberModel.updateOne({ email:email}, { changePassword: false,password:newpassword})
+//                     }
+//                 else{
+//                   return res.json({
+//                     statusCode:1,
+//                     error: 'enter new Password',
+//                   })
+//             }
+
+                    const payload = {
+                     id:userAcdemicMember.id,
+                     role:userAcdemicMember.role
+                    };
+                    const token =await jwt.sign(payload,"HS256")
+                    await logoutModel.findOneAndDelete({token:token})
+                    res.header('token',token)
+                    return res.json({
+                      statusCode:5,
+                      token
+                    })
+ 
+                 }   
                 const payload = {
                     id:userAcdemicMember.id,
                     role:userAcdemicMember.role
                 };
-                //const key = 'ueihudchnjfrhiu8u2309w-d0-civj njbvhj';
-                // const token = jwt.sign(payload, key);
-                // res.header('auth-token', token); 
-                console.log("hhea")
              const token =await jwt.sign(payload,"HS256")
              await logoutModel.findOneAndDelete({token:token})
             res.header('token',token)
            
-            var decoded =await jwt.verify(token, 'HS256');
+           // var decoded =await jwt.verify(token, 'HS256');
             return res.json({
               statusCode:0,
               msg: 'logged in Suucessfully',
+              token:token
             })
             
             
@@ -133,24 +160,35 @@ console.log("pass"+correctPassword);
             error: 'Invalid Password',
           })
         }
- if(userHrStaff.changePassword){
-                if(newpassword){                               //error here when entering newpassword 
-                    const salt= await bcrypt.genSalt(10)
-                    newpassword=await bcrypt.hash(newpassword,salt)
-                    await hrmodel.updateOne({ email:email}, { changePassword: false,password:newpassword})
-                    }
-                else{
-                  return res.json({
-                    statusCode:1,
-                    error: 'enter new Password',
-                  })
-            }
+  if(userHrStaff.changePassword){
+//                 if(newpassword){                               //error here when entering newpassword 
+//                     const salt= await bcrypt.genSalt(10)
+//                     newpassword=await bcrypt.hash(newpassword,salt)
+//                     await hrmodel.updateOne({ email:email}, { changePassword: false,password:newpassword})
+//                     }
+//                 else{
+//                   return res.json({
+//                     statusCode:1,
+//                     error: 'enter new Password',
+//                   })
+//             }
+
+                      const payload = {
+                       id:userAcdemicMember.id,
+                       role:userAcdemicMember.role
+                      };
+                     const token =await jwt.sign(payload,"HS256")
+                     await logoutModel.findOneAndDelete({token:token})
+                     res.header('token',token)
+                      return res.json({
+                      statusCode:5,
+                      token
+                      })
                 }   
                 const payload = {
                     id:userHrStaff.id,role:userHrStaff.role
                 };
        
-                console.log("hhea")
                 const token =await jwt.sign(payload,"HS256")
              await logoutModel.findOneAndDelete({token:token})
                res.header('token',token)
@@ -158,6 +196,7 @@ console.log("pass"+correctPassword);
                return res.json({
                 statusCode:0,
                 msg: 'logged in Suucessfully',
+                token
               })
               
                

@@ -14,7 +14,7 @@ import { useHistory } from 'react-router';
 
 
 
-
+var success=0;
 export default function ViewSlotLinkingRequests(props) {
   const [requests, setRequests] = useState([])
   const [modal, setModal] = useState(false);
@@ -24,7 +24,17 @@ export default function ViewSlotLinkingRequests(props) {
       window.location.reload();
     };
     const history=useHistory()
-    const logoutClick=()=>{
+    const logoutClick= async ()=>{
+      sessionStorage.removeItem("token")
+      await axios({
+        url: `${backendLink}/logging/logout`,
+        method: 'post',
+      }).then((res) => {
+          console.log(res)
+          
+      }).catch((err) => {
+          console.log(err.response)
+        })
       history.push("/")
     }
   
@@ -36,7 +46,8 @@ const  handleAcceptRequest= async(x)=>{
       url: `${backendLink}/request/acceptSlotLinkingRequest`,
       method: 'post',
       headers: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+        // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+        token:sessionStorage.getItem("token")
       },
       data: {
            request:x,
@@ -68,7 +79,8 @@ const  handleAcceptRequest= async(x)=>{
       url: `${backendLink}/request/rejectSlotLinkingRequest`,
       method: 'post',
       headers: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+       // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+       token:sessionStorage.getItem("token")
       },
       data: {
            request:x,
@@ -161,11 +173,18 @@ const  handleAcceptRequest= async(x)=>{
                 url: `${backendLink}/request/viewAllSlotLinkingRequests`,
                 method: 'get',
                 headers: {
-                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
-                },
+                  // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
+                  token:sessionStorage.getItem("token")
+                 },
                
               }).then((res) => {
+                if(res.data.statusCode===0){
+                  success=1;
                   setRequests(res.data.requests)
+                }
+                else{
+                  
+                }
                 if(res.data.statusCode==2 || res.data.statusCode==1){
                     setError(res.data.error)
   
@@ -184,6 +203,7 @@ const  handleAcceptRequest= async(x)=>{
 
         <img className="viewScheduleLogo" src={logo} alt="Logo" />
         <i className="fa fa-sign-out fa-lg sign-out-ALL" onClick={logoutClick}></i>
+        {success===1?<>
           <p className="viewScheduleHeaders"> Slot-Linking Requests</p>
           <Table  striped>
            <tbody>
@@ -197,6 +217,7 @@ const  handleAcceptRequest= async(x)=>{
             } 
               </tbody>
        </Table>        
+       </>:<div><p> Sorry only coordinators can view slot linking requests</p></div>}
 </div>
 
   )

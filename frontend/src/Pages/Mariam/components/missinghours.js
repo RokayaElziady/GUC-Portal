@@ -15,7 +15,7 @@ export default function Missing(props) {
     method: 'get',
   
     headers: {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTIiLCJyb2xlIjoiSE9EIiwiaWF0IjoxNjEwMDM3OTMyfQ.F9NCo_fN95m8ntjWIlJidGQmlbTjZPi2AWkdIjS3KI8",
+      token:sessionStorage.getItem("token")
     },
  
    

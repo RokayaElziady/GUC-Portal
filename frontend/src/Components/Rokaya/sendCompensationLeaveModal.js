@@ -66,7 +66,7 @@ export default function SendReplacementRequest(props) {
             url: `${backendLink}/request/sendCompensationLeaveRequest`,
             method: 'post',
             headers: {
-              token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTIiLCJyb2xlIjoiSE9EIiwiaWF0IjoxNjEwMDM3OTMyfQ.F9NCo_fN95m8ntjWIlJidGQmlbTjZPi2AWkdIjS3KI8",
+              token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE",
             },
             data:{
                   compensationDay:state.compensationDay,

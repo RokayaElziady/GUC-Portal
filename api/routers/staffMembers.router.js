@@ -122,13 +122,19 @@ async (req, res) => {
         var email
         var officeLocation
         var extraInformation
+        var gender
         var password
         if(req.body.email){
           email=req.body.email;}
         else{
           email=userHrStaff.email;
         }
-          
+        if(req.body.gender){ 
+          gender=req.body.gender;
+          }
+          else{
+           gender=userHrStaff.gender;
+          } 
          if(req.body.officeLocation){
           officeLocation=req.body.officeLocation;
          }
@@ -167,18 +173,17 @@ async (req, res) => {
 
 
         
-      await   hrmodel.findOneAndUpdate( { id:req.user.id},{email:email,extraInformation:extraInformation,officeLocation:officeLocation,  password: password})
+      await   hrmodel.findOneAndUpdate( { id:req.user.id},{gender:gender,email:email,extraInformation:extraInformation,officeLocation:officeLocation,  password: password})
       res.send("updated successfully") 
       }
 
 
       
-    } catch (exception) {
-      return res.json({
-        error: 'Something went wrong',
-        exception
-      })
-    }
+    } catch(err){
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });}
   }
 
 )
@@ -429,7 +434,6 @@ break;
      temp=[];
      temp2=[];
   }}}
-
    res.send(absence);}
           catch(err){
             console.log(err);
@@ -485,7 +489,6 @@ for(var i=new Date(startDate);i.getDate()<=endDate.getDate()&&i.getMonth()<=endD
   else{
     person=acPeople;
   }
-
 
   let dayoff;
 if(person){
@@ -545,7 +548,6 @@ break;
      temp=[];
      temp2=[];
   }}}
-
    res.send(absence);}
           catch(err){
             console.log(err);

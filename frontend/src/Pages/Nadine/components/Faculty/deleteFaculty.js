@@ -11,7 +11,7 @@ export default function DeleteFaculty(props) {
     method: "Delete",
     url: `${backendLink}/faculties/${details}`,
     headers: {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImhyLTEiLCJpYXQiOjE2MDk2MDEwMTN9.b9C36kkrTjXlUaFxeur0INCh-zB3_Mm21l88_rnPi78"
+      token:sessionStorage.getItem("token")
     }
   }).then(res => {
     if(res.data.message){
