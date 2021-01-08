@@ -17,6 +17,7 @@ const {
   }
   =require('../../middleware/requests.validation');
 const { request } = require('express');
+const locationModel = require('../../Models/location.model');
 
 
 
@@ -52,6 +53,7 @@ const { request } = require('express');
 router.put('/UpdateProfile',validateUpdateProfile,
 async (req, res) => {
     try {
+      console.log("started")
      const userAcdemicMember= await academicMemberModel.findOne({id:req.user.id})
      const userHrStaff=await hrStaff.findOne({id:req.user.id})
 
@@ -83,6 +85,25 @@ async (req, res) => {
          }
          if (req.body.officeLocation){
            officeLocation=req.body.officeLocation;
+           const location=await locationModel.findOne({name : req.body.officeLocation});
+           console.log(location+"llll")
+           if(!location){
+             res.send(
+                 "location does not exist"
+                 ); 
+                 return;}
+ if(location.type!=="offices"){
+  res.send(
+      "location is not an office"
+      ); 
+      return;
+                     }
+    if(location.capacity===location.officeOccupants){
+      res.send(
+         "office full"
+          ); 
+          return;          
+       }
          }
          else{
           officeLocation=userAcdemicMember.officeLocation;
@@ -135,9 +156,28 @@ async (req, res) => {
           else{
            gender=userHrStaff.gender;
           } 
-         if(req.body.officeLocation){
-          officeLocation=req.body.officeLocation;
-         }
+          if (req.body.officeLocation){
+            officeLocation=req.body.officeLocation;
+            const location=await locationModel.findOne({name : req.body.officeLocation});
+            console.log(location+"llll")
+            if(!location){
+              res.send(
+                  "location does not exist"
+                  ); 
+                  return;}
+  if(location.type!=="offices"){
+   res.send(
+       "location is not an office"
+       ); 
+       return;
+                      }
+     if(location.capacity===location.officeOccupants){
+       res.send(
+          "office full"
+           ); 
+           return;          
+        }
+          }
         else{
           officeLocation=userHrStaff.officeLocation;
         }

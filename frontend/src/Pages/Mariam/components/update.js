@@ -66,7 +66,7 @@ console.log(querystring.stringify(data)+"d")
       return;
     }
  console.log(res.data);
-      setSuccess("success");
+      setSuccess(res.data);
     return;
   }).catch((err) => {
     console.log("here7")
