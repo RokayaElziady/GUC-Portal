@@ -57,7 +57,7 @@ export default function Login(props) {
 
            
           }).then((res) => {
-              console.log(res)
+              console.log(res.data)
               if(res.data.statusCode===2 || res.data.statusCode===1){
                 success=0
                   setError(res.data.error)
@@ -69,14 +69,17 @@ export default function Login(props) {
                       success=1;
                     history.push('/changePassword')
                     sessionStorage.setItem("token",res.data.token)
+                    sessionStorage.setItem("type", res.data.type)
                   }
                   else{
                   success=1;
                   sessionStorage.setItem("token",res.data.token)
-                  sessionStorage.setItem("user","blbla")
-                  setError(res.data.msg)
-               
-                  history.push('/home')
+                  sessionStorage.setItem("type", res.data.type)
+                
+               setError(res.data.msg)
+               if(res.data.type=="hr"){
+                 history.push('/hr')
+               }else{                  history.push('/home')}
                   }
               }
               

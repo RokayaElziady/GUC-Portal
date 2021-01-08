@@ -42,42 +42,76 @@ function App() {
     <Router>
     <React.Fragment>
     <Switch>
-    <Route exact path='/sign' render={()=><Attendance/>}/>
-    <Route exact path='/signing' render={()=><Main/>}/>
-    <Route exact path='/updateme' render={()=><Main/>}/>
-    <Route exact path='/myAttendance' render={()=><Main/>}/>
-    <Route exact path='/hours' render={()=><Main/>}/>
-    <Route exact path='/days' render={()=><Main/>}/>
-    <Route exact path='/salary' render={()=><Main/>}/>
-    <Route exact path='/staff' render={()=><Staff2/>}/>
-    <Route exact path='/attendance' render={()=><Attendance/>}/>
-    <Route exact path='/viewMissing' render={()=><Attendance/>}/>
-    <Route exact path='/staffAttendance' render={()=><Attendance/>}/>
-    <Route exact path='/faculty' render={()=><Faculty/>}/>
-    <Route exact path='/department' render={()=><Department/>}/>
-    <Route exact path='/course' render={()=><Course/>}/>
-    <Route exact path='/location' render={()=><Location/>}/>
-    <Route exact path='/addFaculty' render={()=><Faculty/>}/>
-    <Route exact path='/deleteFaculty' render={()=><Faculty/>}/>
-    <Route exact path='/updateFaculty' render={()=><Faculty/>}/>
-    <Route exact path='/addDepartment' render={()=><Department/>}/>
-    <Route exact path='/deleteDepartment' render={()=><Department/>}/>
-    <Route exact path='/updateDepartment' render={()=><Department/>}/>
-    <Route exact path='/addCourse' render={()=><Course/>}/>
-    <Route exact path='/deleteCourse' render={()=><Course/>}/>
-    <Route exact path='/updateCourse' render={()=><Course/>}/>
-    <Route exact path='/addLocation' render={()=><Location/>}/>
-    <Route exact path='/deleteLocation' render={()=><Location/>}/>
-    <Route exact path='/updateLocation' render={()=><Location/>}/>
-    <Route exact path='/addStaff' render={()=><Staff2/>}/>
-    <Route exact path='/deleteStaff' render={()=><Staff2/>}/>
-    <Route exact path='/updateStaff' render={()=><Staff2/>}/>
-    <Route exact path='/editSalary' render={()=><Staff2/>}/>
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/sign' render={()=><Attendance/>}/>}
+    {(sessionStorage.getItem("token"))&&
+    <Route exact path='/signing' render={()=><Main/>}/>}
+    {(sessionStorage.getItem("token")) && 
+    <Route exact path='/updateme' render={()=><Main/>}/>}
+    {(sessionStorage.getItem("token")) && 
+    <Route exact path='/myAttendance' render={()=><Main/>}/>}
+    {(sessionStorage.getItem("token")) && 
+    <Route exact path='/hours' render={()=><Main/>}/>}
+    {(sessionStorage.getItem("token")) && 
+    <Route exact path='/days' render={()=><Main/>}/>}
+    {(sessionStorage.getItem("token")) &&
+    <Route exact path='/salary' render={()=><Main/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/staff' render={()=><Staff2/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/attendance' render={()=><Attendance/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/viewMissing' render={()=><Attendance/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/staffAttendance' render={()=><Attendance/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/faculty' render={()=><Faculty/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/department' render={()=><Department/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/course' render={()=><Course/>}/>}
+    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/location' render={()=><Location/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/addFaculty' render={()=><Faculty/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/deleteFaculty' render={()=><Faculty/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/updateFaculty' render={()=><Faculty/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/addDepartment' render={()=><Department/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/deleteDepartment' render={()=><Department/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/updateDepartment' render={()=><Department/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/addCourse' render={()=><Course/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/deleteCourse' render={()=><Course/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/updateCourse' render={()=><Course/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/addLocation' render={()=><Location/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/deleteLocation' render={()=><Location/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/updateLocation' render={()=><Location/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/addStaff' render={()=><Staff2/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/deleteStaff' render={()=><Staff2/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/updateStaff' render={()=><Staff2/>}/>}
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/editSalary' render={()=><Staff2/>}/>}
+    
     <Route exact path='/home' render={()=><MainAcademic/>}/>
-    <Route exact path='/hr' render={()=><MainHr/>}/>
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    <Route exact path='/hr' render={()=><MainHr/>}/>}
 
     <Route exact path='/' render={()=><Login/>}/>
-    <Route exact path='/main' render={()=><Main/>}/>
+    {(sessionStorage.getItem("type")) && 
+    <Route exact path='/main' render={()=><Main/>}/>}
     <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>
  
 
@@ -103,7 +137,7 @@ function App() {
     <Route exact path='/courseInstructor/manageCourses' render={() => <ManageCoursesInstructor />} />
     <Route exact path='/courseInstructor/manageSlots' render={() => <ManageSlots />} />
     <Route exact path='/courseInstructor/staffInDepartment' render={()=><Staff/>}/>
-    <Route exact path='/sign' render={()=><Attendance/>}/> 
+ 
     <Route exact path='/*' render={()=><Not/>}/> 
     </Switch>
      </React.Fragment>

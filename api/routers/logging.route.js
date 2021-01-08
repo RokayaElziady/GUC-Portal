@@ -128,6 +128,7 @@ console.log("pass"+correctPassword);
                     res.header('token',token)
                     return res.json({
                       statusCode:5,
+                      type:"ac",
                       token
                     })
  
@@ -143,6 +144,7 @@ console.log("pass"+correctPassword);
            // var decoded =await jwt.verify(token, 'HS256');
             return res.json({
               statusCode:0,
+              type:"ac",
               msg: 'logged in Suucessfully',
               token:token
             })
@@ -174,14 +176,15 @@ console.log("pass"+correctPassword);
 //             }
 
                       const payload = {
-                       id:userAcdemicMember.id,
-                       role:userAcdemicMember.role
+                       id:userHrStaff.id,
+                       role:userHrStaff.role
                       };
                      const token =await jwt.sign(payload,"HS256")
                      await logoutModel.findOneAndDelete({token:token})
                      res.header('token',token)
                       return res.json({
                       statusCode:5,
+                      type:"hr",
                       token
                       })
                 }   
@@ -195,7 +198,8 @@ console.log("pass"+correctPassword);
 
                return res.json({
                 statusCode:0,
-                msg: 'logged in Suucessfully',
+                type:"hr",
+         msg: 'logged in Suucessfully',
                 token
               })
               

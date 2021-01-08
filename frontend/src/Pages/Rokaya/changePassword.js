@@ -69,7 +69,11 @@ export default function ChangePassword(props) {
               else{
                   success=1;
                   setError(res.data.msg)
-                  history.push('/home')
+                 if(sessionStorage.getItem("type")==="hr")
+              {    history.push('/hr')}
+              else{
+                history.push('/home')
+              }
               }
               
           }).catch((err) => {

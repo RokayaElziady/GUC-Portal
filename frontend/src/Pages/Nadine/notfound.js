@@ -17,7 +17,7 @@ export default function MainAcademicPage(props) {
   return (
     <div class="main">
     <div class="purple">
-    <Header name="Page Not Found"/>
+    <Header name="Page Not Found or unautorized"/>
     </div>
   
  <div class="row center2">
