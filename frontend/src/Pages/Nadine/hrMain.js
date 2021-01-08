@@ -73,6 +73,11 @@ export default function MainAcademicPage(props) {
          
 </div>
  <div class="row center2">
+
+ <div id="class">
+      <span id="id"></span>
+      <span class="text" onClick={()=> history.push("/main")}> <i class="fa fa-home" aria-hidden="true">home</i></span>
+    </div>
     <div id="class">
       <span id="id"></span>
       <span class="text" onClick={()=> history.push("/viewMissing")}>View staff members with missing hours/days</span>

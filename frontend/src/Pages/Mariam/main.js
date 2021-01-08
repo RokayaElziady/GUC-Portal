@@ -28,11 +28,14 @@ export default function MainAcademicPage(props) {
           <div class="col-sm-12  hideSmall">
             <div class="row">
       
-            <button  class="offset-sm-1 col-sm-2 buttonblue "  onClick={()=> history.push("/signing")} ><span>sign</span></button>
+            <button  class="col-sm-2 buttonblue "  onClick={()=> history.push("/signing")} ><span>sign</span></button>
             <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/hours")}><span>Missing Hours</span></button>
             <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/days")}><span>Missing Days</span></button>
             <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/salary")}><span>Salary</span></button>
             <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/updateme")}><span>Update Profile</span></button>
+            <button  class="col-sm-2 buttonblue " onClick={()=>{if(sessionStorage.getItem("type")==="hr"){ history.push("/hr")}else{ history.push("/home")}}}>
+
+            <span> <i class="fa fa-home" aria-hidden="true">Main</i></span></button>
                   </div>  </div>
  
        
