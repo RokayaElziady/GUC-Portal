@@ -50,6 +50,32 @@ courseRouter.route('/')
     }
     );
 courseRouter.route('/:courseName')
+.get( async (req, res) => { 
+  try{ 
+    if(!(req.user.id.includes("hr-"))){
+      res.send("you are not an hr");
+      return;
+    }   
+ 
+    const course =await  courseModel.findOne({name : req.params.courseName})
+    if(!course){
+      res.send("course does not exist");
+      return;
+    }
+    res.status(200).json({
+      department: course.department,
+  });
+      
+  } 
+      catch(err){
+        console.log(err);
+        res.status(500).json({
+          error: err
+        });
+    }
+
+  }
+  )
 .delete(validateDeleteCourse,async (req, res)=>{ 
   try{
   

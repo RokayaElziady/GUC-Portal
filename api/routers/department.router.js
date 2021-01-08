@@ -9,6 +9,7 @@ const {
   validatePutdepartment
  }=require('../../middleware/department.validation')
 departmentRouter.route('/')
+
 .post(validatePostdepartment,
   async (req, res) => {
  const newdepartment= new departmentModel({
@@ -117,6 +118,32 @@ const staff3=await acadamicMemberModel.updateMany({department:req.params.departm
             error: err,
             
           });}})
+.get( async (req, res) => { 
+            try{ 
+              if(!(req.user.id.includes("hr-"))){
+                res.send("you are not an hr");
+                return;
+              }   
+           
+              const department =await  departmentModel.findOne({name : req.params.departmentName})
+              if(!department){
+                res.send("departent does not exist");
+                return;
+              }
+              res.status(200).json({
+                staff: department.staffIds,
+            });
+                
+            } 
+                catch(err){
+                  console.log(err);
+                  res.status(500).json({
+                    error: err
+                  });
+              }
+        
+            }
+            )
 //update department if staff or course changed or name or other attributes
 .put( validatePutdepartment,async(req, res)=>
 { 

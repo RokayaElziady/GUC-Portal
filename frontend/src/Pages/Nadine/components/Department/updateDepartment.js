@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Axios from 'axios'
 import {backendLink} from '../../../../keys_dev'
 import  { Fragment } from "react";
@@ -11,6 +11,29 @@ export default function AddDepartment(props) {
   const [newName, setnewName] = useState("")
   const [staff, setstaff] = useState([]);
   const [success, setSuccess] = useState("")
+  const go=( async (e) => {
+    setDetails(e.target.value);
+    await Axios({
+             url: `${backendLink}/departments/${e.target.value}`,
+             method: 'get',
+             headers: {
+               token:sessionStorage.getItem("token")
+             },
+            
+           }).then((res) => {
+             console.log("hhhh"+qs.stringify(res.data))
+               if(res.status===200 && res.data.staff){
+                 
+            setstaff(res.data.staff)
+           
+               }
+               else{
+                setstaff([])
+               }
+           }).catch((err) => {
+               console.log(err.response)
+             })
+           });
  const Submit=event=>{
    console.log("submitting")
    event.preventDefault();
@@ -86,7 +109,7 @@ const handleInputChange = (index, event) => {
     <h3>Update a Department</h3>
     <div className="form-group">
         <label>Name</label>
-        <input type="text" required onChange={e=>{setDetails(e.target.value)}}className="form-control" placeholder="Name" />
+        <input type="text" required onChange={go}className="form-control" placeholder="Name" />
     </div>
     <div className="form-group">
         <label>New Name</label>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Axios from 'axios'
 import {backendLink} from '../../../../keys_dev'
 import  { Fragment } from "react";
@@ -8,9 +8,33 @@ export default function AddCourse(props) {
   const [department, setdepartment] = useState([
   
   ]);
-  const [details, setDetails] = useState({name:""})
+  const [details, setDetails] = useState("")
   const [newName, setnewName] = useState("")
   const [success, setSuccess] = useState("")
+  let d="";
+ const go=( async (e) => {
+  setDetails(e.target.value);
+  await Axios({
+    url: `${backendLink}/courses/${e.target.value}`,
+    method: 'get',
+    headers: {
+      token:sessionStorage.getItem("token")
+    },
+   
+  }).then((res) => {
+    console.log(e.target.value+"d")
+    console.log("hhhh"+qs.stringify(res.data))
+      if(res.status===200 && res.data.department){
+        
+   setdepartment(res.data.department)
+  
+      }else{
+        setdepartment([])
+      }
+  }).catch((err) => {
+      console.log(err.response)
+    })
+  });
  const Submit=event=>{
    console.log("submitting")
    event.preventDefault();
@@ -35,13 +59,17 @@ const options = {
 };
 Axios(options)
 .then(res => {
+  if(res.data==="course does not exist"){
+    setSuccess("course does not exist")
+    return;
+  }
     if(res.data.error){
       setSuccess(res.data.error);
       return;
     }
    if(res.data.message){
-     if(res.data.message=="some departments do not exist or not array"){
-      setSuccess("some departments do not exist or not array");
+     if(res.data.message){
+      setSuccess(res.data.message);
       return;
      }
    }
@@ -83,7 +111,7 @@ Axios(options)
     <h3>Update a Course</h3>
     <div className="form-group">
         <label>Name</label>
-        <input type="text" required onChange={e=>{setDetails(e.target.value)}}className="form-control" placeholder="Name" />
+        <input type="text" required onChange={go}className="form-control" placeholder="Name" />
     </div>
     <div className="form-group">
         <label>New Name</label>

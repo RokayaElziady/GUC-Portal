@@ -73,6 +73,7 @@ export default function Login(props) {
                   else{
                   success=1;
                   sessionStorage.setItem("token",res.data.token)
+                  sessionStorage.setItem("user","blbla")
                   setError(res.data.msg)
                
                   history.push('/home')
