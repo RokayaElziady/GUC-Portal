@@ -173,7 +173,9 @@ router.post('/sendReplacementRequest',validateSendReplacementRequest,
 
             var notification=new notificationModel({
               academicMember:reciever,
-              request:reqq[0]._id
+              request:reqq[0]._id,
+              message:"you have a new replacement request open your requests to view details"
+              
             })
             notification.save()
             return res.json({
@@ -989,7 +991,8 @@ router.get('/viewAllPendingRequests',
         await requestsModel.findByIdAndUpdate(request, {status:requestStatus.REJECTED})
         var notification=new notificationModel({
           academicMember:request1[0].from,
-          request:request
+          request:request,
+          message:"sorry this request is rejected ,open your request"
         })
         notification.save()
         
@@ -1040,7 +1043,8 @@ router.get('/viewAllPendingRequests',
           await requestsModel.findByIdAndUpdate(request, {status:requestStatus.ACCEPTED})
           var notification=new notificationModel({
             academicMember:request1[0].from,
-            request:request
+            request:request,
+            message:"this request is accepted successfully"
           })
           notification.save()
           
@@ -1468,7 +1472,9 @@ router.get('/viewAllSlotLinkingRequests',
 
         var notification=new notificationModel({
           academicMember:request1[0].from,
-          request:request
+          request:request,
+          message:"this request is accepted "
+
         })
         notification.save()
         
@@ -1551,7 +1557,8 @@ router.get('/viewAllSlotLinkingRequests',
         await requestsModel.findByIdAndUpdate(request, {status:requestStatus.REJECTED})
         var notification=new notificationModel({
           academicMember:request1[0].from,
-          request:request
+          request:request,
+          message:"sorry this request is rejected open your request"
         })
         notification.save()
         

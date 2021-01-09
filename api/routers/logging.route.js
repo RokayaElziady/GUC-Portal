@@ -85,7 +85,6 @@ router.post('/logout',
     const userAcdemicMember= await academicMemberModel.findOne({email:email})
     const userHrStaff=await hrStaff.findOne({email:email})
    
-   
     if (!userAcdemicMember && ! userHrStaff){
         console.log("you must sign up first or you must be added by hr first")
         return res.json({

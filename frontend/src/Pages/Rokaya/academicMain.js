@@ -57,6 +57,9 @@ export default function MainAcademicPage(props) {
   const logoutClick=()=>{
     history.push("/")
   }
+  const viewProfileClick=()=>{
+    history.push("/viewProfile")
+  }
 
 
 
@@ -71,6 +74,9 @@ export default function MainAcademicPage(props) {
         <tr className="MainAcademicList">
         <tr >
           <p className="MainAcademicListFont" onClick={viewScheduleClick}>View Schedule</p>
+        </tr>
+        <tr >
+          <p className="MainAcademicListFont" onClick={viewProfileClick}>View Profile</p>
         </tr>
         <tr>
           <p className="MainAcademicListFont" onClick={viewNotificationsClick}>View Notifications </p>

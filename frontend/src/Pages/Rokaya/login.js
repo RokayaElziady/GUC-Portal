@@ -79,7 +79,8 @@ export default function Login(props) {
                setError(res.data.msg)
                if(res.data.type=="hr"){
                  history.push('/hr')
-               }else{                  history.push('/home')}
+               }else{       
+                  history.push('/home')}
                   }
               }
               

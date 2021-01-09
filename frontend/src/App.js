@@ -35,9 +35,15 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import Login from './Pages/Rokaya/login'
 import ChangePassword  from './Pages/Rokaya/changePassword'
+import ViewProfile from './Pages/Rokaya/viewProfile'
 
 
 function App() {
+  console.log("type")
+  console.log(sessionStorage.getItem("type"))
+
+  console.log("token")
+  console.log(sessionStorage.getItem("token"))
   return (
     <Router>
     <React.Fragment>
@@ -104,30 +110,21 @@ function App() {
     <Route exact path='/updateStaff' render={()=><Staff2/>}/>}
     {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
     <Route exact path='/editSalary' render={()=><Staff2/>}/>}
-    
-    <Route exact path='/home' render={()=><MainAcademic/>}/>
     {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
     <Route exact path='/hr' render={()=><MainHr/>}/>}
-
-    <Route exact path='/' render={()=><Login/>}/>
     {(sessionStorage.getItem("type")) && 
     <Route exact path='/main' render={()=><Main/>}/>}
-    <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>
- 
 
-
-
-
+  <Route exact path='/' render={()=><Login/>}/>
+   { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/home' render={()=><MainAcademic/>}/>}
+    { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>}
+   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>}
     <Route exact path='/changePassword' render={()=><ChangePassword/>}/>
-   
-    <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>
-    <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>
-    <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>
-    <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>
-    <Route exact path='/viewNotifications' render={()=><ViewNotifications/>}/>
-    
-
-  
+    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>}
+   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>}
+   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>}
+  {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>}
+   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewNotifications' render={()=><ViewNotifications/>}/>}
     <Route exact path='/HOD' render={()=><HODMain/>}/>
     <Route exact path='/HOD/manageCourses' render={()=><ManageCourses/>}/>
     <Route exact path='/HOD/manageInstructors' render={() => <ManageInstructors />} />

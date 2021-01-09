@@ -351,7 +351,8 @@ router.post('/rejectRequest', validateRejectAcceptRequest, async (req, res) => {
     });
     await notificationModel.insertMany([{
         academicMember: myAcademic,
-        request: reqID
+        request: reqID,
+        message:"sorry this request is rejected open your request"
     }])
     res.send("request rejected successfully")
 });
@@ -414,7 +415,8 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
                     });
                     await notificationModel.insertMany([{
                         academicMember: myAcademic,
-                        request: reqID
+                        request: reqID,
+                        message:"this request is accepted"
                     }]);
                     res.send("ANNUAL LEAVE REQUEST ACCEPTED");
                     return;
@@ -437,7 +439,8 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
                 });
                 await notificationModel.insertMany([{
                     academicMember: myAcademic,
-                    request: reqID
+                    request: reqID,
+                    message:"this request is accepted"
                 }]);
                 res.send("ACCIDENTAL LEAVE REQUEST ACCEPTED");
                 return;
@@ -453,7 +456,8 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
         });
         await notificationModel.insertMany([{
             academicMember: myAcademic,
-            request: reqID
+            request: reqID,
+            message:"this request is accepted"
         }]);
         res.send("Normal Leave Request Accepted");
         return;
@@ -478,7 +482,8 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
     })
     await notificationModel.insertMany([{
         academicMember: myAcademic,
-        request: reqID
+        request: reqID,
+        message:"this request is accepted"
     }]);
     res.send("Change Day off request accepted");
 })

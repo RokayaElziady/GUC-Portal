@@ -182,6 +182,45 @@
     height: 3vw;
   }
 
+  .viewProfileTable{
+    /* border:none !important; */
+    border-collapse: collapse !important;
+    border-spacing: 0vw !important;
+    margin-bottom: 0vw !important;
+    border-style:hidden;
+    /* padding: 0vw !important; */
+  }
+
+  .viewProfileHeading{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.8vw;
+    color: crimson;
+    position: 'relative';
+    margin-bottom: 0.2vw;
+
+  }
+
+  .viewProfileData{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.4vw;
+    color: black;
+    position: 'relative';
+    margin-bottom: 0.2vw;
+  }
+
+
+  .viewProfileCard{
+    margin-left: 10vw;
+    margin-top: 10vw;
+    width:80vw !important;
+    align-self: center;
+    border-radius: 2vw;
+    border:1vw grey solid;
+      background-color:crimson ;
+  }
+
   
   
 

@@ -32,12 +32,18 @@ const locationModel = require('../../Models/location.model');
        console.log("e"+userHrStaff)
       if(userAcdemicMember){
         console.log("entered userAcdemicMember")
-          res.send(userAcdemicMember)
+        return res.json({
+          statusCode:1,
+            userAcdemicMember
+          })
       }
 
       if(userHrStaff){
        
-           res.send(userHrStaff)
+        return res.json({
+          statusCode:2,
+            userHrStaff
+          })
       }
 
     } catch (exception) {
