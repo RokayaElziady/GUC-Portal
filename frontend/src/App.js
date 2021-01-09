@@ -47,83 +47,82 @@ function App() {
     <Router>
     <React.Fragment>
     <Switch>
-    {( sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    { 
     <Route exact path='/sign' render={()=><Attendance/>}/>}
-    {(sessionStorage.getItem("token"))&&
+    {  
     <Route exact path='/signing' render={()=><Main/>}/>}
-    {(sessionStorage.getItem("token")) && 
+    {  
     <Route exact path='/updateme' render={()=><Main/>}/>}
-    {(sessionStorage.getItem("token")) && 
+    {  
     <Route exact path='/myAttendance' render={()=><Main/>}/>}
-    {(sessionStorage.getItem("token")) && 
+    {  
     <Route exact path='/hours' render={()=><Main/>}/>}
-    {(sessionStorage.getItem("token")) && 
+    {  
     <Route exact path='/days' render={()=><Main/>}/>}
-    {(sessionStorage.getItem("token")) &&
+    {  
     <Route exact path='/salary' render={()=><Main/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/staff' render={()=><Staff2/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/attendance' render={()=><Attendance/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/viewMissing' render={()=><Attendance/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/staffAttendance' render={()=><Attendance/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/faculty' render={()=><Faculty/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/department' render={()=><Department/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/course' render={()=><Course/>}/>}
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/location' render={()=><Location/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/addFaculty' render={()=><Faculty/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/deleteFaculty' render={()=><Faculty/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/updateFaculty' render={()=><Faculty/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/addDepartment' render={()=><Department/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/deleteDepartment' render={()=><Department/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/updateDepartment' render={()=><Department/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    { 
     <Route exact path='/addCourse' render={()=><Course/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/deleteCourse' render={()=><Course/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/updateCourse' render={()=><Course/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/addLocation' render={()=><Location/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/deleteLocation' render={()=><Location/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/updateLocation' render={()=><Location/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/addStaff' render={()=><Staff2/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/deleteStaff' render={()=><Staff2/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/updateStaff' render={()=><Staff2/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
+    {  
     <Route exact path='/editSalary' render={()=><Staff2/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
-    <Route exact path='/hr' render={()=><MainHr/>}/>}
+    {<Route exact path='/hr' render={()=><MainHr/>}/>}
   <Route exact path='/' render={()=><Login/>}/>
-    { (sessionStorage.getItem("token"))&& <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>}
+    {    <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>}
     
     <Route exact path='/main' render={()=><Main/>}/>
-   { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/home' render={()=><MainAcademic/>}/>}
+   {<Route exact path='/home' render={()=><MainAcademic/>}/>}
    <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>
-   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>}
+   {  <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>}
   { <Route exact path='/changePassword' render={()=><ChangePassword/>}/>}
-    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>}
-   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>}
-   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>}
-  {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>}
-   {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewNotifications' render={()=><ViewNotifications/>}/>}
+    {  <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>}
+   {  <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>}
+   {  <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>}
+  {  <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>}
+   {  <Route exact path='/viewNotifications' render={()=><ViewNotifications/>}/>}
     <Route exact path='/HOD' render={()=><HODMain/>}/>
     <Route exact path='/HOD/manageCourses' render={()=><ManageCourses/>}/>
     <Route exact path='/HOD/manageInstructors' render={() => <ManageInstructors />} />
