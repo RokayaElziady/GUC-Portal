@@ -62,6 +62,17 @@ export default function MainAcademicPage(props) {
       <span id="blue"></span>
       <span class="text">My Attendance</span>
     </div>
+    <div id="class" onClick={()=> history.push("/viewProfile")}>
+      <span id="blue"></span>
+      <span class="text">View Profile</span>
+    </div> <div id="class" onClick={()=> history.push("/changePassword")}>
+      <span id="blue"></span>
+      <span class="text">Change Password</span>
+    </div>
+ 
+ 
+   
+  
     
 </div>
     </div>

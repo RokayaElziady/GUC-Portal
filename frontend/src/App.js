@@ -112,12 +112,12 @@ function App() {
     <Route exact path='/editSalary' render={()=><Staff2/>}/>}
     {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="hr")&&
     <Route exact path='/hr' render={()=><MainHr/>}/>}
-    {(sessionStorage.getItem("type")) && 
-    <Route exact path='/main' render={()=><Main/>}/>}
-
   <Route exact path='/' render={()=><Login/>}/>
-   {<Route exact path='/home' render={()=><MainAcademic/>}/>}
-    { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>}
+    { (sessionStorage.getItem("token"))&& <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>}
+    
+    <Route exact path='/main' render={()=><Main/>}/>
+   { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/home' render={()=><MainAcademic/>}/>}
+   <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>
    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>}
     <Route exact path='/changePassword' render={()=><ChangePassword/>}/>
     {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>}
