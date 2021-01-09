@@ -48,7 +48,7 @@ function App() {
     <Router>
     <React.Fragment>
     <Switch>
-    {(sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
+    {( sessionStorage.getItem("token") && sessionStorage.getItem("type")==="hr")&&
     <Route exact path='/sign' render={()=><Attendance/>}/>}
     {(sessionStorage.getItem("token"))&&
     <Route exact path='/signing' render={()=><Main/>}/>}
@@ -119,7 +119,7 @@ function App() {
    { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/home' render={()=><MainAcademic/>}/>}
    <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>
    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>}
-    <Route exact path='/changePassword' render={()=><ChangePassword/>}/>
+  { <Route exact path='/changePassword' render={()=><ChangePassword/>}/>}
     {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>}
    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>}
    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>}

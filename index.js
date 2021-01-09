@@ -89,6 +89,15 @@ app.use((req, res) => {
 // })
 // s.save()
 
+const a =new hrmodel({
+  id:"hr-1",
+  name:"nadine",
+  email:"nadine",
+  password:"$2a$10$f8gx6lpROA0SBwDwAen4neFYZo4XNafgGGRXIecgTS8DhbjuITVUK", 
+})
+
+//a.save()
+
 
 
 const port = 3001;

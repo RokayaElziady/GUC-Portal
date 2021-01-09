@@ -154,8 +154,10 @@ console.log("pass"+correctPassword);
     if(userHrStaff){
         console.log("entered hr member")
         console.log("comparing password with bcrypted password")
-        const correctPassword=bcrypt.compare(password,userHrStaff.password)
+        const correctPassword= await bcrypt.compare(password,userHrStaff.password)
+        console.log(correctPassword)
         if(!correctPassword){
+          console.log("lalalalal")
           return res.json({
             statusCode:1,
             error: 'Invalid Password',
