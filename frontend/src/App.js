@@ -28,7 +28,6 @@ import CourseInstructorMain from './Pages/Hagar/courseInstructorMain';
 import ManageSlots from './Pages/Hagar/manageSlotsInstructor';
 import ManageCoursesInstructor from './Pages/Hagar/manageCoursesInstructor';
 import Staff from './Pages/Hagar/courseInstructorStaff';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css'; 
 import 'font-awesome/css/font-awesome.min.css';

@@ -351,8 +351,7 @@ router.post('/rejectRequest', validateRejectAcceptRequest, async (req, res) => {
     });
     await notificationModel.insertMany([{
         academicMember: myAcademic,
-        request: reqID,
-        message:"sorry this request is rejected open your request"
+        request: reqID
     }])
     res.send("request rejected successfully")
 });
@@ -415,8 +414,7 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
                     });
                     await notificationModel.insertMany([{
                         academicMember: myAcademic,
-                        request: reqID,
-                        message:"this request is accepted"
+                        request: reqID
                     }]);
                     res.send("ANNUAL LEAVE REQUEST ACCEPTED");
                     return;
@@ -439,8 +437,7 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
                 });
                 await notificationModel.insertMany([{
                     academicMember: myAcademic,
-                    request: reqID,
-                    message:"this request is accepted"
+                    request: reqID
                 }]);
                 res.send("ACCIDENTAL LEAVE REQUEST ACCEPTED");
                 return;
@@ -456,8 +453,7 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
         });
         await notificationModel.insertMany([{
             academicMember: myAcademic,
-            request: reqID,
-            message:"this request is accepted"
+            request: reqID
         }]);
         res.send("Normal Leave Request Accepted");
         return;
@@ -482,10 +478,10 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
     })
     await notificationModel.insertMany([{
         academicMember: myAcademic,
-        request: reqID,
-        message:"this request is accepted"
+        request: reqID
     }]);
     res.send("Change Day off request accepted");
+
 })
 
 router.get('/courseCoverage', async (req, res) => {
@@ -649,6 +645,7 @@ async function authorizeHOD(request) {
     //     return true;
     // return false;
     //GET THE HOD'S DEPARTMENT FROM HIS/HER ID
+
     let x = await isHOD(request.user.id);
     if (x.valid == 1) {
         let myID = request.user.id;
