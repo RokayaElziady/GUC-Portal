@@ -46,6 +46,7 @@ async (req, res) => {
               statusCode:0,
               msg:"success",
                 notifications
+                
             })
          
         

@@ -116,7 +116,7 @@ function App() {
     <Route exact path='/main' render={()=><Main/>}/>}
 
   <Route exact path='/' render={()=><Login/>}/>
-   { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/home' render={()=><MainAcademic/>}/>}
+   {<Route exact path='/home' render={()=><MainAcademic/>}/>}
     { (sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>}
    {(sessionStorage.getItem("token")&& sessionStorage.getItem("type")==="ac")&& <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>}
     <Route exact path='/changePassword' render={()=><ChangePassword/>}/>
