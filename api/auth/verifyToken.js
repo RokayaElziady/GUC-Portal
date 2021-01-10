@@ -12,7 +12,7 @@ const verify=async (req, res,next)=>{
    
     const s=await logoutModel.find({token:token})
   //  console.log(s)
-    if(s!=null && s.length>0){
+    if( token!=null&& s!=null && s.length>0){
       return res.status(401).send('Access deined, you are not loggod in') 
     }
     if(!token)  

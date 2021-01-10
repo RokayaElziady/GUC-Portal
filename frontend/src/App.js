@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import MainAcademic from './Pages/Rokaya/academicMain'
 import Main from './Pages/Mariam/main'
 
@@ -36,27 +36,40 @@ import Login from './Pages/Rokaya/login'
 import ChangePassword  from './Pages/Rokaya/changePassword'
 import ViewProfile from './Pages/Rokaya/viewProfile'
 
+import { useHistory } from 'react-router';
+
 
 function App() {
+ 
   console.log("type")
   console.log(sessionStorage.getItem("type"))
 
   console.log("token")
   console.log(sessionStorage.getItem("token"))
+  let history=useHistory()
+  
+//const [auth,setAuth]=useState(false)
+
+// if(!sessionStorage.getItem("token")){
+//   //setAuth(false)
+//   history.push("/haker")
+// }
+
+
   return (
+  
     <Router>
     <React.Fragment>
     <Switch>
-    { 
-    <Route exact path='/sign' render={()=><Attendance/>}/>}
-    {  
-    <Route exact path='/signing' render={()=><Main/>}/>}
-    {  
-    <Route exact path='/updateme' render={()=><Main/>}/>}
-    {  
-    <Route exact path='/myAttendance' render={()=><Main/>}/>}
-    {  
-    <Route exact path='/hours' render={()=><Main/>}/>}
+    <Route exact path='/sign' render={()=><Attendance/>}/>
+      
+    <Route exact path='/signing' render={()=><Main/>}/>
+    
+    <Route exact path='/updateme' render={()=><Main/>}/>
+    
+    <Route exact path='/myAttendance' render={()=><Main/>}/>
+    
+    <Route exact path='/hours' render={()=><Main/>}/>
     {  
     <Route exact path='/days' render={()=><Main/>}/>}
     {  
@@ -113,7 +126,7 @@ function App() {
   <Route exact path='/' render={()=><Login/>}/>
     {    <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>}
     
-    <Route exact path='/main' render={()=><Main/>}/>
+   <Route exact path='/main' render={()=><Main/>}/>
    {<Route exact path='/home' render={()=><MainAcademic/>}/>}
    <Route exact path='/viewProfile' render={()=><ViewProfile/>}/>
    {  <Route exact path='/viewSchedule' render={()=><ViewSchedule/>}/>}
@@ -121,7 +134,7 @@ function App() {
     {  <Route exact path='/viewSentReplacements' render={()=><ViewSentReplacements/>}/>}
    {  <Route exact path='/viewRecievedReplacements' render={()=><ViewRecievedReplacements/>}/>}
    {  <Route exact path='/viewAllRequests' render={()=><ViewAllRequests/>}/>}
-  {  <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>}
+  { <Route exact path='/viewSlotLinking' render={()=><ViewSlotLinkingRequests/>}/>}
    {  <Route exact path='/viewNotifications' render={()=><ViewNotifications/>}/>}
     <Route exact path='/HOD' render={()=><HODMain/>}/>
     <Route exact path='/HOD/manageCourses' render={()=><ManageCourses/>}/>
@@ -133,7 +146,7 @@ function App() {
     <Route exact path='/courseInstructor/manageSlots' render={() => <ManageSlots />} />
     <Route exact path='/courseInstructor/staffInDepartment' render={()=><Staff/>}/>
  
-    <Route exact path='/*' render={()=><Not/>}/> 
+     {<Route exact path='/haker' render={()=><Not/>}/>}
     </Switch>
      </React.Fragment>
      </Router>

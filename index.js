@@ -23,10 +23,10 @@ const app = express();
 //   });
 // });
 
-var corsO={
-      origin: "http://localhost:3000",
-      methods: ["GET", "POST","PUT","DELETE"]
-    }
+// var corsO={
+//       origin: "http://localhost:3000",
+//       methods: ["GET", "POST","PUT","DELETE"]
+//     }
 const location=require('./api/routers/location.router');
 const facultyRoute=require('./api/routers/faculty.router');
 const { connectDB } = require('./config/dbConfig');
@@ -64,7 +64,7 @@ app.use('/',(req,res,next)=>{
   next()
 })
 
-app.use(cors(corsO))
+app.use(cors())
 app.use('/logging',log)
 app.use(verify)
 app.use('/hrStaff',hrRoute);
@@ -98,15 +98,17 @@ const a =new hrmodel({
 
 //a.save()
 
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static('./frontend/build'))
+}
 
-
-const port = 3001;
+const port = 5001;
 if (process.env.PORT) {
-  app.listen(process.env.PORT, () =>
-    console.log(`Server up and running on ${process.env.PORT}`)
-  )
-} else {
   app.listen(port, () => console.log(`Server up and running on ${port}`))
+
+} else {
+  app.listen(process.env.PORT, () =>
+    console.log(`Server up and running on ${process.env.PORT}`))
 }
 
 
