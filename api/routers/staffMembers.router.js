@@ -828,6 +828,9 @@ console.log(attend2)
     return "4";
     if(day== "Saturday")
     return "6";
+
+
+    
     }
 
 
