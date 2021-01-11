@@ -36,13 +36,18 @@ export default function ManageCourses(props) {
             url: `${backendLink}/HOD/courseCoverage`,
             method: 'get',
             headers: {
-                token: "eyJhbGciOiJIUI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTEiLCJyb2xlIjoiY29vcmRpbmF0b3IiLCJpYXQiOjE2MDkzNDA3MTR9.Gj-oLfyvDPDNY6f_PBmPuWU6_Ep8ZJtKc9h4NEBiAZE"
+                //token: "",
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiVEEiLCJpYXQiOjE2MDk4Mjk3NjR9.WAu45Jn6ar0YkZjD53CkkL9rim4rOWUjXwJQpimzLoA"
             },
             data: {}
         }).then((res) => {
+            console.log("the dataaa");
+            console.log(res.data);
             if (!res.data.error) {
                 setCourseCoverage(res.data);
             }
+          
+           // console.log(res.data);
             
            
         }).catch((err) => {
