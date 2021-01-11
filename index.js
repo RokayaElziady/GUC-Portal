@@ -64,7 +64,7 @@ app.use('/',(req,res,next)=>{
   next()
 })
 
-app.use(cors(corsO))
+app.use(cors())
 app.use('/logging',log)
 app.use(verify)
 app.use('/hrStaff',hrRoute);
@@ -91,14 +91,10 @@ app.use((req, res) => {
 
 
 
-const port = 3001;
-if (process.env.PORT) {
-  app.listen(process.env.PORT, () =>
-    console.log(`Server up and running on ${process.env.PORT}`)
-  )
-} else {
+const port = 5001||process.env.PORT;
+
   app.listen(port, () => console.log(`Server up and running on ${port}`))
-}
+
 
 
 
