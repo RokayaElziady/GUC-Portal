@@ -71,7 +71,7 @@ app.use('/',(req,res,next)=>{
   next()
 })
 
-app.use(cors())
+app.use(cors(corsO))
 app.use('/logging',log)
 app.use('/',verify)
 app.use('/hrStaff',hrRoute);
