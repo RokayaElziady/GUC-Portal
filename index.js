@@ -24,7 +24,7 @@ const app = express();
 // });
 
 var corsO={
-      origin: "http://localhost:3000",
+      origin: "http://localhost:3001",
       methods: ["GET", "POST","PUT","DELETE"]
     }
 const location=require('./api/routers/location.router');
@@ -64,6 +64,11 @@ app.use('/',(req,res,next)=>{
   next()
 })
 
+app.use('/',(req,res,next)=>{
+  res.header('Access-Control-Allow-Origin', 'true');
+  next()
+})
+
 app.use(cors())
 app.use('/logging',log)
 app.use(verify)
@@ -89,13 +94,20 @@ app.use((req, res) => {
 // })
 // s.save()
 
-if(process.env.NODE_ENV==='production'){
-      app.use(express.static('frontend/build'))
-}
+const a =new hrmodel({
+  id:"hr-1",
+  name:"nadine",
+  email:"nadine",
+  password:"$2a$10$f8gx6lpROA0SBwDwAen4neFYZo4XNafgGGRXIecgTS8DhbjuITVUK", 
+})
 
+//a.save()
 
+// if(process.env.NODE_ENV==='production'){
+//   app.use(express.static('./frontend/build'))
+// }
 
-const port = process.env.PORT||5001;
+const port = 3001;
 
   app.listen(port, () => console.log(`Server up and running on ${port}`))
 

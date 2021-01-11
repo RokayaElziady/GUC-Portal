@@ -163,28 +163,28 @@ export default function ViewAllRequests(props) {
                           <p>Reason: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                   {JSON.stringify(r.reason).substring(1,11)}
+                   {JSON.stringify(r.reason)}
                    </td></>:(<></>)}
 
                    {(r.dayOff && r.dayOff!=null)?<><td className="viewSentReplacementRequestTextTitle">
                           <p>Day Off: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                   {JSON.stringify(r.dayOff).substring(1,11)}
+                   {JSON.stringify(r.dayOff)}
                    </td></>:(<></>)}
 
                    {(r.replacementMembers && r.replacementMembers!=null && r.replacementMembers.length>0)?<><td className="viewSentReplacementRequestTextTitle">
                           <p>Replacement Members: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                   {JSON.stringify(r.replacementMembers).substring(1,11)}
+                   {JSON.stringify(r.replacementMembers)}
                    </td></>:(<></>)}
 
                    {(r.compensationDay && r.compensationDay!=null)?<><td className="viewSentReplacementRequestTextTitle">
                           <p>Compensation Day: </p>
                    </td>
                    <td className="viewSentReplacementRequestTextData">
-                   {JSON.stringify(r.compensationDay).substring(1,11)}
+                   {JSON.stringify(r.compensationDay)}
                    </td></>:(<></>)}
 
                    {(r.dateOfRequest && r.dateOfRequest!=null)?<><td className="viewSentReplacementRequestTextTitle">

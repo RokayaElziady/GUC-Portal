@@ -33,7 +33,7 @@ export default function MainAcademicPage(props) {
             <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/days")}><span>Missing Days</span></button>
             <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/salary")}><span>Salary</span></button>
             <button  class="col-sm-2 buttonblue " onClick={()=> history.push("/updateme")}><span>Update Profile</span></button>
-            <button  class="col-sm-2 buttonblue " onClick={()=>{if(sessionStorage.getItem("type")==="hr"){ history.push("/hr")}else{ history.push("/home")}}}>
+            <button  class="col-sm-2 buttonblue " onClick={ ()=>{if( sessionStorage.getItem("type")==="hr"){ history.push("/hr")}else{history.push("/home")}}}>
 
             <span> <i class="fa fa-home" aria-hidden="true">Main</i></span></button>
                   </div>  </div>
@@ -62,6 +62,17 @@ export default function MainAcademicPage(props) {
       <span id="blue"></span>
       <span class="text">My Attendance</span>
     </div>
+    <div id="class" onClick={()=> history.push("/viewProfile")}>
+      <span id="blue"></span>
+      <span class="text">View Profile</span>
+    </div> <div id="class" onClick={()=> history.push("/changePassword")}>
+      <span id="blue"></span>
+      <span class="text">Change Password</span>
+    </div>
+ 
+ 
+   
+  
     
 </div>
     </div>

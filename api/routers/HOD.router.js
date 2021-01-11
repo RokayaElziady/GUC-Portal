@@ -481,6 +481,7 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
         request: reqID
     }]);
     res.send("Change Day off request accepted");
+
 })
 
 router.get('/courseCoverage', async (req, res) => {
@@ -644,6 +645,7 @@ async function authorizeHOD(request) {
     //     return true;
     // return false;
     //GET THE HOD'S DEPARTMENT FROM HIS/HER ID
+
     let x = await isHOD(request.user.id);
     if (x.valid == 1) {
         let myID = request.user.id;

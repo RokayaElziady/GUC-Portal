@@ -42,6 +42,8 @@ export default function ManageCourses(props) {
                },
             data: {}
         }).then((res) => {
+            console.log("getcourse coverage")
+            console.log(res.data)
             if (!res.data.error) {
                 setCourseCoverage(res.data);
             }

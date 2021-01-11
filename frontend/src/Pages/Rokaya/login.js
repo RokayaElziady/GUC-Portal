@@ -77,10 +77,9 @@ export default function Login(props) {
                   sessionStorage.setItem("type", res.data.type)
                 
                setError(res.data.msg)
-               if(res.data.type=="hr"){
-                 history.push('/hr')
-               }else{                  history.push('/home')}
-                  }
+                  
+                  history.push('/main')}
+                  
               }
               
           }).catch((err) => {
