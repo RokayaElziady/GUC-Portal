@@ -89,9 +89,13 @@ app.use((req, res) => {
 // })
 // s.save()
 
+if(process.env.NODE_ENV==='production'){
+      app.use(express.static('frontend/build'))
+}
 
 
-const port = 5001||process.env.PORT;
+
+const port = process.env.PORT||5001;
 
   app.listen(port, () => console.log(`Server up and running on ${port}`))
 

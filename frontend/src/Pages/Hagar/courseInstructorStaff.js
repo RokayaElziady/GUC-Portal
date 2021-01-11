@@ -61,7 +61,8 @@ export default function Staff(props) {
             url: `${backendLink}/courseInstructor/viewStaffByCourse`,
             method: 'get',
             headers: {
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiVEEiLCJpYXQiOjE2MDk4Mjk3NjR9.WAu45Jn6ar0YkZjD53CkkL9rim4rOWUjXwJQpimzLoA"
+                // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjLTMiLCJyb2xlIjoiVEEiLCJpYXQiOjE2MDk4Mjk3NjR9.WAu45Jn6ar0YkZjD53CkkL9rim4rOWUjXwJQpimzLoA"
+                token:sessionStorage.getItem("token")
             },
             data: {}
         }).then((res) => {
