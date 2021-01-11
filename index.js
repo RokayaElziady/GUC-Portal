@@ -24,7 +24,7 @@ const app = express();
 // });
 
 var corsO={
-      origin: "http://localhost:3001",
+      origin: "http://localhost:5000",
       methods: ["GET", "POST","PUT","DELETE"]
     }
 const location=require('./api/routers/location.router');
@@ -55,6 +55,8 @@ var cors = require('cors');
 const slotsModel = require('./Models/slots.model');
 const replacementModel = require('./Models/replacements.model');
 const notificationModel = require('./Models/notification.model');
+
+const path=require('path')
 
 
 
@@ -104,10 +106,14 @@ const a =new hrmodel({
 //a.save()
 
 if(process.env.NODE_ENV==='production'){
-  app.use(express.static('./frontend/build'))
+  app.use(express.static('frontend/build'))
+
+  app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+  })
 }
 
-const port = process.env.PORT|| 3001;
+const port = process.env.PORT|| 5000;
 
   app.listen(port, () => console.log(`Server up and running on ${port}`))
 
