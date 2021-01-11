@@ -24,7 +24,7 @@ const app = express();
 // });
 
 var corsO={
-      origin: "http://localhost:5001",
+      origin: "http://localhost:5000",
       methods: ["GET", "POST","PUT","DELETE"]
     }
 const location=require('./api/routers/location.router');
@@ -73,7 +73,7 @@ app.use('/',(req,res,next)=>{
 
 app.use(cors())
 app.use('/logging',log)
-app.use(verify)
+app.use('/',verify)
 app.use('/hrStaff',hrRoute);
 app.use('/acadamic',acadamicRoute);
 app.use('/courses',courseRoute);
@@ -114,7 +114,7 @@ if(process.env.NODE_ENV==='production'){
   
 }
 
-const port =  precess.env.PORT|| 5001;
+const port =  precess.env.PORT|| 5000;
 
   app.listen(port, () => console.log(`Server up and running on ${port}`))
 
