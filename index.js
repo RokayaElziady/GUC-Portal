@@ -73,6 +73,15 @@ app.use('/',(req,res,next)=>{
 
 app.use(cors(corsO))
 app.use('/logging',log)
+if(process.env.NODE_ENV==='production'){
+  app.get('/',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+  })
+  
+  app.use(express.static('frontend/build'))
+ 
+  
+}
 app.use('/',verify)
 app.use('/hrStaff',hrRoute);
 app.use('/acadamic',acadamicRoute);
@@ -105,15 +114,7 @@ const a =new hrmodel({
 
 //a.save()
 
-if(process.env.NODE_ENV==='production'){
-  app.get('/',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
-  })
-  
-  app.use(express.static('frontend/build'))
- 
-  
-}
+
 
 const port =  process.env.PORT|| 5000;
 
