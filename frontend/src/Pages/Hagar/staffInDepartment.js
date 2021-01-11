@@ -42,6 +42,7 @@ export default function StaffInDepartment(props) {
                },
             data: {}
         }).then((res) => {
+            if (!res.data.error)
             setAcademicsDep(res.data);
             
            
@@ -62,6 +63,7 @@ export default function StaffInDepartment(props) {
                 courseName:courseName
             }
         }).then((res) => {
+            if (!res.data.error)
             setAcademicsCourse(res.data);
             
            

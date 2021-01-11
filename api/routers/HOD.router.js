@@ -21,7 +21,8 @@ const { request } = require('express');
 router.post('/makeInstructor', validateMakeDeleteInstructor, async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
 
@@ -71,7 +72,8 @@ router.post('/deleteInstructor', validateMakeDeleteInstructor, async (req, res) 
 
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     const academicID = req.body.academicID;
@@ -117,7 +119,8 @@ router.post('/updateInstructor', validateUpdateInstructor, async (req, res) => {
 
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     const academicID = req.body.academicID;
@@ -180,7 +183,8 @@ router.get('/viewStaffByDepartment', async (req, res) => {
 
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     const departmentName = authorizationToken.department;
@@ -205,7 +209,8 @@ router.post('/viewStaffByCourseName', validateViewStaffByCourseName, async (req,
 
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+       // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     const courseName = req.body.courseName;
@@ -237,7 +242,8 @@ router.post('/viewStaffByCourseName', validateViewStaffByCourseName, async (req,
 router.get('/viewDaysOffInDepartment', async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     const departmentName = authorizationToken.department;
@@ -272,7 +278,8 @@ router.get('/viewDaysOffInDepartment', async (req, res) => {
 router.get('/viewChangeDayOffRequests', async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
 
@@ -296,7 +303,8 @@ router.get('/viewChangeDayOffRequests', async (req, res) => {
 router.get('/viewLeaveRequests', async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+       // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     let leaveRequestTypes = [requestType.LEAVE, requestType.SICK_LEAVE, requestType.ANNUAL_LEAVE,
@@ -319,7 +327,8 @@ router.get('/viewLeaveRequests', async (req, res) => {
 router.post('/rejectRequest', validateRejectAcceptRequest, async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     let reqID = req.body._id;
@@ -358,7 +367,8 @@ router.post('/rejectRequest', validateRejectAcceptRequest, async (req, res) => {
 router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+       // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     let reqID = req.body._id;
@@ -487,7 +497,8 @@ router.post('/acceptRequest', validateRejectAcceptRequest, async (req, res) => {
 router.get('/courseCoverage', async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+       // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
 
@@ -536,7 +547,8 @@ router.get('/courseCoverage', async (req, res) => {
 router.post('/teachingAssignmentsOfCourse', validateTeachingAssignmentsOfCourse, async (req, res) => {
     const authorizationToken = await authorizeHOD(req);
     if (!authorizationToken.aurthorized) {
-        res.send("you are not HOD : NOT AUTHORIZED");
+        res.json({error:"you are not HOD : NOT AUTHORIZED"})
+        // res.send("you are not HOD : NOT AUTHORIZED");
         return;
     }
     let courseName = req.body.courseName;

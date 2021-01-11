@@ -26,7 +26,8 @@ const{
 router.get('/courseCoverage', async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let coverageArray = [];    
@@ -61,7 +62,8 @@ router.get('/courseCoverage', async (req, res) => {
 router.get('/slotsAssignment', async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let slotsForCourse = await slotsModel.find({
@@ -76,7 +78,8 @@ router.get('/slotsAssignment', async (req, res) => {
 router.get('/viewStaffByDep', async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
 
@@ -91,7 +94,8 @@ router.get('/viewStaffByDep', async (req, res) => {
 router.get('/viewStaffByCourse', async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let acadmics = await academicMemberModel.find({
@@ -103,7 +107,8 @@ router.get('/viewStaffByCourse', async (req, res) => {
 router.post('/assignSlotToMember', validateAssignSlotToMember,async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let slot_id = req.body._id;
@@ -171,7 +176,8 @@ router.post('/assignSlotToMember', validateAssignSlotToMember,async (req, res) =
 router.post('/updateSlotAssignmentToMember', validateUpdateSlotAssignmentToMember, async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let slot_id = req.body._id;
@@ -228,7 +234,8 @@ router.post('/updateSlotAssignmentToMember', validateUpdateSlotAssignmentToMembe
 router.post('/deleteSlotAssignmentFromMember', validateDeleteSlotAssignmentFromMember,async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let slot_id = req.body._id;
@@ -271,7 +278,8 @@ router.post('/deleteSlotAssignmentFromMember', validateDeleteSlotAssignmentFromM
 router.post('/makeCoordinator',validateMakeCoordinator, async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let myAcademic = req.body.academicID;
@@ -323,7 +331,8 @@ router.post('/makeCoordinator',validateMakeCoordinator, async (req, res) => {
 router.post('/assignAcademicToCourse', validateAssignAcademicToCourse,async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let myAcademic = req.body.academicID;
@@ -363,7 +372,8 @@ router.post('/assignAcademicToCourse', validateAssignAcademicToCourse,async (req
 router.post('/removeAcademicFromCourse', validateRemoveAcademicFromCourse,async (req, res) => {
     let authorizationToken = await authorizeCourseInstructor(req);
     if (!authorizationToken.aurthorized) {
-        res.send("You are not authorized for this request");
+        res.json({ error: "You are not authorized for this request" });
+        //res.send("You are not authorized for this request");
         return;
     }
     let myAcademic = req.body.academicID;

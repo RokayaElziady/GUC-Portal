@@ -47,6 +47,8 @@ export default function ManageCourses(props) {
             if (!res.data.error) {
                 setCourseCoverage(res.data);
             }
+          
+           // console.log(res.data);
             
            
         }).catch((err) => {
