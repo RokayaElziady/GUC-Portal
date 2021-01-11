@@ -76,20 +76,10 @@ app.use('/',(req,res,next)=>{
 })
 
 app.use(cors())
+app.use(express.static(path.join(__dirname, "client", "build")))
 //app.UseCors(options => options.AllowAnyOrigin());
 app.use('/logging',log)
-if(process.env.NODE_ENV==='production'){
-  app.use(express.static('client/build'))
 
-
-  app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
-  })
-  
-  
- 
-  
-}
 app.use('/',verify)
 app.use('/hrStaff',hrRoute);
 app.use('/acadamic',acadamicRoute);
@@ -107,20 +97,15 @@ app.use((req, res) => {
   res.status(404).send({ err: 'No such url' })
 })
 
-// const s=new replacementModel({
-//   academicMember:"ac-1",
-//   slot:"5fe5bdd648f1f75a545457ff"
-// })
-// s.save()
 
-const a =new hrmodel({
-  id:"hr-1",
-  name:"nadine",
-  email:"nadine",
-  password:"$2a$10$f8gx6lpROA0SBwDwAen4neFYZo4XNafgGGRXIecgTS8DhbjuITVUK", 
-})
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static('client/build'))
 
-//a.save()
+
+  app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+  })
+}
 
 
 
