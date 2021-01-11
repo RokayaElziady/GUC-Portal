@@ -24,7 +24,7 @@ const app = express();
 // });
 
 var corsO={
-      origin: "http://localhost:5000",
+      origin: 'https://guc2.herokuapp.com',
       methods: ["GET", "POST","PUT","DELETE"]
     }
 const location=require('./api/routers/location.router');
