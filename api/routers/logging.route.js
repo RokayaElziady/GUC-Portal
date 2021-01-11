@@ -61,7 +61,8 @@ router.post('/logout',
   router.post('/login',validateLogin,
   async (req, res) => {
       try{
-        
+        console.log("LLLLLLLOOOOOOOOOOGGGGGGGGIIIIIIIIIIINNNNNNN  HHHHEEEEAAADDDDEEEEEEERRRRRRRRSSSSSS")
+             console.log(req.headers)
         console.log(await bcrypt.compare("$2b$10$mueDTpkYYPB9YINCsVYPIuTiylI9jBfpf9J0Ybnvk0aQwmXmGJmTO","1234"))
       const email =req.body.email
       const password=req.body.password 

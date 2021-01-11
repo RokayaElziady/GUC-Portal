@@ -24,7 +24,8 @@ const app = express();
 // });
 
 var corsO={
-      origin: 'https://guc2.herokuapp.com',
+      origin: 'http://guc2.herokuapp.com',
+    //  origin: 'http://localhost:3000',
       methods: ["GET", "POST","PUT","DELETE"]
     }
 const location=require('./api/routers/location.router');
@@ -68,10 +69,13 @@ app.use('/',(req,res,next)=>{
 
 app.use('/',(req,res,next)=>{
   res.header('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
   next()
+ 
 })
 
-app.use(cors(corsO))
+app.use(cors())
 //app.UseCors(options => options.AllowAnyOrigin());
 app.use('/logging',log)
 if(process.env.NODE_ENV==='production'){
