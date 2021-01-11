@@ -79,11 +79,11 @@ app.use(cors())
 //app.UseCors(options => options.AllowAnyOrigin());
 app.use('/logging',log)
 if(process.env.NODE_ENV==='production'){
-  app.use(express.static('frontend/build'))
+  app.use(express.static('client/build'))
 
 
   app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
   })
   
   
@@ -125,6 +125,8 @@ const a =new hrmodel({
 
 
 const port =  process.env.PORT|| 5001;
+
+console.log(process.env.PORT)
 
   app.listen(port, () => console.log(`Server up and running on ${port}`))
 
