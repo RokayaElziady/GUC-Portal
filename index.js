@@ -103,9 +103,9 @@ const a =new hrmodel({
 
 //a.save()
 
-// if(process.env.NODE_ENV==='production'){
-//   app.use(express.static('./frontend/build'))
-// }
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static('./frontend/build'))
+}
 
 const port = 3001;
 
