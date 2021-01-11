@@ -67,11 +67,12 @@ app.use('/',(req,res,next)=>{
 })
 
 app.use('/',(req,res,next)=>{
-  res.header('Access-Control-Allow-Origin', 'true');
+  res.header('Access-Control-Allow-Origin', '*');
   next()
 })
 
 app.use(cors(corsO))
+app.UseCors(options => options.AllowAnyOrigin());
 app.use('/logging',log)
 if(process.env.NODE_ENV==='production'){
   app.get('/',(req,res)=>{
