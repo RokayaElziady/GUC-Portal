@@ -98,21 +98,21 @@ app.use((req, res) => {
 })
 
 
-// const t=new notificationModel({
-//   academicMember:"ac-1",
-//   message:"lalalalalalala"
+const t=new notificationModel({
+  academicMember:"ac-1",
+  message:"lalalalalalala"
 
-// })
+})
 
-// t.save()
+t.save()
 
-// const u=new notificationModel({
-//   academicMember:"ac-1",
-//   message:"lalalalalalala"
+const u=new notificationModel({
+  academicMember:"ac-1",
+  message:"lalalalalalala"
 
-// })
+})
 
-// u.save()
+u.save()
 
 
 if(process.env.NODE_ENV==='production'){
