@@ -47,10 +47,14 @@ async (req, res) => {
        var y1=datetoday.getFullYear();
        var t1=datetoday.getMinutes();
        var t2=datetoday.getHours();
+       var t0=datetoday.getSeconds();
        console.log("month today")
        console.log(m1)
 
-       t1=t1-1;
+       t0=t0-30;
+       if(t0<0){
+         t0+60
+         t1=t1-1;
        if(t1<0){
          t1=t1+60;
          t2=t2-1;
@@ -69,6 +73,7 @@ async (req, res) => {
          }
         }
        }
+      }
 
        neww=notifications.filter((n)=>{
          console.log("month request")
