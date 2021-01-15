@@ -106,13 +106,6 @@ const t=new notificationModel({
 
 t.save()
 
-const u=new notificationModel({
-  academicMember:"ac-2",
-  message:"lalalalalalala"
-
-})
-
-u.save()
 
 
 if(process.env.NODE_ENV==='production'){

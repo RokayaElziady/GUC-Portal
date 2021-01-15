@@ -83,7 +83,7 @@ async (req, res) => {
         console.log("new")
          console.log((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2)
          console.log((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()>=t1 ))
-         if((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()>=t1 )){
+         if((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()==t1 && n.dateRecieved.getSeconds()>t0)){
          console.log("ana gwawaaa")          
           return n
          }
