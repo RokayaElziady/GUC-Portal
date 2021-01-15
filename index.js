@@ -99,7 +99,7 @@ app.use((req, res) => {
 
 
 const t=new notificationModel({
-  academicMember:"ac-1",
+  academicMember:"ac-2",
   message:"lalalalalalala"
 
 })
@@ -107,7 +107,7 @@ const t=new notificationModel({
 t.save()
 
 const u=new notificationModel({
-  academicMember:"ac-1",
+  academicMember:"ac-2",
   message:"lalalalalalala"
 
 })

@@ -50,7 +50,7 @@ async (req, res) => {
        console.log("month today")
        console.log(m1)
 
-       t1=t1-10;
+       t1=t1-1;
        if(t1<0){
          t1=t1+60;
          t2=t2-1;
