@@ -88,24 +88,11 @@ async (req, res) => {
 
        console.log(neww)
 
-       var datetoday=new Date(Date.now())
-
-       var d1 = datetoday.getDate();
-       var m1 = datetoday.getMonth()+1;
-       var y1=datetoday.getFullYear();
-       var t1=datetoday.getMinutes();
-       var t2=datetoday.getHours();
-      //  console.log("minutes")
-      //  console.log(t1)
-      //  console.log("hours")
-      //  console.log(t2)
-
-
        
             return res.json({
               statusCode:0,
               msg:"success",
-                notifications
+                neww
                 
             })
          
