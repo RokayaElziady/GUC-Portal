@@ -192,7 +192,7 @@ if(new Date(req2[l].dateOfRequest).getDate()==i.getDate()&&new Date(req2[l].date
 accepted=true;
 break;
 }
-if(new Date(req2[l]. compensationDay).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='compensation leave')){
+if(new Date(req2[l].dateOfRequest).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='compensation leave')){
   accepted=true;
 break;
 }}

@@ -470,15 +470,15 @@ if(req2){
 accepted=true;
 break;
 }
-if(new Date(req2[l].compensationDay).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='compensation leave')){
+if(new Date(req2[l].dateOfRequest).getDate()==i.getDate()&&new Date(req2[l].dateOfRequest).getFullYear()==i.getFullYear()&&new Date(req2[l].dateOfRequest).getMonth()==i.getMonth()&&req2[l].status=='accepted'&&(req2[l].type=='compensation leave')){
   const attend=[]
    for(var k=0;k<result.signIn.length;k++){
     elementTime=new Date(result.signIn[k]);
      elementTime.setTime( elementTime.getTime() +elementTime.getTimezoneOffset()*60*1000 );  
  
-   if( elementTime.getMonth()==req2[l].dateOfRequest.getMonth() && 
-     elementTime.getFullYear()==req2[l].dateOfRequest.getFullYear()&&
-     elementTime.getDate()==req2[l].dateOfRequest.getDate()&&
+   if( elementTime.getMonth()==req2[l].compensationDay.getMonth() && 
+     elementTime.getFullYear()==req2[l].compensationDay.getFullYear()&&
+     elementTime.getDate()==req2[l].compensationDay.getDate()&&
      elementTime.getHours()>=7&&
      elementTime.getHours()<=18 ){ 
 attend.push(elementTime)}
@@ -494,9 +494,9 @@ for(var k=0;k<result.signIn.length;k++){
      if(((new Date(attend[l])).getTime()) < elementTime.getTime()){
    timeExist=true;
    }}
- if( elementTime.getMonth()==req2[l].dateOfRequest.getMonth() && 
-   elementTime.getFullYear()==req2[l].dateOfRequest.getFullYear()&&
-   elementTime.getDate()==req2[l].dateOfRequest.getDate()&&
+ if( elementTime.getMonth()==req2[l].compensationDay.getMonth() && 
+   elementTime.getFullYear()==req2[l].compensationDay.getFullYear()&&
+   elementTime.getDate()==req2[l].compensationDay.getDate()&&
    elementTime.getHours()>=7&&
    elementTime.getHours()<=18&&timeExist ){ 
 attend2.push(result.signOut[k])}
@@ -789,9 +789,9 @@ break;
     elementTime=new Date(result.signIn[k]);
      elementTime.setTime( elementTime.getTime() +elementTime.getTimezoneOffset()*60*1000 );  
  
-   if( elementTime.getMonth()==compensation[i].dateOfRequest.getMonth() && 
-     elementTime.getFullYear()==compensation[i].dateOfRequest.getFullYear()&&
-     elementTime.getDate()==compensation[i].dateOfRequest.getDate()&&
+   if( elementTime.getMonth()==compensation[i].compensationDay.getMonth() && 
+     elementTime.getFullYear()==compensation[i].compensationDay.getFullYear()&&
+     elementTime.getDate()==compensation[i].compensationDay.getDate()&&
      elementTime.getHours()>=7&&
      elementTime.getHours()<=18 ){ 
 attend.push(elementTime)}
@@ -807,9 +807,9 @@ for(var k=0;k<result.signIn.length;k++){
      if(((new Date(attend[l])).getTime()) < elementTime.getTime()){
    timeExist=true;
    }}
- if( elementTime.getMonth()==compensation[i].dateOfRequest.getMonth() && 
-   elementTime.getFullYear()==compensation[i].dateOfRequest.getFullYear()&&
-   elementTime.getDate()==compensation[i].dateOfRequest.getDate()&&
+ if( elementTime.getMonth()==compensation[i].compensationDay.getMonth() && 
+   elementTime.getFullYear()==compensation[i].compensationDay.getFullYear()&&
+   elementTime.getDate()==compensation[i].compensationDay.getDate()&&
    elementTime.getHours()>=7&&
    elementTime.getHours()<=18&&timeExist ){ 
 attend2.push(result.signOut[k])}
