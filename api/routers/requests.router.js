@@ -51,9 +51,9 @@ async (req, res) => {
        console.log("month today")
        console.log(m1)
 
-       t0=t0-30;
+       t0=t0-8;
        if(t0<0){
-         t0+60
+         t0=t0+60
          t1=t1-1;
        if(t1<0){
          t1=t1+60;
@@ -76,14 +76,11 @@ async (req, res) => {
       }
 
        neww=notifications.filter((n)=>{
-         console.log("month request")
-         console.log(n.dateRecieved.getMonth()+1)
-         console.log(n.dateRecieved.getMinutes())
-         console.log(t1)
-        console.log("new")
-         console.log((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2)
-         console.log((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()>=t1 ))
-         if((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()==t1 && n.dateRecieved.getSeconds()>t0)){
+         console.log("nowww")
+          console.log(t2+" "+t1+" "+t0)
+          console.log("request")
+          console.log( n.dateRecieved.getHours()+" "+n.dateRecieved.getMinutes()+" "+n.dateRecieved.getSeconds())
+         if((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()==t1 && n.dateRecieved.getSeconds()>=t0)){
          console.log("ana gwawaaa")          
           return n
          }
