@@ -35,7 +35,91 @@ const {
 }
 =require('../../middleware/requests.validation')
 
+router.get('/getNotifications',
+async (req, res) => {
+    try {
+      var neww=[]
+       const notifications = await notificationModel.find({academicMember:req.user.id})
+       var datetoday=new Date(Date.now())
 
+       var d1 = datetoday.getDate();
+       var m1 = datetoday.getMonth()+1;
+       var y1=datetoday.getFullYear();
+       var t1=datetoday.getMinutes();
+       var t2=datetoday.getHours();
+       console.log("month today")
+       console.log(m1)
+
+       t1=t1-5;
+       if(t1<0){
+         t1=t1+60;
+         t2=t2-1;
+         if(t2<0){
+           t2+24
+         
+         d1=d1-1
+         if(d1<0){
+           d1=30;
+           m1=m1-1
+           if(m1<0){
+             m1+=12
+             y1=y1-1;
+
+           }
+         }
+        }
+       }
+
+       neww=notifications.filter((n)=>{
+         console.log("month request")
+         console.log(n.dateRecieved.getMonth()+1)
+         console.log(n.dateRecieved.getMinutes())
+         console.log(t1)
+        console.log("new")
+         console.log((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2)
+         console.log((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()>=t1 ))
+         if((n.dateRecieved.getMonth()+1==m1 && n.dateRecieved.getFullYear()==y1 &&n.dateRecieved.getDate()==d1)&& n.dateRecieved.getHours()==t2 && (n.dateRecieved.getMinutes()>=t1 )){
+         console.log("ana gwawaaa")          
+          return n
+         }
+
+       })
+
+
+       console.log(neww)
+
+       var datetoday=new Date(Date.now())
+
+       var d1 = datetoday.getDate();
+       var m1 = datetoday.getMonth()+1;
+       var y1=datetoday.getFullYear();
+       var t1=datetoday.getMinutes();
+       var t2=datetoday.getHours();
+      //  console.log("minutes")
+      //  console.log(t1)
+      //  console.log("hours")
+      //  console.log(t2)
+
+
+       
+            return res.json({
+              statusCode:0,
+              msg:"success",
+                notifications
+                
+            })
+         
+        
+
+    } catch (exception) {
+      return res.json({
+        error: 'Something went wrong',
+        exception
+      })
+    }
+  }
+   
+  )
 
 router.get('/viewNotifications',
 async (req, res) => {
